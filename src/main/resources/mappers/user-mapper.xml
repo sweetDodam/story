@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.healingchurch.story.services.user.UserMapper">
+    <select id="findUserList" parameterType="net.healingchurch.story.domain.User"
+            resultType="net.healingchurch.story.domain.User">
+        select
+            cu.* ,
+            chg.group_name as group_desc,
+            chr.description as role_desc
+        from ch_user cu
+        left join ch_user_group chg on chg.group_id = cu.group_id
+        left join ch_user_role chr on chr.role_id = cu.role_id
+        where 1=1
+
+
+        <if test="userId!='' and userId!=null">and cu.user_id = #{userId}</if>
+        <if test="groupId!='' and groupId!=null">and cu.group_id = #{groupId}</if>
+        <if test="roleId!='' and roleId!=null">and cu.role_id = #{roleId}</if>
+        <if test="userName!='' and userName!=null">and cu.group_id = #{userName}</if>
+        <if test="isAdmin!='' and isAdmin!=null">and cu.is_admin = #{isAdmin} </if>
+        <if test="alphaDate!='' and alphaDate!=null">, cu.alpha_date = #{alphaDate}</if>
+        <if test="pastureJoinDate!='' and pastureJoinDate!=null">, cu.pasture_join_date = #{pastureJoinDate}</if>
+        <if test="isPermission!='' and isPermission!=null">and cu.is_permission = #{isPermission} </if>
+
+        <if test="page!=null and page!=''">LIMIT #{offset}, #{limit}</if>
+    </select>
+
+    <select id="findUserListCnt" parameterType="net.healingchurch.story.domain.User"
+            resultType="int">
+        select Count(*) AS cnt from ch_user
+
+        where 1=1
+
+        <if test="userId!='' and userId!=null">and user_id = #{userId}</if>
+        <if test="groupId!='' and groupId!=null">and group_id = #{groupId}</if>
+        <if test="roleId!='' and roleId!=null">and role_id = #{roleId}</if>
+        <if test="userName!='' and userName!=null">and group_id = #{userName}</if>
+        <if test="isAdmin!='' and isAdmin!=null">and is_admin = #{isAdmin} </if>
+        <if test="alphaDate!='' and alphaDate!=null">, alpha_date = #{alphaDate}</if>
+        <if test="pastureJoinDate!='' and pastureJoinDate!=null">, pasture_join_date = #{pastureJoinDate}</if>
+        <if test="isPermission!='' and isPermission!=null">and cu.is_permission = #{isPermission} </if>
+
+    </select>
+
+    <select id="findUserById" parameterType="string" resultType="net.healingchurch.story.domain.User">
+        select
+            cu.* ,
+            chg.group_name as group_desc,
+            chr.description as role_desc
+        from ch_user cu
+        left join ch_user_group chg on chg.group_id = cu.group_id
+        left join ch_user_role chr on chr.role_id = cu.role_id
+        where cu.user_id = #{value}
+    </select>
+
+    <select id="findUserRoleList" parameterType="string"
+            resultType="net.healingchurch.story.domain.Role">
+        select
+          cur.*
+
+        from ch_user_role cur
+        left join ch_user ch on ch.role_id = cur.role_id
+
+        where ch.user_id=#{value}
+    </select>
+
+    <insert id="createUser" parameterType="net.healingchurch.story.domain.User"
+            useGeneratedKeys="true" keyProperty="userSeq">
+        INSERT INTO ch_user(user_id, password, role_id, group_id, user_name, is_admin, address, mobile, email,
+        <if test="regDate!='' and regDate!=null">reg_date,</if>
+        <if test="alphaDate!='' and alphaDate!=null">alpha_date,</if>
+        <if test="pastureJoinDate!='' and regDate!=null">pasture_join_date,</if>
+        <if test="isPermission!='' and isPermission!=null">is_permission, </if>
+        status)
+        VALUES (
+            CONCAT('ch_', (select * from (select MAX(user_seq)+1 from ch_user) tmp)),
+            #{password},
+            #{roleId},
+            #{groupId},
+            #{userName},
+            #{isAdmin},
+            #{address},
+            #{mobile},
+            #{email},
+        <if test="regDate!='' and regDate!=null">#{regDate},</if>
+        <if test="alphaDate!='' and alphaDate!=null">#{alphaDate},</if>
+        <if test="pastureJoinDate!='' and pastureJoinDate!=null">#{pastureJoinDate},</if>
+        <if test="isPermission!='' and isPermission!=null">#{isPermission}, </if>
+            #{status}
+            )
+    </insert>
+
+    <update id="updateUser" parameterType="net.healingchurch.story.domain.User"
+            useGeneratedKeys="true" keyProperty="userId">
+        update ch_user
+        set
+        user_name = #{userName}
+        <if test="password!='' and password!=null">, password = #{password}</if>
+        <if test="roleId!='' and roleId!=null">, role_id = #{roleId}</if>
+        <if test="groupId!='' and groupId!=null">, group_id = #{groupId}</if>
+        <if test="isAdmin!='' and isAdmin!=null">, is_admin = #{isAdmin} </if>
+        <if test="address!='' and address!=null">, address = #{address} </if>
+        <if test="mobile!='' and mobile!=null">, mobile = #{mobile} </if>
+        <if test="email!='' and email!=null">, email = #{email} </if>
+        <if test="regDate!='' and regDate!=null">, reg_date = #{regDate}</if>
+        <if test="alphaDate!='' and alphaDate!=null">, alpha_date = #{alphaDate}</if>
+        <if test="pastureJoinDate!='' and pastureJoinDate!=null">, pasture_join_date = #{pastureJoinDate}</if>
+        <if test="isPermission!='' and isPermission!=null">, is_permission = #{isPermission} </if>
+        <if test="status!='' and status!=null">, status = #{status}</if>
+        where user_id = #{userId}
+    </update>
+
+    <delete id="removeUser" parameterType="string">
+        delete from ch_user
+        where user_id = #{value}
+    </delete>
+
+</mapper>

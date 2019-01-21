@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.healingchurch.story.services.story.pastor.PastorStoryMapper">
+    <select id="findStoryList" parameterType="net.healingchurch.story.domain.PastorStory" resultType="net.healingchurch.story.domain.PastorStory">
+        select * from ch_story_pastor
+        <where>
+            <if test="pastorId!=null and pastorId!=''">pastor_id=#{pastorId}</if>
+            <if test="fromDate!=null and fromDate!=''">
+                and CAST(visit_date AS CHARACTER)<![CDATA[ >= ]]> CONCAT( #{fromDate}, ' 00:00:00')
+            </if>
+            <if test="toDate!=null and toDate!=''">
+                and CAST(visit_date AS CHARACTER)<![CDATA[ <= ]]> CONCAT( #{toDate}, ' 23:59:59')
+            </if>
+        </where>
+        <if test="page!=null and page!=''">LIMIT #{offset}, #{limit}</if>
+    </select>
+
+    <select id="getStory" resultType="net.healingchurch.story.domain.PastorStory" parameterType="int">
+        select * from ch_story_pastor
+        where pastor_id = #{value}
+    </select>
+
+    <insert id="createStory" parameterType="net.healingchurch.story.domain.PastorStory"
+            useGeneratedKeys="true" keyProperty="storyId">
+        insert into ch_story_pastor (pastor_id, visit_user_id, visit_date, summary, prayers, etc)
+        VALUES
+        (
+            #{pastorId},
+            #{visitUserId},
+            #{visitDate},
+            #{summary},
+            #{prayers},
+            #{etc}
+        )
+    </insert>
+
+    <update id="updateStory" parameterType="net.healingchurch.story.domain.PastorStory"
+            useGeneratedKeys="true" keyProperty="storyId">
+        update ch_story_pastor
+        set
+        <if test="visitUserId!='' and visitUserId!=null">visit_user_id = #{visitUserId}</if>
+        <if test="pastorId!='' and pastorId!=null">, pastor_id = #{pastorId}</if>
+        <if test="visitDate!='' and visitDate!=null">, visit_date = #{visitDate} </if>
+        <if test="summary!='' and summary!=null">, summary = #{summary} </if>
+        <if test="prayers!='' and prayers!=null">, prayers = #{prayers} </if>
+        <if test="etc!='' and etc!=null">, etc = #{etc} </if>
+        where story_id = #{storyId}
+    </update>
+
+    <delete id="removeStory" parameterType="int">
+        delete from ch_story_pastor
+        where story_id = #{value}
+    </delete>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.healingchurch.story.services.menu.MenuMapper">
+    <select id="findMenuList" resultType="net.healingchurch.story.domain.Menu">
+        select * from ch_menu
+    </select>
+
+    <select id="findMenuChildList" resultType="net.healingchurch.story.domain.Menu" parameterType="int">
+        select * from ch_menu
+        where parent_menu_id = #{value}
+    </select>
+
+    <select id="getMenu" resultType="net.healingchurch.story.domain.Menu" parameterType="int">
+        select * from ch_menu
+        where menu_id = #{value}
+    </select>
+
+    <insert id="createMenu" parameterType="net.healingchurch.story.domain.Menu"
+            useGeneratedKeys="true" keyProperty="menuId">
+        insert into ch_menu (parent_menu_id, menu_name, menu_level, sort_idx)
+        VALUES
+        (
+            #{parentMenuId},
+            #{menuName},
+            #{menuLevel},
+            #{sortIdx}
+        )
+    </insert>
+
+    <update id="updateMenu" parameterType="net.healingchurch.story.domain.Menu"
+            useGeneratedKeys="true" keyProperty="menuId">
+        update ch_menu
+        set
+        <if test="menuName!='' and menuName!=null">menu_name = #{menuName}</if>
+        <if test="parentMenuId!='' and parentMenuId!=null">, parent_menu_id = #{parentMenuId}</if>
+        <if test="menuLevel!='' and menuLevel!=null">, menu_level = #{menuLevel} </if>
+        <if test="sortIdx!='' and sortIdx!=null">, sort_idx = #{sortIdx} </if>
+        where menu_id = #{menuId}
+    </update>
+
+    <delete id="removeMenu" parameterType="int">
+        delete from ch_menu
+        where menu_id = #{value}
+    </delete>
+</mapper>

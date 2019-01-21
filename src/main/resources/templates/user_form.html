@@ -1,0 +1,88 @@
+<div class="modal-header" th:with="registFlag=${(formUser == null || formUser.getUserId() == '') ? true : false}, groupFlag=${(formUserGroup == null || formUserGroup.getGroupId() == '') ? false : true}">
+    <h5 class="modal-title" id="saveUserLabel" th:text="${registFlag ? '사용자 등록' : '사용자 수정'}">사용자 등록</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" th:with="registFlag=${(formUser == null || formUser.getUserId() == '') ? true : false}, groupFlag=${(formUserGroup == null || formUserGroup.getGroupId() == '') ? false : true}">
+    <form id="UserForm" th:action="@{registFlag ? /services/user/create : /services/user/update}" method="POST">
+        <input type="hidden" id="userId" name="userId" th:value="${registFlag ? '' :formUser.getUserId()}"/>
+
+        <div class="form-group">
+            <div class="form-label-group">
+                <input type="text" class="form-control" id="userName" name="userName" th:value="${registFlag ? '' : formUser.getUserName()}" placeholder="이름을 입력하세요" required="required" autofocus="autofocus">
+                <label for="userName">이름</label>
+            </div>
+        </div>
+
+        <div class="form-group" th:if="${registFlag}">
+            <div class="form-label-group">
+                <input type="password" class="form-control" id="password" name="password" value="1111" placeholder="비밀번호를 입력하세요" required="required">
+                <label for="password">비밀번호</label>
+            </div>
+        </div>
+
+        <div class="form-group" th:if="${!registFlag}">
+            <div class="checkbox">
+                <label class="mr-1"><input type="checkbox" id="isPassword" value="1">비밀번호 변경 여부</label>
+            </div>
+            <div class="form-label-group passwordInput" style="display:none;">
+                <input type="password" class="form-control" id="password" name="password" value="" placeholder="비밀번호를 입력하세요">
+                <label for="password">비밀번호</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="form-label-group">
+                        <input type="text" id="mobile" name="mobile" class="form-control" placeholder="전화번호" th:value="${registFlag ? '' : formUser.getMobile()}">
+                        <label for="mobile">전화번호</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-label-group">
+                        <input type="email" id="email" name="email" class="form-control" placeholder="이메일" th:value="${registFlag ? '' : formUser.getEmail()}">
+                        <label for="email">이메일</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group group-selectBox">
+            <p class="my-2">소속 그룹</p>
+            <div class="form-row">
+                <input type="hidden" id="formGroupId" th:value="${groupFlag ? formUserGroup.getGroupId() : ''}"/>
+                <input type="hidden" id="formParentGroupId" th:value="${groupFlag ? formUserGroup.getParentGroupId() : ''}"/>
+                <input type="hidden" id="formLevel" th:value="${groupFlag ? formUserGroup.getGroupLevel() : ''}"/>
+                <div class="col-md-4">
+                    <select class="form-control" group-level="1" required="required"></select>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control" group-level="2"></select>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control" group-level="3"></select>
+                </div>
+            </div>
+        </div>
+        <div class="checkbox">
+            <p class="my-2 ch-chk-label">권한</p>
+            <label class="mr-1"><input type="radio" name="roleId" format="num" value="1" th:attr="checked=${!registFlag && formUser.getRoleId() == 1 ? 'true' : 'false'}">어드민</label>
+            <label class="mr-1"><input type="radio" name="roleId" format="num" value="2" th:attr="checked=${!registFlag && formUser.getRoleId() == 2 ? 'true' : 'false'}">목회자</label>
+            <label class="mr-1"><input type="radio" name="roleId" format="num" value="3" th:attr="checked=${!registFlag && formUser.getRoleId() == 3 ? 'true' : 'false'}">마을 목자</label>
+            <label class="mr-1"><input type="radio" name="roleId" format="num" value="4" th:attr="checked=${!registFlag && formUser.getRoleId() == 4 ? 'true' : 'false'}">목자</label>
+            <label class="mr-1"><input type="radio" name="roleId" format="num" value="5" th:attr="checked=${registFlag || formUser.getRoleId() == 5 ? 'true' : 'false'}">목원</label>
+        </div>
+        <div class="checkbox">
+            <p class="my-2 ch-chk-label">시스템 관리자 여부</p>
+            <label class="mr-1"><input type="radio" name="isAdmin" format="numToBool" value="1" th:attr="checked=${!registFlag && formUser.getIsAdmin().toString() == 'true' ? 'true' : 'false'}">예</label>
+            <label class="mr-1"><input type="radio" name="isAdmin" format="numToBool" value="0" th:attr="checked=${registFlag || formUser.getIsAdmin().toString() == 'false' ? 'true' : 'false'}">아니오</label>
+        </div>
+    </form>
+    <div class="modal-footer" th:with="role=${userInfo.getRoleId()}, isAdmin=${userInfo.getIsAdmin()}">
+        <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="userForm.save();">저장</a>
+        <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="userForm.delete();" th:if="${role <= 3 && role != 0 && !registFlag}">삭제</a>
+    </div>
+</div>
+
+<script src="../../js/user_form.js"></script>

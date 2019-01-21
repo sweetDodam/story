@@ -1,0 +1,180 @@
+/*  사용자 추가  */
+.bg-ch {
+    background-color: #FAFAFA !important;
+}
+
+.bg-ch-blue {
+    background-color: #00A7EA !important;
+}
+
+.txt-ch-white {
+    color: #FFF !important;
+}
+
+.txt-ch-size-big {
+    font-size: 2em !important;
+}
+
+.txt-ch-size-middle {
+    font-size: 1em !important;
+}
+
+.txt-ch-size-middle {
+    font-size: 1em !important;
+}
+
+.txt-ch-size-small {
+    font-size: 0.8em !important;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.btn-right {
+    float: right;
+}
+
+.btn-custom {
+    padding: 1px 5px 1px 5px;
+    font-size: 0.9em !important;
+}
+
+.ui-th-column, .ui-jqgrid .ui-jqgrid-htable th.ui-th-column {
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center !important;
+    border-top: 0px none;
+    border-bottom: 0px none;
+    padding-right: 1px !important;
+    padding-left: 1px !important;
+}
+
+.height100p {
+    height: 100%;
+}
+
+.height90p {
+    height: 90%;
+}
+
+select.ui-pg-selbox.form-control{
+    width: 50px !important;
+    padding-left: 2px !important;
+    padding-right: 0px !important;
+    border: 1px solid #ced4da;
+}
+
+.glyphicon{
+    position:relative;
+    top:1px;
+    display:inline-block;
+    font-family:'Glyphicons Halflings';
+    font-style:normal;
+    font-weight:400;
+    line-height:1;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    padding-bottom: 5px;
+}
+
+.glyphicon-step-backward:before{
+    content:"《";
+    font-size: 20px;
+    font-weight: blod;
+}
+
+.glyphicon-backward:before{
+    content:"〈";
+    font-size: 20px;
+    font-weight: blod;
+}
+
+.glyphicon-forward:before{
+    content:"〉";
+    font-size: 20px;
+    font-weight: blod;
+}
+
+.glyphicon-step-forward:before{
+    content:"》";
+    font-size: 20px;
+    font-weight: blod;
+}
+
+.ui-jqgrid-hdiv{
+    pointer-events: none;
+    background-color: #FAFAFA;
+}
+
+.ui-jqgrid tr.jqgrow td {
+    vertical-align: middle;
+    padding: 2px;
+    height: 40px;
+}
+
+.ui-jqgrid-view table-responsive{
+    font-size: 14px;
+}
+
+.ui-paging-info{
+    float: left;
+    padding-left: 45px;
+    font-size: 13px;
+}
+
+select[readonly=readonly], .datePicker{
+    pointer-events: none;
+}
+
+.ch-max-width750{
+    max-width: 750px;
+}
+
+.datepicker table tr td.disabled, .datepicker table tr td.disabled:hover{
+    color: #999999 !important;
+}
+
+.ch-group-pad-btm{
+    padding-bottom: 5px;
+}
+
+.calendar-icon {
+    position: absolute;
+    display: inline-block;
+    top: 7px;
+    right: 10px;
+    width: 30px;
+    height: 25px;
+    border: none;
+    background: url('../../image/calendar_icon.png') no-repeat;
+    background-size: 23px 23px;
+    cursor: pointer;
+}
+
+.datePicker[readonly]{
+    background-color: #FFFFFF !important;
+}
+
+.ch-chk-label{
+    font-weight: bold !important;
+}
+
+.ch-input-row3{
+    width: 32%;
+    padding-left:15px;
+}
+
+.ch-input-row2{
+    width: 48%;
+    padding-left:10px;
+}
+
+.form-label-group input:not(:placeholder-shown) ~ label.unit {
+    text-align: right;
+    padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+    padding-bottom: calc(var(--input-padding-y) / 3);
+    font-size: 1rem;
+}

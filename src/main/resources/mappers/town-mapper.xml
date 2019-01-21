@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.healingchurch.story.services.story.town.TownStoryMapper">
+    <select id="findStoryList" parameterType="net.healingchurch.story.domain.TownStory" resultType="net.healingchurch.story.domain.TownStory">
+        select
+        A.story_id, A.user_id, A.group_id, A.worship_yn, A.pasture_meet_yn, A.bible_count,
+        A.qt_count, A.friday_worship_yn, A.dawn_pray_count, A.etc, A.create_date, A.update_date,
+        B.leader_care_story, B.town_care_stroy, B.town_story_id
+        from ch_story_master A
+        inner join ch_story_town B
+        on A.story_id = B.master_id
+        <where>
+            <if test="groupId!=null and groupId!=''">group_id=#{groupId}</if>
+            <if test="fromDate!=null and fromDate!=''">
+                and CAST(update_date AS CHARACTER)<![CDATA[ >= ]]> CONCAT( #{fromDate}, ' 00:00:00')
+            </if>
+            <if test="toDate!=null and toDate!=''">
+                and CAST(update_date AS CHARACTER)<![CDATA[ <= ]]> CONCAT( #{toDate}, ' 23:59:59')
+            </if>
+        </where>
+        <if test="page!=null and page!=''">LIMIT #{offset}, #{limit}</if>
+    </select>
+
+    <select id="getStory" resultType="net.healingchurch.story.domain.TownStory" parameterType="int">
+        select
+        A.story_id, A.user_id, A.group_id, A.worship_yn, A.pasture_meet_yn, A.bible_count,
+        A.qt_count, A.friday_worship_yn, A.dawn_pray_count, A.etc, A.create_date, A.update_date,
+        B.leader_care_story, B.town_care_stroy, B.town_story_id
+        from ch_story_master A
+        inner join ch_story_town B
+        on A.story_id = B.master_id
+        where A.story_id = #{value}
+    </select>
+
+    <insert id="createStory" parameterType="net.healingchurch.story.domain.TownStory"
+            useGeneratedKeys="true" keyProperty="storyId">
+        insert into ch_story_master
+        (user_id, group_id, worship_yn, pasture_meet_yn, bible_count,
+        qt_count, friday_worship_yn, dawn_pray_count, etc)
+        VALUES
+        (
+            #{userId},
+            #{groupId},
+            #{worshipYn},
+            #{pastureMeetYn},
+            #{bibleCount},
+            #{qtCount},
+            #{fridayWorshipYn},
+            #{dawnPrayCount},
+            #{etc}
+        );
+
+        insert into ch_story_town
+        (master_id, leader_care_story, town_care_stroy)
+        VALUES
+        (
+            (select MAX(story_id) from ch_story_master),
+            #{leaderCareStory},
+            #{townCareStroy}
+        );
+    </insert>
+
+    <update id="updateStory" parameterType="net.healingchurch.story.domain.TownStory"
+            useGeneratedKeys="true" keyProperty="storyId">
+        update ch_story_master
+        set
+        update_date = now()
+        <if test="userId!='' and userId!=null">, user_id = #{userId}</if>
+        <if test="groupId!='' and groupId!=null">, group_id = #{groupId}</if>
+        <if test="worshipYn!='' and worshipYn!=null">, worship_yn = #{worshipYn}</if>
+        <if test="pastureMeetYn!='' and pastureMeetYn!=null">, pasture_meet_yn = #{pastureMeetYn}</if>
+        <if test="bibleCount!='' and bibleCount!=null">, bible_count = #{bibleCount}</if>
+        <if test="qtCount!='' and qtCount!=null">, qt_count = #{qtCount}</if>
+        <if test="fridayWorshipYn!='' and fridayWorshipYn!=null">, friday_worship_yn = #{fridayWorshipYn}</if>
+        <if test="dawnPrayCount!='' and dawnPrayCount!=null">, dawn_pray_count = #{dawnPrayCount}</if>
+        <if test="etc!='' and etc!=null">, etc = #{etc}</if>
+        where story_id = #{storyId};
+
+        update ch_story_town
+        set
+        <if test="leaderYn!='' and leaderYn!=null">leader_care_story = #{leaderYn}</if>
+        <if test="prayers!='' and prayers!=null">, town_care_stroy = #{masterId}</if>
+        where master_id = #{storyId};
+    </update>
+
+    <delete id="removeStory" parameterType="int">
+        delete from ch_story_master
+        where story_id = #{value};
+
+        delete from ch_story_town
+        where master_id = #{value};
+    </delete>
+</mapper>

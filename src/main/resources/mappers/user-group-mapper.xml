@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.healingchurch.story.services.user.group.UserGroupMapper">
+
+    <select id="findUserGroupList" parameterType="net.healingchurch.story.domain.UserGroup"
+            resultType="net.healingchurch.story.domain.UserGroup">
+        select * from ch_user_group
+        <if test="page!=null and page!=''">LIMIT #{offset}, #{limit}</if>
+    </select>
+
+    <select id="findUserGroupChildList" parameterType="int"
+            resultType="net.healingchurch.story.domain.UserGroup">
+        select * from ch_user_group
+        where parent_group_id = #{value}
+    </select>
+
+    <select id="getUserGroup" parameterType="int"
+            resultType="net.healingchurch.story.domain.UserGroup">
+        select * from ch_user_group
+        where group_id = #{value}
+    </select>
+
+    <insert id="createUserGroup" parameterType="net.healingchurch.story.domain.UserGroup"
+            useGeneratedKeys="true" keyProperty="userSeq">
+        INSERT INTO ch_user_group(group_id, parent_group_id, group_name, group_level)
+        VALUES (
+            #{groupId},
+            #{parentGroupId},
+            #{groupName},
+            #{groupLevel}
+            )
+    </insert>
+
+    <update id="updateUserGroup" parameterType="net.healingchurch.story.domain.UserGroup"
+            useGeneratedKeys="true" keyProperty="groupId">
+        update ch_user_group
+        set
+        <if test="groupName!='' and groupName!=null">group_name = #{groupName} </if>
+        <if test="parentGroupId!='' and parentGroupId!=null">, parent_group_id = #{parentGroupId} </if>
+        <if test="groupLevel!='' and groupLevel!=null">, group_level = #{groupLevel} </if>
+        where group_id = #{groupId}
+    </update>
+
+    <delete id="removeUserGroup" parameterType="int">
+        delete from ch_user_group
+        where group_id = #{value}
+    </delete>
+
+</mapper>

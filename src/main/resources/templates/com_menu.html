@@ -1,0 +1,43 @@
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>chyou 웹스토리</span>
+    </a>
+    <div class="dropdown-menu" aria-labelledby="pagesDropdown" th:with="role=${userInfo.getRoleId()}, isAdmin=${userInfo.getIsAdmin()}">
+        <h6 class="dropdown-header" th:if="${role <= 4 && role != 0}"><i class="fas fa-fw fa-tachometer-alt"></i><span>목장 스토리</span></h6>
+        <a class="dropdown-item importPage" th:if="${role <= 4 && role != 0}" importUrl="/story/pasture" href="javascript:void(0);"><i class="fas fa-fw fa-table"></i><span>목장 스토리 관리</span></a>
+        <a class="dropdown-item importPage prepare" th:if="${role <= 4 && role != 0}" importUrl="/story/pasture" href="javascript:void(0);"><i class="fas fa-fw fa-table"></i><span>목장 스토리 조회</span></a>
+
+        <div class="dropdown-divider" th:if="${role <= 3 && role != 0}"></div>
+        <h6 class="dropdown-header" th:if="${role <= 3 && role != 0}"><i class="fas fa-fw fa-tachometer-alt"></i><span>마을 스토리</span></h6>
+        <a class="dropdown-item importPage prepare" th:if="${role <= 3 && role != 0}" importUrl="/story/town" href="javascript:void(0);"><i class="fas fa-fw fa-table"></i><span>마을 스토리</span></a>
+        <a class="dropdown-item importPage prepare" th:if="${role <= 3 && role != 0}" importUrl="/story/town" href="javascript:void(0);"><i class="fas fa-fw fa-table"></i><span>마을 스토리</span></a>
+
+        <div class="dropdown-divider" th:if="${role <= 2 && role != 0}"></div>
+        <h6 class="dropdown-header" th:if="${role <= 2 && role != 0}"><i class="fas fa-fw fa-tachometer-alt"></i><span>사역자 스토리</span></h6>
+        <a class="dropdown-item importPage prepare" th:if="${role <= 2 && role != 0}" importUrl="/story/pastor" href="javascript:void(0);"><i class="fas fa-fw fa-table"></i><span>사역자 스토리</span></a>
+        <a class="dropdown-item importPage prepare" th:if="${role <= 2 && role != 0}" importUrl="/story/pastor" href="javascript:void(0);"><i class="fas fa-fw fa-table"></i><span>사역자 스토리</span></a>
+    </div>
+</li>
+<li class="nav-item dropdown" th:if="${userInfo.getIsAdmin().toString() == 'true'}">
+    <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>관리</span>
+    </a>
+    <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+        <a class="dropdown-item importPage" importUrl="/user" href="javascript:void(0);"><i class="fas fa-fw fa-chart-area"></i><span>사용자 관리</span></a>
+        <a class="dropdown-item importPage prepare" importUrl="/user/group" href="javascript:void(0);"><i class="fas fa-fw fa-chart-area"></i><span>사용자 그룹 관리</span></a>
+        <a class="dropdown-item importPage prepare" importUrl="/town" href="javascript:void(0);"><i class="fas fa-fw fa-chart-area"></i><span>마을 관리</span></a>
+        <a class="dropdown-item importPage prepare" importUrl="/permission" href="javascript:void(0);"><i class="fas fa-fw fa-chart-area"></i><span>권한 관리</span></a>
+        <a class="dropdown-item importPage prepare" importUrl="/menu" href="javascript:void(0);"><i class="fas fa-fw fa-chart-area"></i><span>메뉴 관리</span></a>
+        <a class="dropdown-item importPage prepare" importUrl="/common/code" href="javascript:void(0);le != 0}"><i class="fas fa-fw fa-chart-area"></i><span>공통 코드 관리</span></a>
+    </div>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="http://ch-you.com/" target="_blank">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span class="txt-ch-size-small">치유하는 교회 청년교구</span>
+    </a>
+</li>
+
+<script src="../../js/menu.js"></script>

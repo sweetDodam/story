@@ -1,0 +1,19 @@
+package net.healingchurch.story.services.user;
+
+import net.healingchurch.story.domain.User;
+
+import java.util.List;
+
+public interface UserService {
+    List<User> findUserList(String userId, int roleId, int groupId, String userName, boolean isAdmin, String alphaDate, String pastureJoinDate, int page, int limit);
+
+    int findUserListCnt(String userId, int roleId, int groupId, String userName, boolean isAdmin, String alphaDate, String pastureJoinDate);
+
+    int createUser(String userId, String password, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String regDate, String alphaDate, String pastureJoinDate, String status);
+
+    User getUser(String userId);
+
+    int updateUser(String userId, String password, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String regDate, String alphaDate, String pastureJoinDate, String status);
+
+    void removeUser(String userId);
+}
