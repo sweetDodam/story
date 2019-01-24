@@ -270,7 +270,6 @@ var jqGridPopForm = {
         { label: 'QT',    			        name: 'qtCount',          	align: 'center', width: 100,    index:'qtCount',                  summaryType:'sum'       },
         { label: '새벽기도',    		    name: 'dawnPrayCount',   	align: 'center', width: 100,    index:'dawnPrayCount',            summaryType:'sum'       },
         { label: '상세',       		        name: 'dtl',               	align: 'center', width: 50, 	formatter: popFormatter.dtlModal},
-        { label: '모임날짜',    		    name: 'inputDate',          align: 'center', width: 120     },
         { label: '기도제목',                name: 'prayers',            align: 'center', width: 100,	hidden: true	},
         { label: '기타사항',                name: 'etc',            	align: 'center', width: 100,	hidden: true	},
         { label: '아이디',      		    name: 'userId',             align: 'center', width: 75,		hidden: true	},
