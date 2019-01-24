@@ -284,6 +284,8 @@ var jqGridPopForm = {
 
         data["page"] = page;
         data["limit"] = $('#pagerPop  .ui-pg-selbox').val();
+        data["fromDate"] = $("#fromDate").val().replace(/[^0-9]/g, "");
+        data["toDate"] = $("#toDate").val().replace(/[^0-9]/g, "");
 
         return data;
     }

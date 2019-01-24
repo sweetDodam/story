@@ -31,10 +31,10 @@
 
         where A.user_id=#{userId}
         <if test="fromDate!=null and fromDate!=''">
-            and CAST(A.input_date AS CHARACTER)<![CDATA[ >= ]]> CONCAT( #{fromDate}, ' 00:00:00')
+            and DATE_FORMAT(A.input_date, '%Y%m%d')<![CDATA[ >= ]]> #{fromDate}
         </if>
         <if test="toDate!=null and toDate!=''">
-            and CAST(A.input_date AS CHARACTER)<![CDATA[ <= ]]> CONCAT( #{toDate}, ' 23:59:59')
+            and DATE_FORMAT(A.input_date, '%Y%m%d')<![CDATA[ <= ]]>  #{toDate}
         </if>
 
         order by A.input_date desc
@@ -53,10 +53,10 @@
 
         where A.user_id=#{userId}
         <if test="fromDate!=null and fromDate!=''">
-            and CAST(A.input_date AS CHARACTER)<![CDATA[ >= ]]> CONCAT( #{fromDate}, ' 00:00:00')
+            and DATE_FORMAT(A.input_date, '%Y%m%d')<![CDATA[ >= ]]> #{fromDate}
         </if>
         <if test="toDate!=null and toDate!=''">
-            and CAST(A.input_date AS CHARACTER)<![CDATA[ <= ]]> CONCAT( #{toDate}, ' 23:59:59')
+            and DATE_FORMAT(A.input_date, '%Y%m%d')<![CDATA[ <= ]]>  #{toDate}
         </if>
     </select>
 
