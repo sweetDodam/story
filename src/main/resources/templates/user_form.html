@@ -14,7 +14,7 @@
                 <label for="userName">이름</label>
             </div>
         </div>
-
+        <br>
         <div class="form-group" th:if="${registFlag}">
             <div class="form-label-group">
                 <input type="password" class="form-control" id="password" name="password" value="1111" placeholder="비밀번호를 입력하세요" required="required">
@@ -31,7 +31,7 @@
                 <label for="password">비밀번호</label>
             </div>
         </div>
-
+        <br>
         <div class="form-group">
             <div class="form-row">
                 <div class="col-md-6">
@@ -48,6 +48,7 @@
                 </div>
             </div>
         </div>
+        <br>
         <div class="form-group group-selectBox">
             <p class="my-2">소속 그룹</p>
             <div class="form-row">
@@ -65,19 +66,22 @@
                 </div>
             </div>
         </div>
+        <br>
         <div class="checkbox">
             <p class="my-2 ch-chk-label">권한</p>
-            <label class="mr-1"><input type="radio" name="roleId" format="num" value="1" th:attr="checked=${!registFlag && formUser.getRoleId() == 1 ? 'true' : 'false'}">어드민</label>
-            <label class="mr-1"><input type="radio" name="roleId" format="num" value="2" th:attr="checked=${!registFlag && formUser.getRoleId() == 2 ? 'true' : 'false'}">목회자</label>
-            <label class="mr-1"><input type="radio" name="roleId" format="num" value="3" th:attr="checked=${!registFlag && formUser.getRoleId() == 3 ? 'true' : 'false'}">마을 목자</label>
-            <label class="mr-1"><input type="radio" name="roleId" format="num" value="4" th:attr="checked=${!registFlag && formUser.getRoleId() == 4 ? 'true' : 'false'}">목자</label>
-            <label class="mr-1"><input type="radio" name="roleId" format="num" value="5" th:attr="checked=${registFlag || formUser.getRoleId() == 5 ? 'true' : 'false'}">목원</label>
+            <label class="mr-4"><input type="radio" name="roleId" format="num" value="1" th:attr="checked=${!registFlag && formUser.getRoleId() == 1 ? 'true' : 'false'}">어드민</label>
+            <label class="mr-4"><input type="radio" name="roleId" format="num" value="2" th:attr="checked=${!registFlag && formUser.getRoleId() == 2 ? 'true' : 'false'}">목회자</label>
+            <label class="mr-4"><input type="radio" name="roleId" format="num" value="3" th:attr="checked=${!registFlag && formUser.getRoleId() == 3 ? 'true' : 'false'}">마을 목자</label>
+            <label class="mr-4"><input type="radio" name="roleId" format="num" value="4" th:attr="checked=${!registFlag && formUser.getRoleId() == 4 ? 'true' : 'false'}">목자</label>
+            <label class="mr-4"><input type="radio" name="roleId" format="num" value="5" th:attr="checked=${registFlag || formUser.getRoleId() == 5 ? 'true' : 'false'}">목원</label>
         </div>
+        <br>
         <div class="checkbox">
             <p class="my-2 ch-chk-label">시스템 관리자 여부</p>
-            <label class="mr-1"><input type="radio" name="isAdmin" format="numToBool" value="1" th:attr="checked=${!registFlag && formUser.getIsAdmin().toString() == 'true' ? 'true' : 'false'}">예</label>
-            <label class="mr-1"><input type="radio" name="isAdmin" format="numToBool" value="0" th:attr="checked=${registFlag || formUser.getIsAdmin().toString() == 'false' ? 'true' : 'false'}">아니오</label>
+            <label class="mr-4"><input type="radio" name="isAdmin" format="numToBool" value="1" th:attr="checked=${!registFlag && formUser.getIsAdmin().toString() == 'true' ? 'true' : 'false'}">예</label>
+            <label class="mr-4"><input type="radio" name="isAdmin" format="numToBool" value="0" th:attr="checked=${registFlag || formUser.getIsAdmin().toString() == 'false' ? 'true' : 'false'}">아니오</label>
         </div>
+        <br>
     </form>
     <div class="modal-footer" th:with="role=${userInfo.getRoleId()}, isAdmin=${userInfo.getIsAdmin()}">
         <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="userForm.save();">저장</a>

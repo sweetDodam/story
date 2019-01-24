@@ -4,19 +4,18 @@ import net.healingchurch.story.domain.PastureStory;
 import net.healingchurch.story.domain.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PastureStoryService {
-    List<PastureStory> findStoryList(int groupId, String fromDate, String toDate, int page, int limit);
+    Map<Object, Object> findStoryList(String userId, String fromDate, String toDate, int page, int limit);
 
-    int createStory(boolean worshipYn, boolean pastureMeetYn, int bibleCount, int qtCount, boolean fridayWorshipYn, int dawnPrayCount, String etc, String userId, int groupId, String prayers, boolean leaderYn, String inputDate, String worshipReason, String leaderReason);
+    int createStory(int worshipYn, int pastureMeetYn, int bibleCount, int qtCount, int fridayWorshipYn, int dawnPrayCount, String etc, String userId, int groupId, int parentGroupId, String prayers, int leaderYn, String inputDate, String worshipReason, String leaderReason);
 
     PastureStory getStory(int storyId);
 
-    int updateStory(int storyId, boolean worshipYn, boolean pastureMeetYn, int bibleCount, int qtCount, boolean fridayWorshipYn, int dawnPrayCount, String etc, String userId, int groupId, String prayers, boolean leaderYn, String worshipReason, String leaderReason);
+    int updateStory(int storyId, int worshipYn, int pastureMeetYn, int bibleCount, int qtCount, int fridayWorshipYn, int dawnPrayCount, String etc, String userId, int groupId, int parentGroupId, String prayers, int leaderYn, String inputDate, String worshipReason, String leaderReason);
 
-    void removeStory(int storyId);
+    void removeStory(int storyId, int groupId, int parentGroupId, String inputDate);
 
-    List<PastureStory> findUserStoryList(String userId, int groupId, String fromDate, String toDate, String inputDate, int page, int limit);
-
-    int findUserStoryListCnt(String userId, int groupId, String fromDate, String toDate, String inputDate);
+    Map<Object, Object> findUserStoryList(String userId, int groupId, int roleId, String userName, String inputDate, int page, int limit);
 }

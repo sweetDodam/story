@@ -5,6 +5,7 @@
 
 .bg-ch-blue {
     background-color: #00A7EA !important;
+    border-color: #00A7EA !important;
 }
 
 .txt-ch-white {
@@ -12,19 +13,15 @@
 }
 
 .txt-ch-size-big {
-    font-size: 2em !important;
+    font-size: 12pt !important;
 }
 
 .txt-ch-size-middle {
-    font-size: 1em !important;
-}
-
-.txt-ch-size-middle {
-    font-size: 1em !important;
+    font-size: 10pt !important;
 }
 
 .txt-ch-size-small {
-    font-size: 0.8em !important;
+    font-size: 9pt !important;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -35,6 +32,12 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .btn-right {
     float: right;
+}
+
+.btn-modal-right{
+    right: 0px;
+    position: absolute;
+    margin-top: 12px;
 }
 
 .btn-custom {
@@ -112,7 +115,7 @@ select.ui-pg-selbox.form-control{
 .ui-jqgrid tr.jqgrow td {
     vertical-align: middle;
     padding: 2px;
-    height: 40px;
+    height: 38px;
 }
 
 .ui-jqgrid-view table-responsive{
@@ -141,7 +144,19 @@ select[readonly=readonly], .datePicker{
     padding-bottom: 5px;
 }
 
-.calendar-icon {
+.ch-mgn-5r{
+    margin-right: 5px;
+}
+
+.ch-mgn-10r{
+    margin-right: 10px;
+}
+
+.ch-mgn-15r{
+    margin-right: 15px;
+}
+
+label.calendar-icon {
     position: absolute;
     display: inline-block;
     top: 7px;
@@ -152,6 +167,16 @@ select[readonly=readonly], .datePicker{
     background: url('../../image/calendar_icon.png') no-repeat;
     background-size: 23px 23px;
     cursor: pointer;
+}
+
+.form-label-group label.calendar-icon {
+    top: 10px;
+}
+
+.form-label-group  input.datePicker{
+    padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * 0.01) !important;
+    padding-bottom: calc(var(--input-padding-y) + var(--input-padding-y) * 0.01) !important;
+    width: 155px !important;
 }
 
 .datePicker[readonly]{
@@ -177,4 +202,76 @@ select[readonly=readonly], .datePicker{
     padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
     padding-bottom: calc(var(--input-padding-y) / 3);
     font-size: 1rem;
+}
+
+.ch-search-area {
+    display:table;
+    width: 100%;
+}
+
+.ch-search-obj-l {
+    display:table-cell;
+    padding-right: 30px;
+    width: 50%;
+    vertical-align: bottom;
+}
+
+.ch-search-obj-r {
+    display:table-cell;
+    vertical-align: bottom;
+}
+
+.modal-lg {
+    max-width: 90% !important;
+    height: 90% !important;
+}
+
+body, .form-control{
+    font-size: 10pt !important;
+}
+
+.modal-body .ui-jqgrid-hdiv .ui-jqgrid-labels [role=columnheader]{
+    vertical-align: middle;
+}
+
+.card-body{
+    padding-top: 5px;
+}
+
+.form-group{
+    margin-bottom: 2px !important;
+}
+
+#logoutModal .modal-content{
+    min-height: 200px;
+}
+
+#logoutModal .modal-footer{
+    padding: 15px 0px 15px 0px !important;
+    justify-content: center !important;
+}
+
+#content-wrapper .modal-content{
+    min-height: 690px;
+}
+
+#content-wrapper .modal-footer{
+    padding: 15px 0px 0px 0px !important;
+    width: 95%;
+    bottom: 15px;
+    position: absolute;
+    right: 15px;
+}
+
+table.ui-pager-table td, table.ui-pg-table th{
+    padding: 4px !important;
+}
+
+tr.footrow td, tr.footrow th{
+    padding: 6px !important;
+    font-size: 10px;
+}
+
+div.ui-jqgrid-hdiv td, div.ui-jqgrid-hdiv th{
+    padding: 9px !important;
 }

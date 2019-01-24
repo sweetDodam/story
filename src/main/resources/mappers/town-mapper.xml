@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.healingchurch.story.services.story.town.TownStoryMapper">
     <select id="findStoryList" parameterType="net.healingchurch.story.domain.TownStory" resultType="net.healingchurch.story.domain.TownStory">
+        /*  TownStoryMapper.findStoryList  */
         select
-        A.story_id, A.user_id, A.group_id, A.worship_yn, A.pasture_meet_yn, A.bible_count,
-        A.qt_count, A.friday_worship_yn, A.dawn_pray_count, A.etc, A.create_date, A.update_date,
+        A.*,
         B.leader_care_story, B.town_care_stroy, B.town_story_id
         from ch_story_master A
         inner join ch_story_town B
@@ -22,9 +22,9 @@
     </select>
 
     <select id="getStory" resultType="net.healingchurch.story.domain.TownStory" parameterType="int">
+        /*  TownStoryMapper.getStory  */
         select
-        A.story_id, A.user_id, A.group_id, A.worship_yn, A.pasture_meet_yn, A.bible_count,
-        A.qt_count, A.friday_worship_yn, A.dawn_pray_count, A.etc, A.create_date, A.update_date,
+        A.*,
         B.leader_care_story, B.town_care_stroy, B.town_story_id
         from ch_story_master A
         inner join ch_story_town B
@@ -32,50 +32,89 @@
         where A.story_id = #{value}
     </select>
 
+    <select id="getStoryByGroup" resultType="net.healingchurch.story.domain.TownStory" parameterType="net.healingchurch.story.domain.TownStory">
+        /*  TownStoryMapper.getStoryByGroup  */
+        select
+        A.*,
+        B.leader_care_story, B.town_care_stroy, B.town_story_id
+        from ch_story_master A
+        inner join ch_story_town B
+        on A.story_id = B.master_id
+        where A.group_id = #{groupId}
+        and A.user_id = #{userId}
+        and A.input_date = #{inputDate}
+
+    </select>
+
     <insert id="createStory" parameterType="net.healingchurch.story.domain.TownStory"
             useGeneratedKeys="true" keyProperty="storyId">
+        /*  TownStoryMapper.createStory  */
         insert into ch_story_master
-        (user_id, group_id, worship_yn, pasture_meet_yn, bible_count,
-        qt_count, friday_worship_yn, dawn_pray_count, etc)
-        VALUES
-        (
-            #{userId},
-            #{groupId},
-            #{worshipYn},
-            #{pastureMeetYn},
-            #{bibleCount},
-            #{qtCount},
-            #{fridayWorshipYn},
-            #{dawnPrayCount},
-            #{etc}
-        );
+        (user_id, group_id, worship_yn, leader_yn, pasture_meet_yn, bible_count,
+        qt_count, friday_worship_yn, dawn_pray_count, etc, input_date, create_date)
+        select
+             #{userId} as user_id
+            ,#{groupId} as group_id
+            ,Ifnull(sum(A.worship_yn), 0) as worship_yn
+            ,Ifnull(sum(A.leader_yn), 0) as leader_yn
+            ,Ifnull(sum(A.pasture_meet_yn), 0) as pasture_meet_yn
+            ,Ifnull(sum(A.bible_count), 0) as bible_count
+            ,Ifnull(sum(A.qt_count), 0) as qt_count
+            ,Ifnull(sum(A.friday_worship_yn), 0) as friday_worship_yn
+            ,Ifnull(sum(A.dawn_pray_count), 0) as dawn_pray_count
+            ,'' as etc
+            ,STR_TO_DATE(#{inputDate}, '%Y%m%d') as input_date
+            ,now() as create_date
+        from ch_story_master A
+        inner join ch_story_pasture B on A.story_id = B.master_id
+        where A.group_id = #{userId}
+        and DATE_FORMAT(A.input_date, '%Y%m%d')  = #{inputDate};
 
         insert into ch_story_town
         (master_id, leader_care_story, town_care_stroy)
         VALUES
         (
             (select MAX(story_id) from ch_story_master),
-            #{leaderCareStory},
-            #{townCareStroy}
+            null,
+            null
         );
     </insert>
 
+    <update id="updateStorySum" parameterType="net.healingchurch.story.domain.TownStory"
+            useGeneratedKeys="true" keyProperty="storyId">
+        /*  TownStoryMapper.updateStorySum  */
+        update ch_story_master as A,
+                (select
+                     #{storyId} as story_id
+                    ,Ifnull(sum(A.worship_yn), 0) as worship_yn
+                    ,Ifnull(sum(A.leader_yn), 0) as leader_yn
+                    ,Ifnull(sum(A.pasture_meet_yn), 0) as pasture_meet_yn
+                    ,Ifnull(sum(A.bible_count), 0) as bible_count
+                    ,Ifnull(sum(A.qt_count), 0) as qt_count
+                    ,Ifnull(sum(A.friday_worship_yn), 0) as friday_worship_yn
+                    ,Ifnull(sum(A.dawn_pray_count), 0) as dawn_pray_count
+                    ,'' as etc
+                    ,now() as update_date
+                from ch_story_master A
+                inner join ch_story_pasture B on A.story_id = B.master_id
+                where A.group_id = #{userId}
+                and A.input_date  = #{inputDate}) as B
+        set
+             A.worship_yn       = B.worship_yn
+            ,A.leader_yn        = B.leader_yn
+            ,A.pasture_meet_yn  = B.pasture_meet_yn
+            ,A.bible_count      = B.bible_count
+            ,A.qt_count         = B.qt_count
+            ,A.friday_worship_yn = B.friday_worship_yn
+            ,A.dawn_pray_count  = B.dawn_pray_count
+            ,A.etc              = B.etc
+            ,A.update_date      = B.update_date
+        where A.story_id = B.story_id;
+    </update>
+
     <update id="updateStory" parameterType="net.healingchurch.story.domain.TownStory"
             useGeneratedKeys="true" keyProperty="storyId">
-        update ch_story_master
-        set
-        update_date = now()
-        <if test="userId!='' and userId!=null">, user_id = #{userId}</if>
-        <if test="groupId!='' and groupId!=null">, group_id = #{groupId}</if>
-        <if test="worshipYn!='' and worshipYn!=null">, worship_yn = #{worshipYn}</if>
-        <if test="pastureMeetYn!='' and pastureMeetYn!=null">, pasture_meet_yn = #{pastureMeetYn}</if>
-        <if test="bibleCount!='' and bibleCount!=null">, bible_count = #{bibleCount}</if>
-        <if test="qtCount!='' and qtCount!=null">, qt_count = #{qtCount}</if>
-        <if test="fridayWorshipYn!='' and fridayWorshipYn!=null">, friday_worship_yn = #{fridayWorshipYn}</if>
-        <if test="dawnPrayCount!='' and dawnPrayCount!=null">, dawn_pray_count = #{dawnPrayCount}</if>
-        <if test="etc!='' and etc!=null">, etc = #{etc}</if>
-        where story_id = #{storyId};
-
+        /*  TownStoryMapper.updateStory  */
         update ch_story_town
         set
         <if test="leaderYn!='' and leaderYn!=null">leader_care_story = #{leaderYn}</if>
@@ -84,6 +123,7 @@
     </update>
 
     <delete id="removeStory" parameterType="int">
+        /*  TownStoryMapper.removeStory  */
         delete from ch_story_master
         where story_id = #{value};
 

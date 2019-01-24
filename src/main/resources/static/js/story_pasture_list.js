@@ -1,14 +1,14 @@
-var storyPasture = {
+var storyPastureList = {
     init : function () {
         var _this = this;
 
-        console.log("storyPasture init");
+        console.log("storyPastureList init");
 
-        //그룹 셀렉트박스 그리기
+        //권한 셀렉트 박스 그리기
+        common.comCodeSelectLoad(".comCode");
+
+        //그룹 셀렉트 박스 그리기
         _this.groupSelectLoad();
-
-        //DatePicker 셋팅
-        _this.datePickerLoad();
 
         //그리드 셋팅
         _this.gridLoad();
@@ -29,37 +29,38 @@ var storyPasture = {
                 //그룹을 가져와 그리기
                 common.childSelectGroupLoad($(this).val(), level+1);
             }
-
-            //검색
-            _this.gridSearch();
-        });
-
-        //달력아이콘 click 이벤트
-        $('.calendar-icon').click(function(){
-            var target = $(this).attr("target");
-            $("#" + target).datepicker().focus();
         });
 
         //모달 닫기 이벤트
-        $("#saveStoryModal").on('hide.bs.modal', function(e){
-            $("#saveStoryModal .modal-content").empty();
+        $("#detailStoryModal").on('hide.bs.modal', function(e){
+            $("#detailStoryModal .modal-content").empty();
+
+            //그리드 크기 변경
+            common.resizeGridWidth('#jqGrid', '.card-body', 10);
+
             e.stopImmediatePropagation();
         });
 
-        //모달 열린 후 이벤트
-        $("#saveStoryModal").on('shown.bs.modal', function(e){
-            storyPastureForm.init();
+        //모달 닫인 후 이벤트
+        $("#detailStoryModal").on('hidden.bs.modal', function(e){
+            //그리드 크기 변경
+            common.resizeGridWidth('#jqGrid', '.card-body', 10);
         });
-
+        
+        //모달 열린 후 이벤트
+        $("#detailStoryModal").on('shown.bs.modal', function(e){
+            storyPastureDetail.init();
+        });
+        
         //윈도우 resize 이벤트
         $(window).bind('resize', function() {
             //그리드 크기 변경
-            common.resizeGridWidth('#jqGrid', '.card-body', 5);
+            common.resizeGridWidth('#jqGrid', '.card-body', 10);
         }).trigger('resize');
     },
-    updatModalLoad : function (userId, storyId, inputDate) {
-        $("#saveStoryModal").modal();
-        $("#saveStoryModal .modal-content").load("/story/pasture/form?", "userId=" + userId + "&storyId=" + storyId + "&inputDate=" + inputDate);
+    detailModalLoad : function (userId) {
+        $("#detailStoryModal").modal();
+        $("#detailStoryModal .modal-content").load("/story/pasture/detail?","userId=" + userId);
     },
     groupSelectLoad : function () {
         var roleId = Number($("#formRoleId").val());
@@ -100,7 +101,8 @@ var storyPasture = {
             colModel: jqGridForm.colModel,
             viewrecords: true,
             height: $("#content-wrapper").height() * 0.5,
-            width: ($(".card-body").width() - 5) < 1000 ? 1000 : ($(".card-body").width() - 5),
+            width: ($(".card-body").width() - 10) < 1000 ? 1000 : ($(".card-body").width() - 10),
+            autowidth: true,
             pager: "#pager",
             pgbuttons: true,
             pginput : true,
@@ -158,75 +160,54 @@ var storyPasture = {
             postData	: jqGridForm.setParam()
         }).trigger("reloadGrid");
     },
-    datePickerLoad : function () {
+    searchClear : function () {
         var _this = this;
 
-        $("#inputDate").datepicker({
-            format: "yyyy-mm-dd(D)",
-            calendarWeeks: false, //몇째주인지 표시
-            autoclose: true,
-            todayHighlight: true,
-            language: "kr",
-            daysOfWeekDisabled: "1,2,3,4,5,6",
-            useCurrent: false,
-            endDate: new Date()
-        }).on('changeDate', function(e){
-            _this.gridSearch();
-        });
+        //검색 조건 초기화
+        $(".ch-search-area").find("input, select").not(".notClear").val("");
+        
+        //그룹 셀렉트 박스 초기화
+        $('.group-selectBox select').children().remove();
 
-        //현재 날짜의 최근 주일을 가져온다
-        var today = common.calculateSundayDate(new Date(), false);
-        $("#inputDate").datepicker("setDate", today);
+        //그룹 셀렉트 박스 그리기
+        _this.groupSelectLoad();
     }
 };
 
 var page = 1;
 var formatter = {
-    updModal : function(cellValue,rowObject,options){
+    dtlModal : function(cellValue,rowObject,options){
             return "<a href='javascript:void(0);' " +
-                "onclick='storyPasture.updatModalLoad(\""+ common.dataChkStr(options.userId) +"\""+
-                                                     ", \""+ common.dataChkStr(options.storyId) +"\""+
-                                                     ", \""+ $("#inputDate").val().replace(/[^0-9]/g, "") +"\")'>"+
-                cellValue +"</a>";
-    },
-    registFlag : function(cellValue,rowObject,options){
-        if(common.dataChk(rowObject)){
-            if(common.dataChkStr(options.storyId)){
-                return "등록";
-            }
-            return "미등록";
-        }
+                "onclick='storyPastureList.detailModalLoad(\""+ common.dataChkStr(options.userId) +"\")'>"+cellValue +"</a>";
     }
 };
 
 var jqGridForm = {
     colModel : [
-        { label: '아이디',			name: 'userId',             align: 'center', width: 75},
-        { label: '이름',        	name: 'userName',           align: 'center', width: 120,	formatter: formatter.updModal},
-        { label: '등록여부',    	name: 'registFlag',			align: 'center', width: 90, 	formatter: formatter.registFlag},
-        { label: '전화번호',    	name: 'mobile',             align: 'center', width: 100 	},
-        { label: '이메일',      	name: 'email',              align: 'center', width: 120 	},
-        { label: '청년부 등록일',	name: 'regDate',            align: 'center', width: 130 	},
-        { label: '알파날짜',    	name: 'alphaDate',          align: 'center', width: 100 	},
-        { label: '상담날짜',    	name: 'pastureJoinDate',    align: 'center', width: 100 	},
-        { label: 'userSeq',		    name: 'userSeq',            align: 'center', width: 100, 	hidden: true},
-        { label: '스토리아이디', 	name: 'storyId',			align: 'center', width: 90, 	hidden: true },
+        { label: '아이디',      	name: 'userId',             align: 'center', width: 150		},
+        { label: '이름',        	name: 'userName',           align: 'center', width: 200, 	formatter: formatter.dtlModal},
+        { label: '전화번호',    	name: 'mobile',             align: 'center', width: 250 	},
+        { label: '이메일',      	name: 'email',              align: 'center', width: 250 	},
+        { label: '청년부 등록일',	name: 'regDate',            align: 'center', width: 200 	},
+        { label: '알파날짜',    	name: 'alphaDate',          align: 'center', width: 200 	},
+        { label: '상담날짜',    	name: 'pastureJoinDate',    align: 'center', width: 200 	},
+        { label: 'userSeq',		    name: 'userSeq',            align: 'center', width: 100,	hidden: true },
+        { label: '스토리아이디',	name: 'storyId',         	align: 'center', width: 90, 	hidden: true },
         { label: '권한',        	name: 'roleDesc',           align: 'center', width: 100, 	hidden: true },
         { label: '권한ID',      	name: 'roleId',             align: 'center', width: 100, 	hidden: true },
-        { label: '소속',        	name: 'groupDesc',			align: 'center', width: 100, 	hidden: true },
+        { label: '소속',        	name: 'groupDesc',        	align: 'center', width: 100, 	hidden: true },
         { label: '소속ID',      	name: 'groupId',            align: 'center', width: 100, 	hidden: true },
         { label: '관리자여부',   	name: 'isAdmin',            align: 'center', width: 100, 	hidden: true },
         { label: '주소',        	name: 'address',            align: 'center', width: 165, 	hidden: true },
         { label: '스토리날짜',  	name: 'inputDate',          align: 'center', width: 100, 	hidden: true },
         { label: '상태',        	name: 'status',             align: 'center', width: 100, 	hidden: true },
         { label: '등록일',       	name: 'createDate',         align: 'center', width: 100, 	hidden: true },
-        { label: '수정일',       	name: 'updateDate',         align: 'center', width: 100, 	hidden: true }]
+        { label: '수정일',       	name: 'updateDate',        	align: 'center', width: 100, 	hidden: true }]
     ,setParam : function(){
         var data = common.serializeObject($("#GridForm"));
 
         data["page"] = page;
         data["limit"] = $('#pager .ui-pg-selbox').val();
-        data["inputDate"] = $("#inputDate").val().replace(/[^0-9]/g, "");
 
         //그룹셀렉트 박스
         var selectCnt = $('.group-selectBox select').length;
@@ -244,4 +225,4 @@ var jqGridForm = {
     }
 };
 
-storyPasture.init();
+storyPastureList.init();

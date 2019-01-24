@@ -44,7 +44,7 @@
           <i class="fas fa-user-circle fa-fw"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+          <a class="dropdown-item txt-ch-size-middle" href="#" data-toggle="modal" data-target="#logoutModal">로그아웃</a>
         </div>
       </li>
     </ul>
@@ -92,15 +92,15 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
+          <h5 class="modal-title txt-ch-size-big" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-footer">
           <form id="modalForm" th:action="@{/logout}" method="post">
-              <button class="btn btn-secondary" type="button" data-dismiss="modal">아니요</button>
-              <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="document.getElementById('modalForm').submit();">예</a>
+              <a class="btn btn-primary bg-ch-blue txt-ch-white txt-ch-size-middle ch-mgn-5r" onclick="document.getElementById('modalForm').submit();">예</a>
+              <button class="btn btn-secondary txt-ch-size-middle" type="button" data-dismiss="modal">아니요</button>
           </form>
         </div>
       </div>

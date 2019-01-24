@@ -8,6 +8,7 @@ public class User {
     private String password;
     private int roleId;
     private int groupId;
+    private int parentGroupId;
     private String userName;
     private boolean isAdmin;
     private String address;
@@ -71,6 +72,14 @@ public class User {
 
     public void setGroupId(int groupId) {
         this.groupId = groupId;
+    }
+
+    public int getParentGroupId() {
+        return parentGroupId;
+    }
+
+    public void setParentGroupId(int parentGroupId) {
+        this.parentGroupId = parentGroupId;
     }
 
     public String getUserName() {
@@ -245,6 +254,7 @@ public class User {
                 "userId='" + userId + '\'' +
                 ", roleId=" + roleId +
                 ", groupId=" + groupId +
+                ", parentGroupId=" + parentGroupId +
                 ", userName='" + userName + '\'' +
                 ", isAdmin=" + isAdmin +
                 ", address='" + address + '\'' +

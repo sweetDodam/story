@@ -6,11 +6,12 @@ public class Story extends User{
     private int storyId;
     private String userId;
     private int groupId;
-    private boolean worshipYn;
-    private boolean pastureMeetYn;
+    private int worshipYn;
+    private int leaderYn;
+    private int pastureMeetYn;
     private int bibleCount;
     private int qtCount;
-    private boolean fridayWorshipYn;
+    private int fridayWorshipYn;
     private int dawnPrayCount;
     private String etc;
 
@@ -60,19 +61,27 @@ public class Story extends User{
         this.dawnPrayCount = dawnPrayCount;
     }
 
-    public boolean getWorshipYn() {
+    public int getWorshipYn() {
         return worshipYn;
     }
 
-    public void setWorshipYn(boolean worshipYn) {
+    public void setWorshipYn(int worshipYn) {
         this.worshipYn = worshipYn;
     }
 
-    public boolean getPastureMeetYn() {
+    public int getLeaderYn() {
+        return leaderYn;
+    }
+
+    public void setLeaderYn(int leaderYn) {
+        this.leaderYn = leaderYn;
+    }
+
+    public int getPastureMeetYn() {
         return pastureMeetYn;
     }
 
-    public void setPastureMeetYn(boolean pastureMeetYn) {
+    public void setPastureMeetYn(int pastureMeetYn) {
         this.pastureMeetYn = pastureMeetYn;
     }
 
@@ -92,11 +101,11 @@ public class Story extends User{
         this.qtCount = qtCount;
     }
 
-    public boolean getFridayWorshipYn() {
+    public int getFridayWorshipYn() {
         return fridayWorshipYn;
     }
 
-    public void setFridayWorshipYn(boolean fridayWorshipYn) {
+    public void setFridayWorshipYn(int fridayWorshipYn) {
         this.fridayWorshipYn = fridayWorshipYn;
     }
 

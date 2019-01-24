@@ -90,11 +90,11 @@ select * from tbl_story_pastor;
 
 create table tbl_story_master(
   story_id int auto_increment not null primary key ,
-  worship_yn boolean,
-  pasture_meet_yn boolean,
+  worship_yn int,
+  pasture_meet_yn int,
   bible_count int,
   qt_count int,
-  friday_worship_yn boolean,
+  friday_worship_yn int,
   dawn_pray_count int,
   prayers varchar(1000),
   etc varchar(1000),

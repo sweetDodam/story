@@ -5,32 +5,7 @@ var storyPastureForm = {
         console.log("storyPastureForm init");
 
         //불참 사유 셀렉트박스 옵션 그리기
-        $(".comCode").each(function(){
-            //가져올 코드
-            var parentCodeId = $(this).attr("parentCodeId");
-
-            //공통코드 조회
-            var comCode = common.comCodeData(parentCodeId);
-
-            //디폴트 값 추가
-            var option = "<option value=''>선택</option>";
-            $(this).append(option);
-
-            //선택된 값
-            var selVal = $(this).attr("selVal");
-            
-            //옵션 그리기
-            for(var i = 0;i < comCode.length;i++){
-                var selected = "";
-
-                if(selVal == comCode[i].codeName){
-                    selected = "selected";
-                }
-
-                var option = "<option value='"+ comCode[i].codeName +"' "+ selected +">"+ comCode[i].description +"</option>";
-                $(this).append(option);
-            }
-        });
+        common.comCodeSelectLoad(".comCode");
 
         //예배 참석 여부
         $("input[name=worshipYn]").on('change', function () {

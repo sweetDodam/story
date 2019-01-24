@@ -31,39 +31,15 @@ public class TownStoryController {
         return townStoryService.getStory(storyId);
     }
 
-    @PostMapping("create")
-    public int createStory(
-            @RequestParam(value = "worshipYn", required = true, defaultValue = "") boolean worshipYn,
-            @RequestParam(value = "pastureMeetYn", defaultValue = "") boolean pastureMeetYn,
-            @RequestParam(value = "bibleCount", defaultValue = "") int bibleCount,
-            @RequestParam(value = "qtCount", defaultValue = "") int qtCount,
-            @RequestParam(value = "fridayWorshipYn", defaultValue = "") boolean fridayWorshipYn,
-            @RequestParam(value = "dawnPrayCount", defaultValue = "") int dawnPrayCount,
-            @RequestParam(value = "etc", defaultValue = "") String etc,
+    @PostMapping("update")
+    public int updateStory(
+            @RequestParam(value = "storyId", required = true, defaultValue = "") int storyId,
             @RequestParam(value = "userId", defaultValue = "") String userId,
             @RequestParam(value = "groupId", defaultValue = "") int groupId,
             @RequestParam(value = "leaderCareStory", defaultValue = "") String leaderCareStory,
             @RequestParam(value = "townCareStroy", defaultValue = "") String townCareStroy
     ) throws Exception {
-        return townStoryService.createStory(worshipYn, pastureMeetYn, bibleCount, qtCount, fridayWorshipYn, dawnPrayCount, etc, userId, groupId, leaderCareStory, townCareStroy);
-    }
-
-    @PostMapping("update")
-    public int updateStory(
-            @RequestParam(value = "storyId", required = true, defaultValue = "") int storyId,
-            @RequestParam(value = "pastorId", required = true, defaultValue = "") boolean worshipYn,
-            @RequestParam(value = "pastureMeetYn", defaultValue = "") boolean pastureMeetYn,
-            @RequestParam(value = "bibleCount", defaultValue = "") int bibleCount,
-            @RequestParam(value = "qtCount", defaultValue = "") int qtCount,
-            @RequestParam(value = "fridayWorshipYn", defaultValue = "") boolean fridayWorshipYn,
-            @RequestParam(value = "dawnPrayCount", defaultValue = "") int dawnPrayCount,
-            @RequestParam(value = "etc", defaultValue = "") String etc,
-            @RequestParam(value = "etc", defaultValue = "") String userId,
-            @RequestParam(value = "etc", defaultValue = "") int groupId,
-            @RequestParam(value = "leaderCareStory", defaultValue = "") String leaderCareStory,
-            @RequestParam(value = "townCareStroy", defaultValue = "") String townCareStroy
-    ) throws Exception {
-        return townStoryService.updateStory(storyId, worshipYn, pastureMeetYn, bibleCount, qtCount, fridayWorshipYn, dawnPrayCount, etc, userId, groupId, leaderCareStory, townCareStroy);
+        return townStoryService.updateStory(storyId, userId, groupId, leaderCareStory, townCareStroy);
     }
 
     @PostMapping("remove")

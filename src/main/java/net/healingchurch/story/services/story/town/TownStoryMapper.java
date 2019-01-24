@@ -13,6 +13,10 @@ public interface TownStoryMapper {
 
     TownStory getStory(int storyId);
 
+    TownStory getStoryByGroup(TownStory townStory);
+
+    int updateStorySum(TownStory townStory);
+
     int updateStory(TownStory townStory);
 
     void removeStory(int storyId);

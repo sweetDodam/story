@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -26,8 +24,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public List<User> findUserList(String userId, int roleId, int groupId, String userName, boolean isAdmin, String alphaDate, String pastureJoinDate, int page, int limit) {
+    public Map<Object, Object> findUserList(String userId, int roleId, int groupId, String userName, boolean isAdmin, String alphaDate, String pastureJoinDate, int page, int limit) {
         User user = new User();
+
         user.setPage(page);
         user.setOffset((page-1)*limit);
         user.setLimit(limit);
@@ -40,22 +39,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setAlphaDate(limit);
         user.setPastureJoinDate(limit);*/
 
-        return userMapper.findUserList(user);
-    }
+        Map<Object, Object> resutMap = new HashMap<>();
 
-    @Override
-    public int findUserListCnt(String userId, int roleId, int groupId, String userName, boolean isAdmin, String alphaDate, String pastureJoinDate) {
-        User user = new User();
+        //데이터
+        resutMap.put("rows", userMapper.findUserList(user));
 
-       /* user.setUserId(limit);
-        user.setGroupId(limit);
-        user.setRoleId(limit);
-        user.setUserName(limit);
-        user.setIsAdmin(limit);
-        user.setAlphaDate(limit);
-        user.setPastureJoinDate(limit);*/
+        //전체 갯수
+        int records = userMapper.findUserListCnt(user);
+        resutMap.put("records", records);
 
-        return userMapper.findUserListCnt(user);
+        //페이지 수
+        resutMap.put("total", (int)Math.ceil((double)records/(double)limit));
+
+        return resutMap;
     }
 
     @Override

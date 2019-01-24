@@ -191,7 +191,81 @@ var common = {
         });
 
         return rs;
-    }
-};
+    },
+    comCodeSelectLoad: function(selector){
+        //불참 사유 셀렉트박스 옵션 그리기
+        $(selector).each(function(){
+            //가져올 코드
+            var parentCodeId = $(this).attr("parentCodeId");
 
+            //공통코드 조회
+            var comCode = common.comCodeData(parentCodeId);
+
+            //디폴트 값 추가
+            var option = "<option value=''>선택</option>";
+            $(this).append(option);
+
+            //선택된 값
+            var selVal = $(this).attr("selVal");
+
+            //옵션 그리기
+            for(var i = 0;i < comCode.length;i++){
+                var selected = "";
+
+                if(selVal == comCode[i].codeName){
+                    selected = "selected";
+                }
+
+                var option = "<option value='"+ comCode[i].codeName +"' "+ selected +">"+ comCode[i].description +"</option>";
+                $(this).append(option);
+            }
+        });
+    },
+    resizeGridWidth: function(gridId, area, padding){
+        var resizeWidth = $(area).width() - padding; //jQuery-ui의 padding 설정 및 border-width값때문에 넘치는 걸 빼줌.
+
+        if(resizeWidth < 1000){
+            resizeWidth = 1000;
+        }
+
+        // 그리드의 width 초기화
+        $(gridId).setGridWidth( resizeWidth, true);
+    },
+    calculateSundayDate : function(getDate, after){
+        var year = getDate.getFullYear();
+        var month = getDate.getMonth()+1;
+        var date = getDate.getDate();
+        var dayLabel = getDate.getDay();
+
+        //평일이라면 과거 일요일로
+        if(dayLabel < 7){
+            var toSunday = new Date(year, (month-1), date);
+
+            if(after){
+                toSunday.setDate(toSunday.getDate() + (7 - dayLabel));
+            }else{
+                toSunday.setDate(toSunday.getDate() - dayLabel);
+            }
+
+            year = toSunday.getFullYear();
+            month = toSunday.getMonth()+1;
+            date = toSunday.getDate();
+        }
+
+        if(month < 10){
+            month = "0" + month;
+        }
+        if(date < 10){
+            date = "0" + date;
+        }
+
+        return year + "-" + month + "-" + date;
+    },
+    comma: function(num){
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    unComma: function(str){
+        return str.toString().replace(/,/gi, "");
+    },
+};
 common.init();

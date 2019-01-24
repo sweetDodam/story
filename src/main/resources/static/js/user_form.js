@@ -4,18 +4,8 @@ var userForm = {
 
         console.log("user_form init");
 
-        //해당 유저에 지정된 그룹아이디가 있다면
-        if(common.dataChk($("#formGroupId").val())){
-            var groupId = Number($("#formGroupId").val());
-            var level = Number($("#formLevel").val());
-            var parentGroupId = Number($("#formParentGroupId").val());
-
-            //자신의 그룹을 가져와 그리기
-            common.selectGroupLoad(groupId, level, parentGroupId, false);
-        }else{
-            //그룹 셀렉트박스 최상위 그룹을 가져와 그리기
-            common.childSelectGroupLoad(-1, 1);
-        }
+        //그룹 셀렉트 박스 그리기
+        _this.groupSelectLoad();
 
         //그룹 셀렉트박스 change 이벤트
         $('.group-selectBox select').on('change', function () {
@@ -34,7 +24,7 @@ var userForm = {
             }
         });
 
-        //비밀번호 변경여부
+        //비밀번호 변경 체크박스 click 이벤트
         $('#isPassword').on('click', function () {
             if($(this).prop("checked")){
                 $(".passwordInput").show();
@@ -45,6 +35,20 @@ var userForm = {
                 $("#password").removeAttr("required");
             }
         });
+    },
+    groupSelectLoad : function () {
+        //해당 유저에 지정된 그룹아이디가 있다면
+        if(common.dataChk($("#formGroupId").val())){
+            var groupId = Number($("#formGroupId").val());
+            var level = Number($("#formLevel").val());
+            var parentGroupId = Number($("#formParentGroupId").val());
+
+            //자신의 그룹을 가져와 그리기
+            common.selectGroupLoad(groupId, level, parentGroupId, false);
+        }else{
+            //그룹 셀렉트박스 최상위 그룹을 가져와 그리기
+            common.childSelectGroupLoad(-1, 1);
+        }
     },
     save : function () {
         //필수체크 검사

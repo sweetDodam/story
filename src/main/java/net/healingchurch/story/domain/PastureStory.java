@@ -6,9 +6,10 @@ public class PastureStory extends Story {
     private int pastureStoryId;
     private int masterId;
     private String prayers;
-    private boolean leaderYn;
     private String  worshipReason;
     private String leaderReason;
+    private String  worshipDesc;
+    private String leaderDesc;
 
     public PastureStory() {
     }
@@ -37,14 +38,6 @@ public class PastureStory extends Story {
         this.prayers = prayers;
     }
 
-    public boolean getLeaderYn() {
-        return leaderYn;
-    }
-
-    public void setLeaderYn(boolean leaderYn) {
-        this.leaderYn = leaderYn;
-    }
-
     public String getWorshipReason() {
         return worshipReason;
     }
@@ -53,12 +46,28 @@ public class PastureStory extends Story {
         this.worshipReason = worshipReason;
     }
 
+    public String getWorshipDesc() {
+        return worshipDesc;
+    }
+
+    public void setWorshipDesc(String worshipDesc) {
+        this.worshipDesc = worshipDesc;
+    }
+
     public String getLeaderReason() {
         return leaderReason;
     }
 
     public void setLeaderReason(String leaderReason) {
         this.leaderReason = leaderReason;
+    }
+
+    public String getLeaderDesc() {
+        return leaderDesc;
+    }
+
+    public void setLeaderDesc(String leaderDesc) {
+        this.leaderDesc = leaderDesc;
     }
 
     @Override
@@ -82,9 +91,10 @@ public class PastureStory extends Story {
                 "pastureStoryId='" + pastureStoryId + '\'' +
                 "masterId='" + masterId + '\'' +
                 ", prayers='" + prayers + '\'' +
-                ", leaderYn=" + leaderYn + '\'' +
                 ", worshipReason=" + worshipReason + '\'' +
+                ", worshipDesc=" + worshipDesc + '\'' +
                 ", leaderReason=" + leaderReason + '\'' +
+                ", leaderDesc=" + leaderDesc + '\'' +
                 '}';
     }
 }

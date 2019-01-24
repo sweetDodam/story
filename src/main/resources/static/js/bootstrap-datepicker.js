@@ -1,10 +1,4 @@
-/*!
- * Datepicker for Bootstrap v1.6.4 (https://github.com/eternicode/bootstrap-datepicker)
- *
- * Copyright 2012 Stefan Petre
- * Improvements by Andrew Rowls
- * Licensed under the Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0)
- */(function(factory){
+(function(factory){
     if (typeof define === "function" && define.amd) {
         define(["jquery"], factory);
     } else if (typeof exports === 'object') {
@@ -495,7 +489,9 @@
 
 			if (this.o.forceParse && this.inputField.val())
 				this.setValue();
-			this._trigger('hide');
+			
+			//모달과 이벤트가 겹쳐 이름 변경
+			this._trigger('datePicker-hide');
 			return this;
 		},
 
@@ -579,7 +575,8 @@
 		setDates: function(){
 			var args = $.isArray(arguments[0]) ? arguments[0] : arguments;
 			this.update.apply(this, args);
-			this._trigger('changeDate');
+			//스크립트로 값 변경할때는 패스
+			//this._trigger('changeDate');
 			this.setValue();
 			return this;
 		},

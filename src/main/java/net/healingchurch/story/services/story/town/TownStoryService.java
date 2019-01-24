@@ -7,11 +7,13 @@ import java.util.List;
 public interface TownStoryService {
     List<TownStory> findStoryList(int groupId, String fromDate, String toDate, int page, int limit);
 
-    int createStory(boolean worshipYn, boolean pastureMeetYn, int bibleCount, int qtCount, boolean fridayWorshipYn, int dawnPrayCount, String etc, String userId, int groupId, String leaderCareStory, String townCareStroy);
-
     TownStory getStory(int storyId);
 
-    int updateStory(int storyId, boolean worshipYn, boolean pastureMeetYn, int bibleCount, int qtCount, boolean fridayWorshipYn, int dawnPrayCount, String etc, String userId, int groupId, String leaderCareStory, String townCareStroy);
+    TownStory getStoryByGroup(String groupId, int parentGroupId, String inputDate);
+
+    void townStorySum(String groupId, int parentGroupId, String inputDate);
+
+    int updateStory(int storyId, String userId, int groupId, String leaderCareStory, String townCareStroy);
 
     void removeStory(int storyId);
 }

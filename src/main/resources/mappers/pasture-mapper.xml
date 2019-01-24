@@ -2,25 +2,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.healingchurch.story.services.story.pasture.PastureStoryMapper">
     <select id="findStoryList" parameterType="net.healingchurch.story.domain.PastureStory" resultType="net.healingchurch.story.domain.PastureStory">
+        /*  PastureStoryMapper.findStoryList  */
         select
-        A.*,
-        B.*
+             A.story_id
+            ,A.user_id
+            ,A.group_id
+            ,FN_DATE_FORMAT(A.input_date) as input_date
+            ,A.worship_yn
+            ,A.leader_yn
+            ,A.pasture_meet_yn
+            ,A.bible_count
+            ,A.qt_count
+            ,A.friday_worship_yn
+            ,A.dawn_pray_count
+            ,A.etc
+            ,FN_DATE_FORMAT(A.create_date) as create_date
+            ,FN_DATE_FORMAT(A.update_date) as update_date
+            ,B.master_id
+            ,B.prayers
+            ,B.worship_reason
+            ,C.description AS worship_desc
+            ,B.leader_reason
+            ,D.description as leader_desc
         from ch_story_master A
-        inner join ch_story_pasture B
-        on A.story_id = B.master_id
-        <where>
-            <if test="groupId!=null and groupId!=''">A.group_id=#{groupId}</if>
-            <if test="fromDate!=null and fromDate!=''">
-                and CAST(A.input_date AS CHARACTER)<![CDATA[ >= ]]> CONCAT( #{fromDate}, ' 00:00:00')
-            </if>
-            <if test="toDate!=null and toDate!=''">
-                and CAST(A.input_date AS CHARACTER)<![CDATA[ <= ]]> CONCAT( #{toDate}, ' 23:59:59')
-            </if>
-        </where>
+        inner join ch_story_pasture B on A.story_id = B.master_id
+        left join ch_common_code C on B.worship_reason = C.code_name and C.parent_code_id = 'WORSHIP_REASON'
+        left join ch_common_code D on B.leader_reason = D.code_name and D.parent_code_id = 'LEADER_REASON'
+
+        where A.user_id=#{userId}
+        <if test="fromDate!=null and fromDate!=''">
+            and CAST(A.input_date AS CHARACTER)<![CDATA[ >= ]]> CONCAT( #{fromDate}, ' 00:00:00')
+        </if>
+        <if test="toDate!=null and toDate!=''">
+            and CAST(A.input_date AS CHARACTER)<![CDATA[ <= ]]> CONCAT( #{toDate}, ' 23:59:59')
+        </if>
+
+        order by A.input_date desc
+
         <if test="page!=null and page!=''">LIMIT #{offset}, #{limit}</if>
     </select>
 
+    <select id="findStoryListCnt" parameterType="net.healingchurch.story.domain.PastureStory" resultType="int">
+        /*  PastureStoryMapper.findStoryListCnt  */
+        select
+          count(A.story_id)  AS cnt
+        from ch_story_master A
+        inner join ch_story_pasture B on A.story_id = B.master_id
+        left join ch_common_code C on B.worship_reason = C.code_name and C.parent_code_id = 'WORSHIP_REASON'
+        left join ch_common_code D on B.leader_reason = D.code_name and D.parent_code_id = 'LEADER_REASON'
+
+        where A.user_id=#{userId}
+        <if test="fromDate!=null and fromDate!=''">
+            and CAST(A.input_date AS CHARACTER)<![CDATA[ >= ]]> CONCAT( #{fromDate}, ' 00:00:00')
+        </if>
+        <if test="toDate!=null and toDate!=''">
+            and CAST(A.input_date AS CHARACTER)<![CDATA[ <= ]]> CONCAT( #{toDate}, ' 23:59:59')
+        </if>
+    </select>
+
     <select id="getStory" resultType="net.healingchurch.story.domain.PastureStory" parameterType="int">
+        /*  PastureStoryMapper.getStory  */
         select
         A.*,
         B.*
@@ -32,14 +73,16 @@
 
     <insert id="createStory" parameterType="net.healingchurch.story.domain.PastureStory"
             useGeneratedKeys="true" keyProperty="storyId">
+        /*  PastureStoryMapper.createStory  */
         insert into ch_story_master
-        (user_id, group_id, worship_yn, pasture_meet_yn, bible_count,
-        qt_count, friday_worship_yn, dawn_pray_count, etc, input_date)
+        (user_id, group_id, worship_yn, leader_yn, pasture_meet_yn, bible_count,
+        qt_count, friday_worship_yn, dawn_pray_count, etc, input_date, create_date)
         VALUES
         (
             #{userId},
             #{groupId},
             #{worshipYn},
+            #{leaderYn},
             #{pastureMeetYn},
             #{bibleCount},
             #{qtCount},
@@ -47,14 +90,14 @@
             #{dawnPrayCount},
             #{etc},
             STR_TO_DATE(#{inputDate}, '%Y%m%d')
+            ,now()
         );
 
         insert into ch_story_pasture
-        (master_id, leader_yn, prayers, worship_reason, leader_reason)
+        (master_id, prayers, worship_reason, leader_reason)
         VALUES
         (
             (select MAX(story_id) from ch_story_master),
-            #{leaderYn},
             #{prayers},
             #{worshipReason},
             #{leaderReason}
@@ -63,10 +106,12 @@
 
     <update id="updateStory" parameterType="net.healingchurch.story.domain.PastureStory"
             useGeneratedKeys="true" keyProperty="storyId">
+        /*  PastureStoryMapper.updateStory  */
         update ch_story_master
         set
           update_date = now()
         , worship_yn = #{worshipYn}
+        ,leader_yn = #{leaderYn}
         , pasture_meet_yn = #{pastureMeetYn}
         , bible_count = #{bibleCount}
         , qt_count = #{qtCount}
@@ -78,14 +123,14 @@
 
         update ch_story_pasture
         set
-           leader_yn = #{leaderYn}
-          , prayers = #{prayers}
+            prayers = #{prayers}
           , worship_reason = #{worshipReason}
           , leader_reason = #{leaderReason}
         where master_id = #{storyId};
     </update>
 
     <delete id="removeStory" parameterType="int">
+        /*  PastureStoryMapper.removeStory  */
         delete from ch_story_master
         where story_id = #{value};
 
@@ -95,60 +140,91 @@
 
     <select id="findUserStoryList" parameterType="net.healingchurch.story.domain.PastureStory"
             resultType="net.healingchurch.story.domain.PastureStory">
+        /*  PastureStoryMapper.findUserStoryList  */
         select
-            cu.user_id,
-            cu.user_name,
-            chg.group_name as group_desc,
-            chr.description as role_desc,
-            csm.*,
-            csp.*
-        from ch_user cu
-        inner join (select  	A.group_id,
-                                A.group_name,
-                                A.parent_group_id
-                                from    (select * from ch_user_group
-                                order by parent_group_id, group_id) A,
-                                (select @pv := #{groupId}) B
-                                where   (find_in_set(A.parent_group_id, @pv) > 0 OR find_in_set(group_id, @pv) > 0)
-                                and     @pv := concat(@pv, ',', A.group_id)) chg on chg.group_id = cu.group_id
-        left join ch_user_role chr on chr.role_id = cu.role_id
-        left join ch_story_master csm on csm.user_id = cu.user_id <if test="inputDate!='' and inputDate!=null">and DATE_FORMAT(csm.input_date, '%Y%m%d')  = #{inputDate}</if>
-        left join ch_story_pasture csp on csp.master_id = csm.story_id
+                 A.user_seq
+                ,A.user_id
+                ,A.role_id
+                ,A.group_id
+                ,A.user_name
+                ,A.is_admin
+                ,A.birth_date
+                ,A.address
+                ,A.mobile
+                ,A.email
+                ,A.reg_date
+                ,A.alpha_date
+                ,A.pasture_join_date
+                ,A.status
+                ,A.is_permission
+                ,B.group_name as group_desc
+                ,C.description as role_desc
+          <if test="inputDate!='' and inputDate!=null">
+                ,D.story_id
+                ,D.input_date
+                ,D.worship_yn
+                ,D.leader_yn
+                ,D.pasture_meet_yn
+                ,D.bible_count
+                ,D.qt_count
+                ,D.friday_worship_yn
+                ,D.dawn_pray_count
+                ,D.etc
+                ,E.master_id
+                ,E.prayers
+                ,E.worship_reason
+                ,E.leader_reason
+          </if>
+        from ch_user A
+        inner join (select  	X.group_id,
+                                X.group_name,
+                                X.parent_group_id
+                    from    (select * from ch_user_group
+                    order by parent_group_id, group_id) X,
+                    (select @pv := #{groupId}) Y
+                    where   (find_in_set(X.parent_group_id, @pv) > 0 OR find_in_set(group_id, @pv) > 0)
+                    and     @pv := concat(@pv, ',', X.group_id)) B on B.group_id = A.group_id
+        left join ch_user_role C on C.role_id = A.role_id
+        <if test="inputDate!='' and inputDate!=null">
+        left join ch_story_master D on D.user_id = A.user_id and DATE_FORMAT(D.input_date, '%Y%m%d')  = #{inputDate}
+        left join ch_story_pasture E on E.master_id = D.story_id
+        </if>
         where 1=1
-        and chr.role_id not in (1, 2) /*   관리자, 목회자 제외  */
+        and C.role_id not in (1, 2) /*   관리자, 목회자 제외  */
 
-        <if test="userId!='' and userId!=null">and cu.user_id = #{userId}</if>
+        <if test="roleId!='' and roleId!=null">and C.role_id = #{roleId}</if>
+        <if test="userId!='' and userId!=null">and A.user_id = #{userId}</if>
+        <if test="userName!='' and userName!=null">and A.user_name like concat('%', #{userName}, '%')</if>
 
-        <if test="fromDate!='' and fromDate!=null">and DATE_FORMAT(csm.input_date, '%Y%m%d')  = #{fromDate}</if>
-        <if test="toDate!='' and toDate!=null">and DATE_FORMAT(csm.input_date, '%Y%m%d')  = #{toDate}</if>
+        order by A.user_name
 
         <if test="page!=null and page!=''">LIMIT #{offset}, #{limit}</if>
     </select>
 
     <select id="findUserStoryListCnt" parameterType="net.healingchurch.story.domain.PastureStory"
             resultType="int">
+        /*  PastureStoryMapper.findUserStoryListCnt  */
         select
-          Count(*) AS cnt
-
-        from ch_user cu
-        inner join (select  	A.group_id,
-                                A.group_name,
-                                A.parent_group_id
-                                from    (select * from ch_user_group
-                                order by parent_group_id, group_id) A,
-                                (select @pv := #{groupId}) B
-                                where   (find_in_set(A.parent_group_id, @pv) > 0 OR find_in_set(group_id, @pv) > 0)
-                                and     @pv := concat(@pv, ',', A.group_id)) chg on chg.group_id = cu.group_id
-        left join ch_user_role chr on chr.role_id = cu.role_id
-        left join ch_story_master csm on csm.user_id = cu.user_id <if test="inputDate!='' and inputDate!=null">and DATE_FORMAT(csm.input_date, '%Y%m%d')  = #{inputDate}</if>
-        left join ch_story_pasture csp on csp.master_id = csm.story_id
-
+          count(A.user_id) AS cnt
+        from ch_user A
+        inner join (select  	X.group_id,
+        X.group_name,
+        X.parent_group_id
+        from    (select * from ch_user_group
+        order by parent_group_id, group_id) X,
+        (select @pv := #{groupId}) Y
+        where   (find_in_set(X.parent_group_id, @pv) > 0 OR find_in_set(group_id, @pv) > 0)
+        and     @pv := concat(@pv, ',', X.group_id)) B on B.group_id = A.group_id
+        left join ch_user_role C on C.role_id = A.role_id
+        <if test="inputDate!='' and inputDate!=null">
+            left join ch_story_master D on D.user_id = A.user_id and DATE_FORMAT(D.input_date, '%Y%m%d')  = #{inputDate}
+            left join ch_story_pasture E on E.master_id = D.story_id
+        </if>
         where 1=1
-        and chr.role_id not in (1, 2) /*   관리자, 목회자 제외  */
+        and C.role_id not in (1, 2) /*   관리자, 목회자 제외  */
 
-        <if test="userId!='' and userId!=null">and cu.user_id = #{userId}</if>
-
-        <if test="fromDate!='' and fromDate!=null">and DATE_FORMAT(csm.input_date, '%Y%m%d')  = #{fromDate}</if>
-        <if test="toDate!='' and toDate!=null">and DATE_FORMAT(csm.input_date, '%Y%m%d')  = #{toDate}</if>
+        <if test="roleId!='' and roleId!=null">and C.role_id = #{roleId}</if>
+        <if test="userId!='' and userId!=null">and A.user_id = #{userId}</if>
+        <if test="userName!='' and userName!=null">and A.user_name like concat('%', #{userName}, '%')</if>
     </select>
 </mapper>

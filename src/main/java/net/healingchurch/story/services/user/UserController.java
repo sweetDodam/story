@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("list")
-    public List<User> findUserList(@RequestParam(value = "userId", defaultValue = "") String userId,
+    public Map<Object, Object>  findUserList(@RequestParam(value = "userId", defaultValue = "") String userId,
                                    @RequestParam(value = "roleId", defaultValue = "0") int roleId,
                                    @RequestParam(value = "groupId", defaultValue = "0") int groupId,
                                    @RequestParam(value = "userName", defaultValue = "") String userName,
@@ -30,21 +31,7 @@ public class UserController {
                                    @RequestParam(value = "pastureJoinDate", defaultValue = "") String pastureJoinDate,
                                    @RequestParam(value = "page", defaultValue = "0") int page,
                                     @RequestParam(value = "limit", defaultValue = "20") int limit) {
-
         return userService.findUserList(userId, roleId, groupId, userName, isAdmin, alphaDate, pastureJoinDate, page, limit);
-    }
-
-    @GetMapping("listCnt")
-    public int findUserListCnt(Map<String, Object> model,
-                                   @RequestParam(value = "userId", defaultValue = "") String userId,
-                                   @RequestParam(value = "roleId", defaultValue = "0") int roleId,
-                                   @RequestParam(value = "groupId", defaultValue = "0") int groupId,
-                                   @RequestParam(value = "userName", defaultValue = "") String userName,
-                                   @RequestParam(value = "isAdmin", defaultValue = "false") boolean isAdmin,
-                                   @RequestParam(value = "alphaDate", defaultValue = "") String alphaDate,
-                                   @RequestParam(value = "pastureJoinDate", defaultValue = "") String pastureJoinDate) {
-
-        return userService.findUserListCnt(userId, roleId, groupId, userName, isAdmin, alphaDate, pastureJoinDate);
     }
 
     @GetMapping("get")

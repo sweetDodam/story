@@ -10,6 +10,8 @@ import java.util.List;
 public interface PastureStoryMapper {
     List<PastureStory> findStoryList(PastureStory pastorStory);
 
+    int findStoryListCnt(PastureStory pastorStory);
+
     int createStory(PastureStory pastorStory);
 
     PastureStory getStory(int storyId);

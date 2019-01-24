@@ -297,7 +297,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   height: auto;
 }
 
-.form-label-group > label {
+.form-label-group > label:not(.calendar-icon) {
   position: absolute;
   top: 0;
   left: 0;
@@ -334,7 +334,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   padding-bottom: calc(var(--input-padding-y) / 3);
 }
 
-.form-label-group input:not(:placeholder-shown) ~ label {
+.form-label-group input:not(:placeholder-shown) ~ label:not(.calendar-icon) {
   padding-top: calc(var(--input-padding-y) / 3);
   padding-bottom: calc(var(--input-padding-y) / 3);
   font-size: 12px;

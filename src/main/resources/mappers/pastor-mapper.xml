@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.healingchurch.story.services.story.pastor.PastorStoryMapper">
     <select id="findStoryList" parameterType="net.healingchurch.story.domain.PastorStory" resultType="net.healingchurch.story.domain.PastorStory">
+        /*  PastorStoryMapper.findStoryList  */
         select * from ch_story_pastor
         <where>
             <if test="pastorId!=null and pastorId!=''">pastor_id=#{pastorId}</if>
@@ -16,12 +17,14 @@
     </select>
 
     <select id="getStory" resultType="net.healingchurch.story.domain.PastorStory" parameterType="int">
+        /*  PastorStoryMapper.getStory  */
         select * from ch_story_pastor
         where pastor_id = #{value}
     </select>
 
     <insert id="createStory" parameterType="net.healingchurch.story.domain.PastorStory"
             useGeneratedKeys="true" keyProperty="storyId">
+        /*  PastorStoryMapper.createStory  */
         insert into ch_story_pastor (pastor_id, visit_user_id, visit_date, summary, prayers, etc)
         VALUES
         (
@@ -36,6 +39,7 @@
 
     <update id="updateStory" parameterType="net.healingchurch.story.domain.PastorStory"
             useGeneratedKeys="true" keyProperty="storyId">
+        /*  PastorStoryMapper.updateStory  */
         update ch_story_pastor
         set
         <if test="visitUserId!='' and visitUserId!=null">visit_user_id = #{visitUserId}</if>
@@ -48,6 +52,7 @@
     </update>
 
     <delete id="removeStory" parameterType="int">
+        /*  PastorStoryMapper.removeStory  */
         delete from ch_story_pastor
         where story_id = #{value}
     </delete>

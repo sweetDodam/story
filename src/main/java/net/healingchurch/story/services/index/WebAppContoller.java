@@ -55,6 +55,8 @@ public class WebAppContoller {
     }
 
     /*****스토리 페이지*****/
+
+    //목장 스토리 관리
     @GetMapping("/story/pasture")
     public String storyPasture(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
         //로그인한 유저의 정보
@@ -68,6 +70,7 @@ public class WebAppContoller {
         return "story_pasture";
     }
 
+    //목장 스토리 등록/수정
     @GetMapping("/story/pasture/form")
     public String storyPastureForm(Map<String, Object> model,
                                    @RequestParam(value = "userId", defaultValue = "") String userId,
@@ -91,6 +94,37 @@ public class WebAppContoller {
         model.put("formInputDate", inputDate);
 
         return "story_pasture_form";
+    }
+
+    //목장 스토리 조회
+    @GetMapping("/story/pasture/list")
+    public String storyPastureList(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
+        //로그인한 유저의 정보
+        User user = userService.getUser(userDetails.getUsername());
+        model.put("userInfo", user);
+
+        //로그인한 유저의 그룹 상세 정보
+        UserGroup formUserGroup = userGroupService.getUserGroup(user.getGroupId());
+        model.put("formUserGroup", formUserGroup);
+
+        return "story_pasture_list";
+    }
+
+    //목장 스토리 상세
+    @GetMapping("/story/pasture/detail")
+    public String storyPastureDetail(Map<String, Object> model,
+                                   @RequestParam(value = "userId", defaultValue = "") String userId,
+                                   @AuthenticationPrincipal UserDetails userDetails) {
+
+        //로그인한 유저의 정보
+        User user = userService.getUser(userDetails.getUsername());
+        model.put("userInfo", user);
+
+        //선택된 목원의 정보
+        User formUser = userService.getUser(userId);
+        model.put("formUser", formUser);
+
+        return "story_pasture_detail";
     }
 
     @GetMapping("/story/town")

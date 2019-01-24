@@ -8,6 +8,7 @@
     <form id="StoryForm" th:action="@{registFlag ? /services/story/pasture/create : /services/story/pasture/update}" method="POST">
         <input type="hidden" id="userId" name="userId" th:value="${formUser.getUserId()}"/>
         <input type="hidden" id="groupId" name="groupId" th:value="${formUser.getGroupId()}"/>
+        <input type="hidden" id="parentGroupId" name="parentGroupId" th:value="${formUser.getParentGroupId()}"/>
         <input type="hidden" id="inputDate" name="inputDate" th:value="${formInputDate}"/>
         <input type="hidden" id="storyId" name="storyId" th:value="${registFlag ? '' :formStory.getStoryId()}"/>
 
@@ -32,15 +33,15 @@
                 <div class="ch-input-row2">
                     <div class="checkbox">
                         <p class="my-2 ch-chk-label">예배 참석 여부</p>
-                        <label class="mr-1"><input type="radio" name="worshipYn" format="numToBool" value="1" th:attr="checked=${!registFlag && formStory.getWorshipYn().toString() == 'true' ? 'true' : 'false'}">예</label>
-                        <label class="mr-1"><input type="radio" name="worshipYn" format="numToBool" value="0" th:attr="checked=${registFlag || formStory.getWorshipYn().toString() == 'false' ? 'true' : 'false'}">아니오</label>
+                        <label class="mr-1"><input type="radio" name="worshipYn" format="numToBool" value="1" th:attr="checked=${!registFlag && formStory.getWorshipYn().toString() == '1' ? 'true' : 'false'}">예</label>
+                        <label class="mr-1"><input type="radio" name="worshipYn" format="numToBool" value="0" th:attr="checked=${registFlag || formStory.getWorshipYn().toString() == '0' ? 'true' : 'false'}">아니오</label>
                     </div>
                 </div>
                 <div class="ch-input-row2">
                     <p class="my-2 ch-chk-label">예배 불참 사유</p>
                     <div class="ch-group-pad-btm">
-                        <select class="form-control comCode" id="worshipReason" name="worshipReason" parentCodeId="WORSHIP_REASON" th:attr="readonly=${registFlag || formStory.getWorshipYn().toString() == 'false' ? 'false' : 'true'}
-                                                                                                                                           ,required=${registFlag || formStory.getWorshipYn().toString() == 'false' ? 'true' : 'false'}
+                        <select class="form-control comCode" id="worshipReason" name="worshipReason" parentCodeId="WORSHIP_REASON" th:attr="readonly=${registFlag || formStory.getWorshipYn().toString() == '0' ? 'false' : 'true'}
+                                                                                                                                           ,required=${registFlag || formStory.getWorshipYn().toString() == '0' ? 'true' : 'false'}
                                                                                                                                            ,selVal=${registFlag ? '' : formStory.getWorshipReason()}"></select>
                     </div>
                 </div>
@@ -51,15 +52,15 @@
                 <div class="ch-input-row2">
                     <div class="checkbox">
                         <p class="my-2 ch-chk-label">리더모임 참석 여부</p>
-                        <label class="mr-1"><input type="radio" name="leaderYn" value="1" format="numToBool" th:attr="checked=${!registFlag && formStory.getLeaderYn().toString() == 'true' ? 'true' : 'false'}">예</label>
-                        <label class="mr-1"><input type="radio" name="leaderYn" value="0" format="numToBool" th:attr="checked=${registFlag || formStory.getLeaderYn().toString() == 'false' ? 'true' : 'false'}">아니오</label>
+                        <label class="mr-1"><input type="radio" name="leaderYn" value="1" format="numToBool" th:attr="checked=${!registFlag && formStory.getLeaderYn().toString() == '1' ? 'true' : 'false'}">예</label>
+                        <label class="mr-1"><input type="radio" name="leaderYn" value="0" format="numToBool" th:attr="checked=${registFlag || formStory.getLeaderYn().toString() == '0' ? 'true' : 'false'}">아니오</label>
                     </div>
                 </div>
                 <div class="ch-input-row2">
                     <p class="my-2 ch-chk-label">리더모임 불참 사유</p>
                     <div class="ch-group-pad-btm">
-                        <select class="form-control comCode" id="leaderReason" name="leaderReason" parentCodeId="LEADER_REASON" th:attr="readonly=${registFlag || formStory.getLeaderYn().toString() == 'false' ? 'false' : 'true'}
-                                                                                                                                        ,required=${registFlag || formStory.getLeaderYn().toString() == 'false' ? 'true' : 'false'}
+                        <select class="form-control comCode" id="leaderReason" name="leaderReason" parentCodeId="LEADER_REASON" th:attr="readonly=${registFlag || formStory.getLeaderYn().toString() == '0' ? 'false' : 'true'}
+                                                                                                                                        ,required=${registFlag || formStory.getLeaderYn().toString() == '0' ? 'true' : 'false'}
                                                                                                                                         ,selVal=${registFlag ? '' : formStory.getLeaderReason()}"></select>
                     </div>
                 </div>
@@ -70,15 +71,15 @@
                 <div class="ch-input-row2">
                     <div class="checkbox">
                         <p class="my-2 ch-chk-label">금요철야 참석 여부</p>
-                        <label class="mr-1"><input type="radio" name="fridayWorshipYn" format="numToBool" value="1" th:attr="checked=${!registFlag && formStory.getFridayWorshipYn().toString() == 'true' ? 'true' : 'false'}">예</label>
-                        <label class="mr-1"><input type="radio" name="fridayWorshipYn" format="numToBool" value="0" th:attr="checked=${registFlag || formStory.getFridayWorshipYn().toString() == 'false' ? 'true' : 'false'}">아니오</label>
+                        <label class="mr-1"><input type="radio" name="fridayWorshipYn" format="numToBool" value="1" th:attr="checked=${!registFlag && formStory.getFridayWorshipYn().toString() == '1' ? 'true' : 'false'}">예</label>
+                        <label class="mr-1"><input type="radio" name="fridayWorshipYn" format="numToBool" value="0" th:attr="checked=${registFlag || formStory.getFridayWorshipYn().toString() == '0' ? 'true' : 'false'}">아니오</label>
                     </div>
                 </div>
                 <div class="ch-input-row2">
                     <div class="checkbox">
                         <p class="my-2 ch-chk-label">목장모임 참석 여부</p>
-                        <label class="mr-1"><input type="radio" name="pastureMeetYn" format="numToBool" value="1" th:attr="checked=${!registFlag && formStory.getPastureMeetYn().toString() == 'true' ? 'true' : 'false'}">예</label>
-                        <label class="mr-1"><input type="radio" name="pastureMeetYn" format="numToBool" value="0" th:attr="checked=${registFlag || formStory.getPastureMeetYn().toString() == 'false' ? 'true' : 'false'}">아니오</label>
+                        <label class="mr-1"><input type="radio" name="pastureMeetYn" format="numToBool" value="1" th:attr="checked=${!registFlag && formStory.getPastureMeetYn().toString() == '1' ? 'true' : 'false'}">예</label>
+                        <label class="mr-1"><input type="radio" name="pastureMeetYn" format="numToBool" value="0" th:attr="checked=${registFlag || formStory.getPastureMeetYn().toString() == '0' ? 'true' : 'false'}">아니오</label>
                     </div>
                 </div>
             </div>
