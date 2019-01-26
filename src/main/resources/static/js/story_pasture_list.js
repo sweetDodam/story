@@ -36,7 +36,7 @@ var storyPastureList = {
             $("#detailStoryModal .modal-content").empty();
 
             //그리드 크기 변경
-            common.resizeGridWidth('#jqGrid', '.card-body', 10);
+            //common.resizeGridWidth('#jqGrid', '.card-body', 10);
 
             e.stopImmediatePropagation();
         });
@@ -44,7 +44,7 @@ var storyPastureList = {
         //모달 닫인 후 이벤트
         $("#detailStoryModal").on('hidden.bs.modal', function(e){
             //그리드 크기 변경
-            common.resizeGridWidth('#jqGrid', '.card-body', 10);
+            //common.resizeGridWidth('#jqGrid', '.card-body', 10);
         });
         
         //모달 열린 후 이벤트
@@ -55,7 +55,7 @@ var storyPastureList = {
         //윈도우 resize 이벤트
         $(window).bind('resize', function() {
             //그리드 크기 변경
-            common.resizeGridWidth('#jqGrid', '.card-body', 10);
+            //common.resizeGridWidth('#jqGrid', '.card-body', 10);
         }).trigger('resize');
     },
     detailModalLoad : function (userId) {
@@ -102,7 +102,7 @@ var storyPastureList = {
             viewrecords: true,
             height: $("#content-wrapper").height() * 0.5,
             width: ($(".card-body").width() - 10) < 1000 ? 1000 : ($(".card-body").width() - 10),
-            autowidth: true,
+            //autowidth: true,
             pager: "#pager",
             pgbuttons: true,
             pginput : true,
@@ -211,6 +211,9 @@ var jqGridForm = {
 
         //그룹셀렉트 박스
         var selectCnt = $('.group-selectBox select').length;
+
+        //그룹ID 초기화
+        data["groupId"] = "";
 
         //최하위부터 선택괸 그룹 값 검색
         for(var i = selectCnt;i >= 1;i--){

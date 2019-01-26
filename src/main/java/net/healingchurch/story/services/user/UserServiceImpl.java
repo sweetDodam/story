@@ -31,13 +31,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setOffset((page-1)*limit);
         user.setLimit(limit);
 
-       /* user.setUserId(limit);
-        user.setGroupId(limit);
-        user.setRoleId(limit);
-        user.setUserName(limit);
-        user.setIsAdmin(limit);
-        user.setAlphaDate(limit);
-        user.setPastureJoinDate(limit);*/
+        user.setUserId(userId);
+        user.setRoleId(roleId);
+        user.setGroupId(groupId);
+        user.setUserName(userName);
+        user.setIsAdmin(isAdmin);
+        user.setAlphaDate(alphaDate);
+        user.setPastureJoinDate(pastureJoinDate);
 
         Map<Object, Object> resutMap = new HashMap<>();
 

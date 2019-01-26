@@ -54,7 +54,7 @@ var storyPasture = {
         //윈도우 resize 이벤트
         $(window).bind('resize', function() {
             //그리드 크기 변경
-            common.resizeGridWidth('#jqGrid', '.card-body', 5);
+            //common.resizeGridWidth('#jqGrid', '.card-body', 5);
         }).trigger('resize');
     },
     updatModalLoad : function (userId, storyId, inputDate) {

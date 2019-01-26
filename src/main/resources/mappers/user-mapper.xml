@@ -25,14 +25,27 @@
             ,B.group_name as group_desc
             ,C.description as role_desc
         from ch_user A
-        left join ch_user_group B on B.group_id = A.group_id
+        <choose>
+            <when test="groupId!='' and groupId!=null">
+                inner join (select  	X.group_id,
+                X.group_name,
+                X.parent_group_id
+                from    (select * from ch_user_group
+                order by parent_group_id, group_id) X,
+                (select @pv := #{groupId}) Y
+                where   (find_in_set(X.parent_group_id, @pv) > 0 OR find_in_set(group_id, @pv) > 0)
+                and     @pv := concat(@pv, ',', X.group_id)) B on B.group_id = A.group_id
+            </when>
+            <otherwise>
+                left join ch_user_group B on B.group_id = A.group_id
+            </otherwise>
+        </choose>
         left join ch_user_role C on C.role_id = A.role_id
         where 1=1
 
         <if test="userId!='' and userId!=null">and A.user_id = #{userId}</if>
-        <if test="groupId!='' and groupId!=null">and A.group_id = #{groupId}</if>
         <if test="roleId!='' and roleId!=null">and A.role_id = #{roleId}</if>
-        <if test="userName!='' and userName!=null">and A.group_id = #{userName}</if>
+        <if test="userName!='' and userName!=null">and A.user_name like concat('%', #{userName}, '%')</if>
         <if test="isAdmin!='' and isAdmin!=null">and A.is_admin = #{isAdmin} </if>
         <if test="alphaDate!='' and alphaDate!=null">and A.alpha_date = #{alphaDate}</if>
         <if test="pastureJoinDate!='' and pastureJoinDate!=null">and A.pasture_join_date = #{pastureJoinDate}</if>
@@ -49,14 +62,27 @@
         select
           count(A.user_id) AS cnt
         from ch_user A
-        left join ch_user_group B on B.group_id = A.group_id
+        <choose>
+            <when test="groupId!='' and groupId!=null">
+                inner join (select  	X.group_id,
+                X.group_name,
+                X.parent_group_id
+                from    (select * from ch_user_group
+                order by parent_group_id, group_id) X,
+                (select @pv := #{groupId}) Y
+                where   (find_in_set(X.parent_group_id, @pv) > 0 OR find_in_set(group_id, @pv) > 0)
+                and     @pv := concat(@pv, ',', X.group_id)) B on B.group_id = A.group_id
+            </when>
+            <otherwise>
+                left join ch_user_group B on B.group_id = A.group_id
+            </otherwise>
+        </choose>
         left join ch_user_role C on C.role_id = A.role_id
         where 1=1
 
         <if test="userId!='' and userId!=null">and A.user_id = #{userId}</if>
-        <if test="groupId!='' and groupId!=null">and A.group_id = #{groupId}</if>
         <if test="roleId!='' and roleId!=null">and A.role_id = #{roleId}</if>
-        <if test="userName!='' and userName!=null">and A.group_id = #{userName}</if>
+        <if test="userName!='' and userName!=null">and A.user_name like concat('%', #{userName}, '%')</if>
         <if test="isAdmin!='' and isAdmin!=null">and A.is_admin = #{isAdmin} </if>
         <if test="alphaDate!='' and alphaDate!=null">and A.alpha_date = #{alphaDate}</if>
         <if test="pastureJoinDate!='' and pastureJoinDate!=null">and A.pasture_join_date = #{pastureJoinDate}</if>

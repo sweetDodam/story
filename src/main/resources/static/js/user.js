@@ -4,18 +4,37 @@ var user = {
 
         console.log("user init");
 
+        //권한 셀렉트 박스 그리기
+        common.comCodeSelectLoad(".comCode");
+
+        //그룹 셀렉트 박스 그리기
+        _this.groupSelectLoad();
+
         //그리드 셋팅
         _this.gridLoad();
         _this.gridSearch();
 
+        //그룹 셀렉트박스 change 이벤트
+        $('#GridForm .group-selectBox select').on('change', function () {
+            var level = Number($(this).attr("group-level"));
+            var selectCnt = $('#GridForm .group-selectBox select').length;
+
+            //하위 레벨의 옵션 초기화
+            for(var i = (level + 1);i <= selectCnt;i++){
+                $('#GridForm .group-selectBox [group-level=' + i + ']').children().remove();
+            }
+
+            //값이 있는 옵션을 선택할 경우
+            if(common.dataChk($(this).val())){
+                //그룹을 가져와 그리기
+                common.childSelectGroupLoad($(this).val(), level+1, '#GridForm');
+            }
+        });
+
         //유저 정보 등록 팝업 클릭 이벤트
         $('.saveUserModalBtn').on('click', function () {
             var targetModal = $(this).attr("data-target");
-
-            $(targetModal + " .modal-content").load("/user/form", function() {
-                    userForm.init();
-                }
-            );
+            $(targetModal + " .modal-content").load("/user/form");
         });
 
         //모달 닫기 이벤트 실행시
@@ -32,12 +51,16 @@ var user = {
         //윈도우 resize 이벤트
         $(window).bind('resize', function() {
             //그리드 크기 변경
-            common.resizeGridWidth('#jqGrid', '.card-body', 5);
+       //     common.resizeGridWidth('#jqGrid', '.card-body', 5);
         }).trigger('resize');
     },
     updatModalLoad : function (userId) {
         $("#saveUserModal").modal();
         $("#saveUserModal .modal-content").load("/user/form?", "userId=" + userId);
+    },
+    groupSelectLoad : function () {
+        //그룹 셀렉트박스 최상위 그룹을 가져와 그리기
+        common.childSelectGroupLoad(-1, 1, '#GridForm');
     },
     gridLoad : function () {
         $("#jqGrid").jqGrid({
@@ -57,7 +80,8 @@ var user = {
             colModel: jqGridForm.colModel,
             viewrecords: true,
             height: $("#content-wrapper").height() * 0.5,
-            width: ($(".card-body").width() - 5) < 1000 ? 1000 : ($(".card-body").width() - 5),
+           // autowidth:true,
+            width: 1500,
             pager: "#pager",
             pgbuttons: true,
             pginput : true,
@@ -114,6 +138,18 @@ var user = {
             datatype	: "json",
             postData	: jqGridForm.setParam()
         }).trigger("reloadGrid");
+    },
+    searchClear : function () {
+        var _this = this;
+
+        //검색 조건 초기화
+        $(".ch-search-area").find("input, select").not(".notClear").val("");
+
+        //그룹 셀렉트 박스 초기화
+        $('#GridForm .group-selectBox select').children().remove();
+
+        //그룹 셀렉트 박스 그리기
+        _this.groupSelectLoad();
     }
 };
 
@@ -129,17 +165,17 @@ var formatter = {
 var jqGridForm = {
     colModel : [
 
-        { label: '아이디',				    name: 'userId',             align: 'center', width: 90 	},
-        { label: '이름',				    name: 'userName',           align: 'center', width: 100, formatter: formatter.updModal},
-        { label: '권한',				    name: 'roleDesc',           align: 'center', width: 100 },
-        { label: '소속',				    name: 'groupDesc',			align: 'center', width: 100 },
+        { label: '아이디',				    name: 'userId',             align: 'center', width: 100 	},
+        { label: '이름',				    name: 'userName',           align: 'center', width: 110, formatter: formatter.updModal},
+        { label: '권한',				    name: 'roleDesc',           align: 'center', width: 120 },
+        { label: '소속',				    name: 'groupDesc',			align: 'center', width: 120 },
         { label: '관리자여부',			    name: 'isAdmin',            align: 'center', width: 100 },
-        { label: '전화번호',			    name: 'mobile',             align: 'center', width: 140 },
-        { label: '주소',				    name: 'address',            align: 'center', width: 100 },
-        { label: '이메일',				    name: 'email',              align: 'center', width: 120 },
-        { label: '청년부 등록일',		    name: 'regDate',            align: 'center', width: 130 },
-        { label: '알파날짜',			    name: 'alphaDate',          align: 'center', width: 100 },
-        { label: '상담날짜',			    name: 'pastureJoinDate',    align: 'center', width: 100 },
+        { label: '전화번호',			    name: 'mobile',             align: 'center', width: 130 },
+        { label: '이메일',				    name: 'email',              align: 'center', width: 140 },
+        { label: '주소',				    name: 'address',            align: 'center', width: 200 },
+        { label: '청년부 등록일',		    name: 'regDate',            align: 'center', width: 110 },
+        { label: '알파날짜',			    name: 'alphaDate',          align: 'center', width: 110 },
+        { label: '상담날짜',			    name: 'pastureJoinDate',    align: 'center', width: 110 },
         { label: 'userSeq',			        name: 'userSeq',            align: 'center', width: 100, hidden: true},
         { label: '권한ID',			        name: 'roleId',             align: 'center', width: 100, hidden: true },
         { label: '소속ID',			        name: 'groupId',            align: 'center', width: 100, hidden: true },
@@ -152,6 +188,21 @@ var jqGridForm = {
 
         data["page"] = page;
         data["limit"] = $('#pager .ui-pg-selbox').val();
+
+        //그룹셀렉트 박스
+        var selectCnt = $('#GridForm .group-selectBox select').length;
+
+        //그룹ID 초기화
+        data["groupId"] = "";
+        
+        //최하위부터 선택괸 그룹 값 검색
+        for(var i = selectCnt;i >= 1;i--){
+            var selVal = $('#GridForm .group-selectBox [group-level=' + i + ']').val();
+            if(common.dataChk(selVal)){
+                data["groupId"] = selVal;
+                break;
+            }
+        }
 
         return data;
     }

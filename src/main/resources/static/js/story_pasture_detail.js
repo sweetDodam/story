@@ -23,10 +23,10 @@ var storyPastureDetail = {
         //윈도우 resize 이벤트
         $(window).bind('resize', function() {
             //그리드 크기 변경
-            common.resizeGridWidth('#jqGridPop', '.modal-body', 2);
+            //common.resizeGridWidth('#jqGridPop', '.modal-body', 2);
 
             //상세 그리드 크기 변경
-            common.resizeGridWidth('#jqGridPopDtl', '.modal-body', 2);
+            //common.resizeGridWidth('#jqGridPopDtl', '.modal-body', 2);
         }).trigger('resize');
     },
     gridLoad : function () {

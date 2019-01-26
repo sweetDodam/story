@@ -91,7 +91,7 @@ var common = {
 
         return rs;
     },
-    childSelectGroupLoad : function (parentGroupId, level) {
+    childSelectGroupLoad : function (parentGroupId, level, selector) {
         var data = {
             parentGroupId: parentGroupId
         };
@@ -105,15 +105,16 @@ var common = {
         }).done(function(result) {
 
             var len = result.length;
+            var sel = common.dataChkStr(selector) + " ";
 
             if(len > 0){
                 //빈값
-                $('.group-selectBox [group-level=' + level + ']').append("<option value=''>선택</option>");
+                $(sel + '.group-selectBox [group-level=' + level + ']').append("<option value=''>선택</option>");
             }
 
             //하위 레벨의 옵션 초기화
             for(var i = 0;i < len;i++){
-                $('.group-selectBox [group-level=' + level + ']').append("<option value='"+ result[i].groupId +"' parentGroupId='"+ result[i].parentGroupId +"'>"+ result[i].groupName +"</option>");
+                $(sel + '.group-selectBox [group-level=' + level + ']').append("<option value='"+ result[i].groupId +"' parentGroupId='"+ result[i].parentGroupId +"'>"+ result[i].groupName +"</option>");
             }
 
         }).fail(function (error) {
@@ -121,40 +122,41 @@ var common = {
             alert(error);
         });
     },
-    selectGroupLoad : function (groupId, level, parentGroupId, readOnly) {
+    selectGroupLoad : function (groupId, level, parentGroupId, readOnly, selector) {
+        var sel = common.dataChkStr(selector) + " ";
+
         //자신의 그룹을 가져와 그리기
-        common.childSelectGroupLoad(parentGroupId, level);
+        common.childSelectGroupLoad(parentGroupId, level, selector);
 
         //옵션 선택
-        $('.group-selectBox [group-level=' + level + ']').children("[value=" + groupId + "]").attr("selected", true);
+        $(sel + '.group-selectBox [group-level=' + level + ']').children("[value=" + groupId + "]").attr("selected", true);
 
         if(readOnly) {
             //선택 불가능하게
-            $('.group-selectBox [group-level=' + level + ']').attr("readonly", true);
+            $(sel + '.group-selectBox [group-level=' + level + ']').attr("readonly", true);
         }
 
         //상위 셀렉트박스 그리기
         for(var i = (level-1);i >= 1;i--){
-            var tmpPGroupId = $('.group-selectBox [group-level=' + (i+1) + ']').children("[selected=selected]").attr("parentGroupId");
+            var tmpPGroupId = $(sel + '.group-selectBox [group-level=' + (i+1) + ']').children("[selected=selected]").attr("parentGroupId");
             //그룹 그리기
             var data = common.groupData(tmpPGroupId);
 
-
-            common.childSelectGroupLoad(data.parentGroupId, i);
+            common.childSelectGroupLoad(data.parentGroupId, i, selector);
 
             //옵션 선택
-            $('.group-selectBox [group-level=' + i + ']').children("[value=" + data.groupId + "]").attr("selected", true);
+            $(sel + '.group-selectBox [group-level=' + i + ']').children("[value=" + data.groupId + "]").attr("selected", true);
 
             if(readOnly) {
                 //선택 불가능하게
-                $('.group-selectBox [group-level=' + i + ']').attr("readonly", true);
+                $(sel + '.group-selectBox [group-level=' + i + ']').attr("readonly", true);
             }
         }
 
         //하위 셀렉트박스 그리기
-        if($('.group-selectBox [group-level=' + (level+1) + ']').length > 0){
+        if($(sel + '.group-selectBox [group-level=' + (level+1) + ']').length > 0){
             //그룹 그리기
-            common.childSelectGroupLoad(groupId, level+1);
+            common.childSelectGroupLoad(groupId, level+1, selector);
         }
     },
     numberTypeChk: function (item) {
