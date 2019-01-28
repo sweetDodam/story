@@ -14,5 +14,7 @@ public interface UserService {
 
     int updateUser(String userId, String password, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String regDate, String alphaDate, String pastureJoinDate, String status);
 
+    Map<Object, Object> updateUserPassword(String userId, String password);
+
     void removeUser(String userId);
 }

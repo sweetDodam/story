@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,11 +42,19 @@ public class WebAppContoller {
     @Autowired
     private PastureStoryService pastureStoryService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping("/")
     public String home(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
+
+        //초기비밀번호라면
+        if(passwordEncoder.matches("1111", user.getPassword())){
+            return "password";
+        }
 
         model.put("message", "샬롬!");
         model.put("title", "Chyou Web Story");

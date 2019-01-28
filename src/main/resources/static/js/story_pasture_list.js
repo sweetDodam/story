@@ -49,7 +49,9 @@ var storyPastureList = {
         
         //모달 열린 후 이벤트
         $("#detailStoryModal").on('shown.bs.modal', function(e){
-            storyPastureDetail.init();
+            setTimeout(function() {
+                storyPastureDetail.init();
+            }, 100);
         });
         
         //윈도우 resize 이벤트
@@ -157,7 +159,8 @@ var storyPastureList = {
 
         $("#jqGrid").setGridParam({
             datatype	: "json",
-            postData	: jqGridForm.setParam()
+            postData	: jqGridForm.setParam(),
+            page        : 1
         }).trigger("reloadGrid");
     },
     searchClear : function () {

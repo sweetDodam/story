@@ -48,7 +48,9 @@ var storyPasture = {
 
         //모달 열린 후 이벤트
         $("#saveStoryModal").on('shown.bs.modal', function(e){
-            storyPastureForm.init();
+            setTimeout(function() {
+                storyPastureForm.init();
+            }, 100);
         });
 
         //윈도우 resize 이벤트
@@ -155,7 +157,8 @@ var storyPasture = {
 
         $("#jqGrid").setGridParam({
             datatype	: "json",
-            postData	: jqGridForm.setParam()
+            postData	: jqGridForm.setParam(),
+            page        : 1
         }).trigger("reloadGrid");
     },
     datePickerLoad : function () {

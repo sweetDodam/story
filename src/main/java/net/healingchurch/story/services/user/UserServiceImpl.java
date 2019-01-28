@@ -10,10 +10,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -98,7 +97,29 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setAlphaDate(alphaDate);
         user.setPastureJoinDate(pastureJoinDate);
         user.setStatus(status);
+
         return userMapper.updateUser(user);
+    }
+
+    @Override
+    public Map<Object, Object> updateUserPassword(String userId, String password) {
+        //비밀번호 유효성 체크
+        Map<Object, Object> resutMap = passwordChk(userId, password);
+
+        //유효하다면 비밀번호 변경
+        if("success".equals(resutMap.get("result").toString())){
+            User user = new User();
+
+            user.setUserId(userId);
+            user.setPassword(passwordEncoder.encode(password));
+
+            userMapper.updateUser(user);
+        }else{
+
+        }
+
+
+        return resutMap;
     }
 
     @Override
@@ -117,5 +138,28 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getUserId(),user.getPassword(), grantedAuthorities);
     }
 
+    public  Map<Object, Object> passwordChk(String userId, String password){
+        Map<Object, Object> resutMap = new HashMap<>();
 
+        String result = "success";
+        String msg = "변경되었습니다.";
+        String location = "/";
+
+        if(password.contains(" ")) {
+            result = "fail";
+            msg = "비밀번호에 공백을 넣을 수 없습니다.";
+        }
+
+        String pattern = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,}$";
+        if(!Pattern.matches(pattern, password)){
+            result = "fail";
+            msg = "비밀번호는 8자리이상이고 숫자, 문자, 특수문자가 포함되어야합니다.";
+        }
+
+        resutMap.put("result", result);
+        resutMap.put("msg", msg);
+        resutMap.put("location", location);
+
+        return resutMap;
+    }
 }

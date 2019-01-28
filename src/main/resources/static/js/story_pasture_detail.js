@@ -122,7 +122,8 @@ var storyPastureDetail = {
 
         $("#jqGridPop").setGridParam({
             datatype	: "json",
-            postData	: jqGridPopForm.setParam()
+            postData	: jqGridPopForm.setParam(),
+            page        : 1
         }).trigger("reloadGrid");
     },
     searchClear : function () {

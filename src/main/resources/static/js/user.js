@@ -45,7 +45,9 @@ var user = {
 
         //모달 열린 후 이벤트
         $("#saveUserModal").on('shown.bs.modal', function(e){
-            userForm.init();
+            setTimeout(function() {
+                userForm.init();
+            }, 100);
         });
 
         //윈도우 resize 이벤트
@@ -133,10 +135,10 @@ var user = {
     },
     gridSearch : function(){
         page = 1;
-
         $("#jqGrid").setGridParam({
             datatype	: "json",
-            postData	: jqGridForm.setParam()
+            postData	: jqGridForm.setParam(),
+            page        : 1
         }).trigger("reloadGrid");
     },
     searchClear : function () {
@@ -159,6 +161,12 @@ var formatter = {
         if(common.dataChk(rowObject)){
             return "<a href='javascript:void(0);' onclick='user.updatModalLoad(\""+ options.userId +"\")'>"+ cellValue +"</a>";
         }
+    },isFormatter : function(cellValue,rowObject,options){
+        if(cellValue){
+            return "예";
+        }else{
+            return "아니오";
+        }
     }
 };
 
@@ -169,7 +177,7 @@ var jqGridForm = {
         { label: '이름',				    name: 'userName',           align: 'center', width: 110, formatter: formatter.updModal},
         { label: '권한',				    name: 'roleDesc',           align: 'center', width: 120 },
         { label: '소속',				    name: 'groupDesc',			align: 'center', width: 120 },
-        { label: '관리자여부',			    name: 'isAdmin',            align: 'center', width: 100 },
+        { label: '관리자여부',			    name: 'isAdmin',            align: 'center', width: 100, formatter: formatter.isFormatter},
         { label: '전화번호',			    name: 'mobile',             align: 'center', width: 130 },
         { label: '이메일',				    name: 'email',              align: 'center', width: 140 },
         { label: '주소',				    name: 'address',            align: 'center', width: 200 },

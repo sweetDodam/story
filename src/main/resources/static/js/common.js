@@ -3,6 +3,26 @@ var common = {
         var _this = this;
         _this.load();
 
+        window.onbeforeunload = function(e){
+            if(e != null && e != undefined){
+                $('#loadingArea').show(); //로딩바를 보여준다.
+            }
+        };
+
+        //모달 열릴 때 이벤트
+        $(document).on('show.bs.modal', '.modal:not(#logoutModal)', function(e){
+            $('#loadingArea').show(); //첫 시작시 로딩바를 숨겨준다.
+        });
+
+        //모달 열린 후 이벤트
+        $(document).on('shown.bs.modal','.modal:not(#logoutModal)', function(e){
+            setTimeout(function() {
+                $('#loadingArea').hide(); //첫 시작시 로딩바를 숨겨준다.
+            }, 200);
+        });
+        $(document).ready(function(){
+           $('#loadingArea').hide(); //첫 시작시 로딩바를 숨겨준다.
+        });
     },
     //공통 화면 로드
     load : function () {
@@ -268,6 +288,6 @@ var common = {
     },
     unComma: function(str){
         return str.toString().replace(/,/gi, "");
-    },
+    }
 };
 common.init();

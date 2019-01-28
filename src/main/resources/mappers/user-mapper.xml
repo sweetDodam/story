@@ -164,20 +164,20 @@
             useGeneratedKeys="true" keyProperty="userId">
         /*  UserMapper.updateUser  */
         update ch_user
-        set
-        user_name = #{userName}
-        <if test="password!='' and password!=null">, password = #{password}</if>
-        <if test="roleId!='' and roleId!=null">, role_id = #{roleId}</if>
-        <if test="groupId!='' and groupId!=null">, group_id = #{groupId}</if>
-        <if test="isAdmin!='' and isAdmin!=null">, is_admin = #{isAdmin} </if>
-        <if test="address!='' and address!=null">, address = #{address} </if>
-        <if test="mobile!='' and mobile!=null">, mobile = #{mobile} </if>
-        <if test="email!='' and email!=null">, email = #{email} </if>
-        <if test="regDate!='' and regDate!=null">, reg_date = #{regDate}</if>
-        <if test="alphaDate!='' and alphaDate!=null">, alpha_date = #{alphaDate}</if>
-        <if test="pastureJoinDate!='' and pastureJoinDate!=null">, pasture_join_date = #{pastureJoinDate}</if>
-        <if test="isPermission!='' and isPermission!=null">, is_permission = #{isPermission} </if>
-        <if test="status!='' and status!=null">, status = #{status}</if>
+        <set>
+            <if test="userName!='' and userName!=null">user_name = #{userName},</if>
+            <if test="password!='' and password!=null">password = #{password},</if>
+            <if test="roleId!='' and roleId!=null">role_id = #{roleId},</if>
+            <if test="groupId!='' and groupId!=null">group_id = #{groupId},</if>
+            <if test="isAdmin!='' and isAdmin!=null">is_admin = #{isAdmin},</if>
+            <if test="address!='' and address!=null">address = #{address},</if>
+            <if test="mobile!='' and mobile!=null">mobile = #{mobile},</if>
+            <if test="email!='' and email!=null">email = #{email},</if>
+            <if test="alphaDate!='' and alphaDate!=null">alpha_date = #{alphaDate},</if>
+            <if test="pastureJoinDate!='' and pastureJoinDate!=null">pasture_join_date = #{pastureJoinDate},</if>
+            <if test="isPermission!='' and isPermission!=null">is_permission = #{isPermission},</if>
+            <if test="status!='' and status!=null">status = #{status},</if>
+        </set>
         where user_id = #{userId}
     </update>
 

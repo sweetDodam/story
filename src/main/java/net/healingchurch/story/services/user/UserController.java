@@ -73,6 +73,12 @@ public class UserController {
         return userService.updateUser(userId, password, roleId, groupId, userName, isAdmin, address, mobile, email, regDate, alphaDate, pastureJoinDate, status);
     }
 
+    @PostMapping("passwordUpdate")
+    public Map<Object, Object> updateUserPassword(@RequestParam(value = "userId", defaultValue = "") String userId,
+                          @RequestParam(value = "password", defaultValue = "") String password){
+        return userService.updateUserPassword(userId, password);
+    }
+
     @PostMapping("remove")
     public int removeUser(
             @RequestParam(value = "userId", required = true, defaultValue = "") String userId) {

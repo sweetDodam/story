@@ -16,8 +16,13 @@ var menu = {
                 return;
             }
 
+            $('#loadingArea').show(); //로딩바를 보여준다.
+
             var url = $(this).attr("importUrl");
-            $("#import-page-area").load(url);  //선택된 화면 로드
+            $("#import-page-area").load(url, function(){
+                $('#loadingArea').hide(); //로딩바를 보여준다.
+            });  //선택된 화면 로드
+
         });
 
         //클릭 이벤트
