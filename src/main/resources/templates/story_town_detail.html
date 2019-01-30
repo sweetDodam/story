@@ -1,0 +1,49 @@
+<div class="modal-header" th:with="registFlag=${(formStory == null || formStory.getStoryId() == '') ? true : false}">
+    <h5 class="modal-title" id="saveUserLabel" >마을 스토리 상세</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form id="GridPopForm" th:action="@{/services/story/pasture/create}" method="POST">
+        <input type="hidden" id="userId" name="userId" th:value="${formUser.getUserId()}"/>
+        <input type="hidden" id="groupId" name="groupId" th:value="${formUser.getGroupId()}"/>
+        <div class="ch-search-area ch-group-pad-btm">
+            <div class="form-row">
+                <div class="form-label-group ch-mgn-5r">
+                    <input type="text" class="form-control notClear" id="disUserName" th:value="${formUser.getUserName()}" readonly>
+                    <label for="disUserName">이름</label>
+                </div>
+                <div class="form-label-group ch-mgn-5r">
+                    <input type="text" class="form-control notClear" id="disRoleDesc" th:value="${formUser.getRoleDesc()}" readonly>
+                    <label for="disRoleDesc">아이디</label>
+                </div>
+                <div class="form-label-group ch-mgn-5r">
+                    <input type="text" id="fromDate" name="fromDate" class="form-control datePicker fromDate notClear" readonly>
+                    <label class="calendar-icon" target="fromDate"></label>
+                </div>
+                <div class="form-label-group ch-mgn-5r">
+                    <input type="text" id="toDate" name="toDate" class="form-control datePicker toDate notClear" readonly>
+                    <label class="calendar-icon" target="toDate"></label>
+                </div>
+                <div class="btn-modal-right ch-mgn-10r">
+                    <a class="btn btn-primary bg-ch-blue txt-ch-white txt-ch-size-middle ch-mgn-5r" onclick="storyTownDetail.gridSearch();">조회</a>
+                    <a class="btn btn-primary bg-ch-blue txt-ch-white txt-ch-size-middle ch-mgn-10r" onclick="storyTownDetail.searchClear()">초기화</a>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive ch-group-pad-btm" >
+            <table id="jqGridPop" class="table table-bordered"></table>
+            <div id="pagerPop"></div>
+        </div>
+
+        <div class="table-responsive">
+            <table id="jqGridPopDtl" class="table table-bordered"></table>
+        </div>
+    </form>
+    <div class="modal-footer">
+        <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="$('#detailStoryModal .close').trigger('click');">닫기</a>
+    </div>
+</div>
+
+<script src="../../js/story_town_detail.js"></script>

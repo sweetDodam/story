@@ -1,0 +1,75 @@
+<div class="modal-header" th:with="registFlag=${(formEvent == null || formEvent.getEventId() == '') ? true : false}">
+    <h5 class="modal-title" id="saveUserLabel" th:text="${registFlag ? '마을스토리 등록' : '마을스토리 수정'}">마을스토리 등록</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" th:with="registFlag=${(formEvent == null || formEvent.getEventId() == '') ? true : false}, role=${userInfo.getRoleId()}">
+    <form id="StoryForm" th:action="@{/services/story/town/update}" method="POST">
+        <input type="hidden" name="userName" th:value="${userInfo.getUserName()}"/>
+        <input type="hidden" name="groupId" th:value="${formUser.getParentGroupId()}"/>
+        <input type="hidden" id="formInputDate" name="formInputDate" th:value="${formInputDate}"/>
+        <input type="hidden" id="eventId" name="eventId" th:value="${registFlag ? '' : formEvent.getEventId()}"/>
+        <input type="hidden" id="storyId" name="storyId" />
+
+        <div class="ch-search-area ch-group-pad-btm">
+            <div class="form-row">
+                <div class="form-label-group ch-mgn-5r">
+                    <input type="text" class="form-control notClear" id="disUserName" th:value="${formUser.getUserName()}" readonly>
+                    <label for="disUserName">이름</label>
+                </div>
+                <div class="form-label-group ch-mgn-5r">
+                    <input type="text" class="form-control notClear" id="disRoleDesc" th:value="${formUser.getRoleDesc()}" readonly>
+                    <label for="disRoleDesc">그룹</label>
+                </div>
+                <div class="form-label-group ch-mgn-5r">
+                    <input type="text" id="inputDatePop" name="inputDatePop" class="form-control datePicker dis notClear" readonly>
+                    <label class="calendar-icon dis" target="inputDatePop"></label>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive ch-group-pad-btm" >
+            <table id="jqGridPop" class="table table-bordered"></table>
+        </div>
+
+        <div class="table-responsive ch-group-pad-btm ch-txt-align-c">
+            <table class="careTable">
+                <tr class="careTitle">
+                    <td rowspan="2" style="width: 10%;"><spam id="userName">-</spam><br><p>목자</p></td>
+                    <td><p>목자 영적돌봄</p></td>
+                    <td><p>목장 영적돌봄</p></td>
+                    <td rowspan="2" style="width: 5%;">
+                        <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="storyTownForm.save(true);">저장</a>
+                        <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="storyTownForm.delete(true);" th:if="${role <= 2 && role != 0}">삭제</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <textarea class="form-control" id="leaderCareStory" name="leaderCareStory" style="height:90px;"></textarea>
+                    </td>
+                    <td>
+                        <textarea class="form-control" id="pastureCareStory" name="pastureCareStory" style="height:90px;"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="table-responsive ch-group-pad-btm ch-txt-align-c">
+            <table class="careTable">
+                <tr class="careTitle">
+                    <td><p>마을동정</p></td>
+                    <td rowspan="2" style="width: 5%;">
+                        <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="storyTownForm.save(false);">저장</a>
+                        <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="storyTownForm.delete(false);" th:if="${role <= 2 && role != 0}">삭제</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <textarea class="form-control" id="eventContent" name="eventContent" th:text="${registFlag ? '' : formEvent.getEventContent()}" style="height:90px;"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</div>
+
+<script src="../../js/story_town_form.js"></script>

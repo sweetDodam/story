@@ -1,0 +1,59 @@
+<div class="col-md-12" th:with="groupFlag=${(formUserGroup == null || formUserGroup.getGroupId() == '') ? false : true}">
+    <div class="card mb-5">
+        <div class="card-header">
+            <i class="fas fa-table mr-1"></i>마을 스토리 등록
+        </div>
+        <div class="card-body" >
+            <form id="GridForm">
+                <input type="hidden" id="formGroupId" name="groupId" th:value="${groupFlag ? formUserGroup.getGroupId() : ''}"/>
+                <input type="hidden" id="formParentGroupId" th:value="${groupFlag ? formUserGroup.getParentGroupId() : ''}"/>
+                <input type="hidden" id="formLevel" th:value="${groupFlag ? formUserGroup.getGroupLevel() : ''}"/>
+                <input type="hidden" id="formRoleId" th:value="${userInfo.getRoleId()}"/>
+                <div class="form-group group-selectBox ch-max-width750">
+                    <p class="my-2">소속 그룹</p>
+                    <div class="form-row">
+                        <div class="col-md-3 ch-group-pad-btm">
+                            <select class="form-control" group-level="1"></select>
+                        </div>
+                        <div class="col-md-3 ch-group-pad-btm">
+                            <select class="form-control" group-level="2"></select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="inputDate" name="inputDate" class="form-control datePicker" readonly>
+                            <label class="calendar-icon" target="inputDate"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive" >
+                    <table id="jqGrid" class="table table-bordered"></table>
+                    <div id="pager"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 사용자 추가/수정 모달 영역 -->
+<div class="modal fade" id="saveStoryModal" tabindex="-1" role="dialog" aria-labelledby="saveUserLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content height100p" style="min-width: 900px;">
+            <!-- 모달 데이터 영역 -->
+        </div>
+    </div>
+</div>
+
+<!-- jqGid CSS -->
+<link rel="stylesheet" th:href="@{/css/ui.jqgrid-bootstrap.css}" href="../../css/ui.jqgrid-bootstrap.css">
+
+<!-- bootsrap DatePicker CSS -->
+<link rel="stylesheet" th:href="@{/css/bootstrap-datepicker3.css}" href="../../css/bootstrap-datepicker3.css">
+
+<!-- jqGid Script -->
+<script src="../../js/grid.locale-kr.js"></script>
+<script src="../../js/jquery.jqGrid.js"></script>
+
+<!-- bootsrap DatePicker Script -->
+<script src="../../js/bootstrap-datepicker.js"></script>
+<script src="../../js/bootstrap-datepicker.kr.min.js"></script>
+
+<script src="../../js/story_town.js"></script>
