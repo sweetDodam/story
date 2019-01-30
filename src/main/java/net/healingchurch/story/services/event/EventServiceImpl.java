@@ -33,7 +33,10 @@ public class EventServiceImpl implements EventService {
         event.setEventContent(eventContent);
         event.setWriter(writer);
         event.setEventDate(eventDate);
-        return eventMapper.createEvent(event);
+
+        eventMapper.createEvent(event);
+
+        return event.getEventId();
     }
 
     @Override
@@ -60,4 +63,16 @@ public class EventServiceImpl implements EventService {
         eventMapper.removeEvent(storyId);
     }
 
+
+    @Override
+    //@PreAuthorize("hasAnyRole('ROLE_TOWN_MANAGER', 'ROLE_PASTER')")
+    public Event getEventByGroup(int groupId, String eventDate) {
+        Event event = new Event();
+
+        event.setGroupId(groupId);
+        event.setEventDate(eventDate);
+
+        return eventMapper.getEventByGroup(event);
+
+    }
 }

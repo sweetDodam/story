@@ -6,7 +6,9 @@ public class TownStory extends Story {
     private int townStroyId;
     private int masterId;
     private String leaderCareStory;
-    private String townCareStroy;
+    private String pastureCareStory;
+    private String eventId;
+    private int userCnt;
 
     public TownStory() {
     }
@@ -35,12 +37,28 @@ public class TownStory extends Story {
         this.leaderCareStory = leaderCareStory;
     }
 
-    public String getTownCareStroy() {
-        return townCareStroy;
+    public String getPastureCareStory() {
+        return pastureCareStory;
     }
 
-    public void setTownCareStroy(String townCareStroy) {
-        this.townCareStroy = townCareStroy;
+    public void setPastureCareStory(String pastureCareStory) {
+        this.pastureCareStory = pastureCareStory;
+    }
+
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
+
+    public int getUserCnt() {
+        return userCnt;
+    }
+
+    public void setUserCnt(int userCnt) {
+        this.userCnt = userCnt;
     }
 
     @Override
@@ -64,7 +82,9 @@ public class TownStory extends Story {
                 "townStroyId=" + townStroyId +
                 "masterId=" + masterId +
                 ", leaderCareStory='" + leaderCareStory + '\'' +
-                ", townCareStroy='" + townCareStroy + '\'' +
+                ", pastureCareStory='" + pastureCareStory + '\'' +
+                ", eventId='" + eventId + '\'' +
+                ", userCnt='" + userCnt + '\'' +
                 '}';
     }
 }

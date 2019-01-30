@@ -169,6 +169,10 @@ label.calendar-icon {
     cursor: pointer;
 }
 
+label.calendar-icon.dis {
+    cursor: auto;
+}
+
 .form-label-group label.calendar-icon {
     top: 10px;
 }
@@ -179,7 +183,7 @@ label.calendar-icon {
     width: 155px !important;
 }
 
-.datePicker[readonly]{
+.datePicker[readonly]:not(.dis){
     background-color: #FFFFFF !important;
 }
 
@@ -304,4 +308,40 @@ div.ui-jqgrid-hdiv td, div.ui-jqgrid-hdiv th{
     background: #1b1e21;
     opacity: 0.6;
     z-index: 2000;
+}
+
+.ch-txt-align-c{
+    text-align: center !important;
+}
+
+.careTable{
+    width: 100%;
+    border: 1px solid #dee2e6;
+    margin-top: 2px;
+}
+
+.careTitle {
+    background-color: #FAFAFA;
+    font-weight: bold;
+    height: 38px;
+}
+
+.careTitle td{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 1px solid #dee2e6;
+}
+
+.careTitle td p{
+    margin: 0px;
+}
+
+.selectRow {
+    background-color: #a8c8d8;
+}
+
+.careTable a.btn{
+    padding: 5px;
+    font-size: 10pt;
+    margin: 2px;
 }

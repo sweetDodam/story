@@ -14,4 +14,6 @@ public interface EventService {
     int updateEvent(int eventId, int groupId, String eventContent, String writer, String eventDate);
 
     void removeEvent(int eventId);
+
+    Event getEventByGroup(int groupId, String eventDate);
 }

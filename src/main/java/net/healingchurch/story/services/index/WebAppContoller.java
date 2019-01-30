@@ -1,11 +1,8 @@
 package net.healingchurch.story.services.index;
 
-import net.healingchurch.story.domain.User;
-import net.healingchurch.story.domain.UserGroup;
-import net.healingchurch.story.domain.PastorStory;
-import net.healingchurch.story.domain.TownStory;
-import net.healingchurch.story.domain.PastureStory;
+import net.healingchurch.story.domain.*;
 
+import net.healingchurch.story.services.event.EventService;
 import net.healingchurch.story.services.user.UserService;
 import net.healingchurch.story.services.user.group.UserGroupService;
 import net.healingchurch.story.services.story.pastor.PastorStoryService;
@@ -41,6 +38,9 @@ public class WebAppContoller {
 
     @Autowired
     private PastureStoryService pastureStoryService;
+
+    @Autowired
+    private EventService eventService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -136,8 +136,53 @@ public class WebAppContoller {
         return "story_pasture_detail";
     }
 
+    //마을 스토리 관리
     @GetMapping("/story/town")
     public String storyTown(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
+        //로그인한 유저의 정보
+        User user = userService.getUser(userDetails.getUsername());
+        model.put("userInfo", user);
+
+        //로그인한 유저의 마을 그룹 상세 정보
+        UserGroup formUserGroup = userGroupService.getUserGroup(user.getParentGroupId());
+        model.put("formUserGroup", formUserGroup);
+
+        return "story_town";
+    }
+
+    //마을 스토리 등록/수정
+    @GetMapping("/story/town/form")
+    public String storyTownForm(Map<String, Object> model,
+                                @RequestParam(value = "userId", defaultValue = "") String userId,
+                                @RequestParam(value = "groupId", defaultValue = "0") int groupId,
+                                @RequestParam(value = "eventId", defaultValue = "0") int eventId,
+                                @RequestParam(value = "inputDate", defaultValue = "") String inputDate,
+                                @AuthenticationPrincipal UserDetails userDetails) {
+
+        //로그인한 유저의 정보
+        User user = userService.getUser(userDetails.getUsername());
+        model.put("userInfo", user);
+
+        //마을 목자 유저의 정보
+        User formUser = userService.getUser(userId);
+        model.put("formUser", formUser);
+
+        //마을 동정 정보
+        Event event = eventService.getEvent(eventId);
+        model.put("formEvent", event);
+
+        //선택한 그룹 아이디
+        model.put("formGroupId", groupId);
+
+        //선택한 스토리 날짜
+        model.put("formInputDate", inputDate);
+
+        return "story_town_form";
+    }
+
+    //마을 스토리 조회
+    @GetMapping("/story/town/list")
+    public String storyTownList(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
@@ -146,21 +191,24 @@ public class WebAppContoller {
         UserGroup formUserGroup = userGroupService.getUserGroup(user.getGroupId());
         model.put("formUserGroup", formUserGroup);
 
-        return "story_town";
+        return "story_town_list";
     }
 
-    @GetMapping("/story/town/form")
-    public String storyTownForm(Map<String, Object> model, @RequestParam(value = "storyId", defaultValue = "") int storyId, @AuthenticationPrincipal UserDetails userDetails) {
+    //마을 스토리 상세
+    @GetMapping("/story/town/detail")
+    public String storyTownDetail(Map<String, Object> model,
+                                     @RequestParam(value = "userId", defaultValue = "") String userId,
+                                     @AuthenticationPrincipal UserDetails userDetails) {
 
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
 
-        //선택된 목장의 스토리 정보
-        TownStory formStory = townStoryService.getStory(storyId);
-        model.put("formStory", formStory);
+        //선택된 목장의 정보
+        User formUser = userService.getUser(userId);
+        model.put("formUser", formUser);
 
-        return "story_town_form";
+        return "story_town_detail";
     }
 
     @GetMapping("/story/pastor")

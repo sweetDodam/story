@@ -1,10 +1,14 @@
 package net.healingchurch.story.services.story.town;
 
+import net.healingchurch.story.domain.Event;
+import net.healingchurch.story.domain.PastureStory;
 import net.healingchurch.story.domain.TownStory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("townStoryService")
 public class TownStoryServiceImpl implements TownStoryService {
@@ -12,15 +16,18 @@ public class TownStoryServiceImpl implements TownStoryService {
     private TownStoryMapper townStoryMapper;
 
     @Override
-    public List<TownStory> findStoryList(int groupId, String fromDate, String toDate, int page, int limit) {
+    public Map<Object, Object> findStoryList(int groupId, String inputDate) {
         TownStory townStory = new TownStory();
-        townStory.setFromDate(fromDate);
-        townStory.setToDate(toDate);
+
         townStory.setGroupId(groupId);
-        townStory.setPage(page);
-        townStory.setOffset((page-1)*limit);
-        townStory.setLimit(limit);
-        return townStoryMapper.findStoryList(townStory);
+        townStory.setInputDate(inputDate);
+
+        Map<Object, Object> resutMap = new HashMap<>();
+
+        //데이터
+        resutMap.put("rows", townStoryMapper.findStoryList(townStory));
+
+        return resutMap;
     }
 
     @Override
@@ -61,14 +68,12 @@ public class TownStoryServiceImpl implements TownStoryService {
 
     @Override
     //@PreAuthorize("hasAnyRole('ROLE_TOWN_MANAGER')")
-    public int updateStory(int storyId, String userId, int groupId, String leaderCareStory, String townCareStroy) {
+    public int updateStory(int storyId, String leaderCareStory, String pastureCareStory) {
         TownStory townStory = new TownStory();
 
         townStory.setStoryId(storyId);
-        townStory.setUserId(userId);
-        townStory.setGroupId(groupId);
         townStory.setLeaderCareStory(leaderCareStory);
-        townStory.setTownCareStroy(townCareStroy);
+        townStory.setPastureCareStory(pastureCareStory);
 
         return townStoryMapper.updateStory(townStory);
     }
@@ -78,4 +83,32 @@ public class TownStoryServiceImpl implements TownStoryService {
         townStoryMapper.removeStory(storyId);
     }
 
+    @Override
+    public Map<Object, Object> findUserStoryList(String userId, int groupId, int roleId, String userName, String inputDate, int page, int limit) {
+        TownStory townStory = new TownStory();
+
+        townStory.setPage(page);
+        townStory.setOffset((page-1)*limit);
+        townStory.setLimit(limit);
+
+        townStory.setUserId(userId);
+        townStory.setGroupId(groupId);
+        townStory.setRoleId(roleId);
+        townStory.setUserName(userName);
+        townStory.setInputDate(inputDate);
+
+        Map<Object, Object> resutMap = new HashMap<>();
+
+        //데이터
+        resutMap.put("rows", townStoryMapper.findUserStoryList(townStory));
+
+        //전체 갯수
+        int records = townStoryMapper.findUserStoryListCnt(townStory);
+        resutMap.put("records", records);
+
+        //페이지 수
+        resutMap.put("total", (int)Math.ceil((double)records/(double)limit));
+
+        return resutMap;
+    }
 }

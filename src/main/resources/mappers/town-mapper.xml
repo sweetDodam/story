@@ -4,20 +4,39 @@
     <select id="findStoryList" parameterType="net.healingchurch.story.domain.TownStory" resultType="net.healingchurch.story.domain.TownStory">
         /*  TownStoryMapper.findStoryList  */
         select
-        A.*,
-        B.leader_care_story, B.town_care_stroy, B.town_story_id
-        from ch_story_master A
-        inner join ch_story_town B
-        on A.story_id = B.master_id
-        <where>
-            <if test="groupId!=null and groupId!=''">group_id=#{groupId}</if>
-            <if test="fromDate!=null and fromDate!=''">
-                and CAST(update_date AS CHARACTER)<![CDATA[ >= ]]> CONCAT( #{fromDate}, ' 00:00:00')
-            </if>
-            <if test="toDate!=null and toDate!=''">
-                and CAST(update_date AS CHARACTER)<![CDATA[ <= ]]> CONCAT( #{toDate}, ' 23:59:59')
-            </if>
-        </where>
+             A.user_name
+            ,A.group_id
+            ,B.parent_group_id
+            ,C.story_id
+            ,C.user_id
+            ,C.group_id
+            ,FN_DATE_FORMAT(C.input_date) as input_date
+            ,C.worship_yn
+            ,C.leader_yn
+            ,C.pasture_meet_yn
+            ,C.bible_count
+            ,C.qt_count
+            ,C.friday_worship_yn
+            ,C.dawn_pray_count
+            ,C.etc
+            ,FN_DATE_FORMAT(C.create_date) as create_date
+            ,FN_DATE_FORMAT(C.update_date) as update_date
+            ,D.*
+            ,count(E.user_id) as user_cnt
+
+        from ch_user A
+        left join ch_user_group B on B.group_id = A.group_id
+        left join ch_story_master C on C.user_id = A.group_id and DATE_FORMAT(C.input_date, '%Y%m%d') = #{inputDate}
+        left join ch_story_town D on C.story_id = D.master_id
+        left join ch_user E  on E.group_id = A.group_id
+
+        where 1=1
+        and A.role_id = 4
+        and B.parent_group_id = #{groupId}
+
+        group by A.group_id
+        order by A.user_name
+
         <if test="page!=null and page!=''">LIMIT #{offset}, #{limit}</if>
     </select>
 
@@ -25,7 +44,7 @@
         /*  TownStoryMapper.getStory  */
         select
         A.*,
-        B.leader_care_story, B.town_care_stroy, B.town_story_id
+        B.leader_care_story, B.pasture_care_story, B.town_story_id
         from ch_story_master A
         inner join ch_story_town B
         on A.story_id = B.master_id
@@ -36,7 +55,7 @@
         /*  TownStoryMapper.getStoryByGroup  */
         select
         A.*,
-        B.leader_care_story, B.town_care_stroy, B.town_story_id
+        B.leader_care_story, B.pasture_care_story, B.town_story_id
         from ch_story_master A
         inner join ch_story_town B
         on A.story_id = B.master_id
@@ -71,7 +90,7 @@
         and DATE_FORMAT(A.input_date, '%Y%m%d')  = #{inputDate};
 
         insert into ch_story_town
-        (master_id, leader_care_story, town_care_stroy)
+        (master_id, leader_care_story, pasture_care_story)
         VALUES
         (
             (select MAX(story_id) from ch_story_master),
@@ -117,8 +136,10 @@
         /*  TownStoryMapper.updateStory  */
         update ch_story_town
         set
-        <if test="leaderYn!='' and leaderYn!=null">leader_care_story = #{leaderYn}</if>
-        <if test="prayers!='' and prayers!=null">, town_care_stroy = #{masterId}</if>
+
+        leader_care_story = #{leaderCareStory},
+        pasture_care_story = #{pastureCareStory}
+
         where master_id = #{storyId};
     </update>
 
@@ -130,4 +151,79 @@
         delete from ch_story_town
         where master_id = #{value};
     </delete>
+
+    <select id="findUserStoryList" parameterType="net.healingchurch.story.domain.TownStory"
+            resultType="net.healingchurch.story.domain.TownStory">
+        /*  TownStoryMapper.findUserStoryList  */
+        select
+        A.user_seq
+        ,A.user_id
+        ,A.role_id
+        ,#{groupId} AS group_id
+        ,A.user_name
+        ,A.is_admin
+        ,A.birth_date
+        ,A.address
+        ,A.mobile
+        ,A.email
+        ,A.reg_date
+        ,A.alpha_date
+        ,A.pasture_join_date
+        ,A.status
+        ,A.is_permission
+        ,B.group_name as group_desc
+        ,C.description as role_desc
+        <if test="inputDate!='' and inputDate!=null">
+            ,D.event_id
+        </if>
+        from ch_user A
+        inner join (select  	X.group_id,
+        X.group_name,
+        X.parent_group_id
+        from    (select * from ch_user_group
+        order by parent_group_id, group_id) X,
+        (select @pv := #{groupId}) Y
+        where   (find_in_set(X.parent_group_id, @pv) > 0 OR find_in_set(group_id, @pv) > 0)
+        and     @pv := concat(@pv, ',', X.group_id)) B on B.group_id = A.group_id
+        left join ch_user_role C on C.role_id = A.role_id
+        <if test="inputDate!='' and inputDate!=null">
+            left join ch_event D on D.group_id = B.parent_group_id and DATE_FORMAT(D.event_date, '%Y%m%d')  = #{inputDate}
+        </if>
+        where 1=1
+
+        and C.role_id = 3   /*   마을 목자만  */
+
+        <if test="userId!='' and userId!=null">and A.user_id = #{userId}</if>
+        <if test="userName!='' and userName!=null">and A.user_name like concat('%', #{userName}, '%')</if>
+
+        order by A.user_name
+
+        <if test="page!=null and page!=''">LIMIT #{offset}, #{limit}</if>
+    </select>
+
+    <select id="findUserStoryListCnt" parameterType="net.healingchurch.story.domain.TownStory"
+            resultType="int">
+        /*  TownStoryMapper.findUserStoryListCnt  */
+        select
+        count(A.user_id) AS cnt
+        from ch_user A
+        inner join (select  	X.group_id,
+        X.group_name,
+        X.parent_group_id
+        from    (select * from ch_user_group
+        order by parent_group_id, group_id) X,
+        (select @pv := #{groupId}) Y
+        where   (find_in_set(X.parent_group_id, @pv) > 0 OR find_in_set(group_id, @pv) > 0)
+        and     @pv := concat(@pv, ',', X.group_id)) B on B.group_id = A.group_id
+        left join ch_user_role C on C.role_id = A.role_id
+        <if test="inputDate!='' and inputDate!=null">
+            left join ch_event D on D.group_id = B.parent_group_id and DATE_FORMAT(D.event_date, '%Y%m%d')  = #{inputDate}
+        </if>
+        where 1=1
+
+        and C.role_id = 3   /*   마을 목자만  */
+
+        <if test="userId!='' and userId!=null">and A.user_id = #{userId}</if>
+        <if test="userName!='' and userName!=null">and A.user_name like concat('%', #{userName}, '%')</if>
+    </select>
 </mapper>

@@ -20,4 +20,8 @@ public interface TownStoryMapper {
     int updateStory(TownStory townStory);
 
     void removeStory(int storyId);
+
+    List<TownStory> findUserStoryList(TownStory townStory);
+
+    int findUserStoryListCnt(TownStory townStory);
 }

@@ -16,4 +16,6 @@ public interface EventMapper {
     int updateEvent(Event event);
 
     void removeEvent(int eventId);
+
+    Event getEventByGroup(Event event);
 }

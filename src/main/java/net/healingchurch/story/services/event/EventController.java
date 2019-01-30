@@ -59,4 +59,20 @@ public class EventController {
         return 1;
     }
 
+    @PostMapping("createUpdate")
+    public int createUpdateEvent(
+            @RequestParam(value = "eventId", defaultValue = "0") int eventId,
+            @RequestParam(value = "groupId", defaultValue = "0") int groupId,
+            @RequestParam(value = "userName", defaultValue = "0") String userName,
+            @RequestParam(value = "inputDate", defaultValue = "") String inputDate,
+            @RequestParam(value = "eventContent", defaultValue = "") String eventContent
+    ) throws Exception {
+        if(eventId == 0){
+            eventId = eventService.createEvent(groupId, eventContent, userName, inputDate);
+        }else{
+            eventService.updateEvent(eventId, groupId, eventContent, userName, inputDate);
+        }
+
+        return eventId;
+    }
 }

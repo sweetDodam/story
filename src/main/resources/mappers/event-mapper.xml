@@ -31,7 +31,7 @@
             #{groupId},
             #{eventContent},
             #{writer},
-            #{eventDate}
+            STR_TO_DATE(#{eventDate}, '%Y%m%d')
         )
     </insert>
 
@@ -40,10 +40,8 @@
         /*  EventMapper.updateEvent  */
         update ch_event
         set
-        <if test="eventContent!='' and eventContent!=null">event_content = #{eventContent}</if>
-        <if test="groupId!='' and groupId!=null">, group_id = #{groupId}</if>
-        <if test="writer!='' and writer!=null">, writer = #{writer} </if>
-        <if test="eventDate!='' and eventDate!=null">, event_date = #{eventDate} </if>
+          event_content = #{eventContent}
+        , writer = #{writer}
         where event_id = #{eventId}
     </update>
 
@@ -52,4 +50,11 @@
         delete from ch_event
         where event_id = #{value}
     </delete>
+
+    <select id="getEventByGroup" resultType="net.healingchurch.story.domain.Event" parameterType="net.healingchurch.story.domain.Event">
+        /*  EventMapper.getEventByGroup  */
+        select * from ch_event
+        where event_date = #{eventDate}
+        and group_id = #{groupId}
+    </select>
 </mapper>

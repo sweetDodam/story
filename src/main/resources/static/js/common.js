@@ -62,6 +62,21 @@ var common = {
 
         return true;
     },
+    //값 넣기
+    dataSet : function (object, value) {
+        if($(object).length > 0) {
+            var tag = ($(object).prop('tagName')).toUpperCase();
+            value = common.dataChkStr(value);
+
+            if (tag == "INPUT" || tag == "SELECT") {
+                $(object).val(value);
+            }else if(tag == "TEXTAREA" ){
+                $(object).val(value);
+            } else {
+                $(object).text(value);
+            }
+        }
+    },
     serializeObject : function(form) {
         var obj = null;
         try {
