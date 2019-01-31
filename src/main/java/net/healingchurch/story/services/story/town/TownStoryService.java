@@ -14,6 +14,8 @@ public interface TownStoryService {
 
     void townStorySum(String groupId, int parentGroupId, String inputDate);
 
+    int createStory(int storyId, String leaderCareStory, String pastureCareStory);
+
     int updateStory(int storyId, String leaderCareStory, String pastureCareStory);
 
     void removeStory(int storyId);

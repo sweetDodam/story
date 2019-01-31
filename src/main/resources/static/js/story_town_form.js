@@ -94,13 +94,32 @@ var storyTownForm = {
         var data = $("#jqGridPop").getRowData(rowId);
 
         for(var obj in data){
-            if(obj == "storyId" || obj == "leaderCareStory" || obj == "pastureCareStory" || obj == "userName"){
+            if(obj == "storyId" || obj == "townStoryId" || obj == "leaderCareStory" || obj == "pastureCareStory" || obj == "userName"){
                 common.dataSet($("#" + obj), data[obj]);
             }
         }
     },
     save : function (careFlag) {
         var _this = this;
+        var url = "/services/story/town/createUpdate";
+        var txt = "저장";
+
+
+        //영적돌봄 저장이라면
+        if(careFlag){
+            $(".careRequired").attr("required", true);
+            $(".eventRequired").attr("required", false);
+
+            if($("#storyId").val() == ''){
+                alert("저장할 목자를 선택해주세요.");
+                return;
+            }
+        }else{
+            url = "/services/event/createUpdate";
+
+            $(".careRequired").attr("required", false);
+            $(".eventRequired").attr("required", true);
+        }
 
         //필수체크 검사
         if(!common.formChk($("#StoryForm"))){
@@ -112,16 +131,8 @@ var storyTownForm = {
 
         formData.append("inputDate", $("#formInputDate").val());
 
-        var url = "/services/story/town/update";
-        var txt = "저장";
-
         if(!confirm(txt + "하시겠습니까?")){
             return;
-        }
-
-        //이벤트 저장이라면
-        if(!careFlag){
-            url = "/services/event/createUpdate";
         }
 
         $.ajax({
@@ -131,7 +142,7 @@ var storyTownForm = {
             contentType: false,
             cache : false,
             data : formData
-        }).done(function(eventId) {
+        }).done(function(resultId) {
             alert(txt + '되었습니다.');
 
             //부모 그리드 재조회
@@ -140,9 +151,11 @@ var storyTownForm = {
             //그리드 재조회
             _this.gridSearch();
 
-            //이벤트 저장이라면
-            if(!careFlag){
-                $("#eventId").val(eventId);
+            //영적돌봄 저장이라면
+            if(careFlag){
+                $("#townStoryId").val(resultId);
+            }else{
+                $("#eventId").val(resultId);
             }
 
         }).fail(function (error) {
@@ -152,20 +165,27 @@ var storyTownForm = {
     },
     delete : function (careFlag) {
         var _this = this;
-
+        var url = "/services/story/town/remove";
+        var txt = "삭제";
         var form = $("#StoryForm")[0];
         var formData = new FormData(form);
 
-        var url = "/services/story/town/remove";
-        var txt = "삭제";
+        //영적돌봄 삭제라면
+        if(careFlag){
+            if($("#storyId").val() == ''){
+                alert("삭제할 목자를 선택해주세요.");
+                return;
+            }
+        }else{
+            if($("#eventId").val() == ''){
+                alert("삭제할 이벤트가 없습니다.");
+                return;
+            }
+            url = "/services/event/remove";
+        }
 
         if(!confirm(txt + "하시겠습니까?")){
             return;
-        }
-
-        //이벤트 삭제라면
-        if(!careFlag){
-            url = "/services/event/remove";
         }
 
         $.ajax({
@@ -184,13 +204,16 @@ var storyTownForm = {
             //그리드 재조회
             _this.gridSearch();
 
-            //이벤트 삭제라면
-            if(!careFlag){
+            //영적돌봄 삭제라면
+            if(careFlag){
+                $("#townStoryId").val('');
+                $("#leaderCareStory").val('');
+                $("#pastureCareStory").val('');
+            }else{
                 $("#eventId").val('');
                 $("#eventContent").val('');
-            }else{
-                $("#storyId").val('');
             }
+
         }).fail(function (error) {
             console.debug(txt + "실패");
             alert(error);
@@ -202,7 +225,7 @@ var popFormatter = {
     dtlModal : function(cellValue,rowObject,options){
         //등록된 스토리가 있는 경우
         if (common.dataChk(options.storyId)) {
-            if (common.dataChk(options.leaderCareStory) || common.dataChk(options.pastureCareStory)) {
+            if (common.dataChk(options.townStoryId)) {
                 return "<a href='javascript:void(0);' " +
                     "onclick='storyTownForm.setGridDtlData("+ rowObject.rowId +")'>등록</a>";
             }else{
@@ -248,16 +271,17 @@ var jqGridPopForm = {
         { label: 'QT',    			        name: 'qtCount',          	align: 'center', width: 100,    formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'qtCount',          summaryType:'sum'},
         { label: '새벽기도',    		    name: 'dawnPrayCount',   	align: 'center', width: 100,    formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'dawnPrayCount',    summaryType:'sum'},
         { label: '영적돌봄',       		    name: 'dtl',               	align: 'center', width: 100, 	formatter: popFormatter.dtlModal},
-        { label: '목자영적돌봄',            name: 'leaderCareStory',    align: 'center', width: 100,	hidden: true	},
-        { label: '목장영적돌봄',            name: 'pastureCareStory',   align: 'center', width: 100,	hidden: true	},
-        { label: '기타사항',                name: 'etc',            	align: 'center', width: 100,	hidden: true	},
-        { label: '아이디',      		    name: 'userId',             align: 'center', width: 75,		hidden: true	},
-        { label: '마을동정아이디',      	name: 'eventId',            align: 'center', width: 75,	    hidden: true	},
-        { label: '스토리아이디', 		    name: 'storyId',         	align: 'center', width: 90, 	hidden: true 	},
-        { label: '권한ID',      		    name: 'roleId',             align: 'center', width: 100, 	hidden: true 	},
-        { label: '소속ID',      		    name: 'groupId',            align: 'center', width: 100, 	hidden: true 	},
-        { label: '등록일',       		    name: 'createDate',         align: 'center', width: 100, 	hidden: true 	},
-        { label: '수정일',       		    name: 'updateDate',        	align: 'center', width: 100, 	hidden: true 	}]
+        { label: '목자영적돌봄',            name: 'leaderCareStory',    hidden: true	},
+        { label: '목장영적돌봄',            name: 'pastureCareStory',   hidden: true	},
+        { label: '기타사항',                name: 'etc',            	hidden: true	},
+        { label: '아이디',      		    name: 'userId',             hidden: true	},
+        { label: '마을동정아이디',      	name: 'eventId',            hidden: true	},
+        { label: '스토리아이디', 		    name: 'storyId',         	hidden: true 	},
+        { label: '마을스토리아이디',        name: 'townStoryId',        hidden: true 	},
+        { label: '권한ID',      		    name: 'roleId',             hidden: true 	},
+        { label: '소속ID',      		    name: 'groupId',            hidden: true 	},
+        { label: '등록일',       		    name: 'createDate',         hidden: true 	},
+        { label: '수정일',       		    name: 'updateDate',        	hidden: true 	}]
     ,setParam : function(){
         var data = common.serializeObject($("#StoryForm"));
 

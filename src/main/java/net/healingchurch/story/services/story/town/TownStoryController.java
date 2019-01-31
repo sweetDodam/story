@@ -19,9 +19,6 @@ public class TownStoryController {
     @Autowired
     private TownStoryService townStoryService;
 
-    @Autowired
-    private EventService eventService;
-
     @GetMapping("list")
     public Map<Object, Object> findStoryList(
             @RequestParam(value = "groupId", required = true, defaultValue = "") int groupId,
@@ -35,18 +32,21 @@ public class TownStoryController {
         return townStoryService.getStory(storyId);
     }
 
-    @PostMapping("update")
+    @PostMapping("createUpdate")
     public int updateStory(
             @RequestParam(value = "storyId", defaultValue = "0") int storyId,
+            @RequestParam(value = "townStoryId", defaultValue = "0") int townStoryId,
             @RequestParam(value = "leaderCareStory", defaultValue = "") String leaderCareStory,
-            @RequestParam(value = "pastureCareStory", defaultValue = "") String pastureCareStory,
-            @RequestParam(value = "eventId", defaultValue = "0") int eventId,
-            @RequestParam(value = "groupId", defaultValue = "0") int groupId,
-            @RequestParam(value = "userName", defaultValue = "0") String userName,
-            @RequestParam(value = "inputDate", defaultValue = "") String inputDate,
-            @RequestParam(value = "eventContent", defaultValue = "") String eventContent
+            @RequestParam(value = "pastureCareStory", defaultValue = "") String pastureCareStory
     ) throws Exception {
-        return townStoryService.updateStory(storyId, leaderCareStory, pastureCareStory);
+
+        if(townStoryId == 0){
+            townStoryId = townStoryService.createStory(storyId, leaderCareStory, pastureCareStory);
+        }else{
+            townStoryService.updateStory(storyId, leaderCareStory, pastureCareStory);
+        }
+
+        return townStoryId;
     }
 
     @PostMapping("remove")

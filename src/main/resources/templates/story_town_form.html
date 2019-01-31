@@ -11,6 +11,7 @@
         <input type="hidden" id="formInputDate" name="formInputDate" th:value="${formInputDate}"/>
         <input type="hidden" id="eventId" name="eventId" th:value="${registFlag ? '' : formEvent.getEventId()}"/>
         <input type="hidden" id="storyId" name="storyId" />
+        <input type="hidden" id="townStoryId" name="townStoryId" />
 
         <div class="ch-search-area ch-group-pad-btm">
             <div class="form-row">
@@ -45,10 +46,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <textarea class="form-control" id="leaderCareStory" name="leaderCareStory" style="height:90px;"></textarea>
+                        <textarea class="form-control careRequired" id="leaderCareStory" name="leaderCareStory" style="height:90px;"></textarea>
                     </td>
                     <td>
-                        <textarea class="form-control" id="pastureCareStory" name="pastureCareStory" style="height:90px;"></textarea>
+                        <textarea class="form-control careRequired" id="pastureCareStory" name="pastureCareStory" style="height:90px;"></textarea>
                     </td>
                 </tr>
             </table>
@@ -64,7 +65,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <textarea class="form-control" id="eventContent" name="eventContent" th:text="${registFlag ? '' : formEvent.getEventContent()}" style="height:90px;"></textarea>
+                        <textarea class="form-control eventRequired" id="eventContent" name="eventContent" th:text="${registFlag ? '' : formEvent.getEventContent()}" style="height:90px;"></textarea>
                     </td>
                 </tr>
             </table>

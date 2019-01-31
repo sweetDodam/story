@@ -59,11 +59,25 @@ public class TownStoryServiceImpl implements TownStoryService {
             townStory.setInputDate(inputDate);
 
             //마을 스토리 합계 입력
-            townStoryMapper.createStory(townStory);
+            townStoryMapper.createStorySum(townStory);
         }else{
             //마을 스토리 합계 수정
             townStoryMapper.updateStorySum(townStory);
         }
+    }
+
+    @Override
+    //@PreAuthorize("hasAnyRole('ROLE_TOWN_MANAGER')")
+    public int createStory(int storyId, String leaderCareStory, String pastureCareStory) {
+        TownStory townStory = new TownStory();
+
+        townStory.setStoryId(storyId);
+        townStory.setLeaderCareStory(leaderCareStory);
+        townStory.setPastureCareStory(pastureCareStory);
+
+        townStoryMapper.createStory(townStory);
+
+        return townStory.getTownStoryId();
     }
 
     @Override

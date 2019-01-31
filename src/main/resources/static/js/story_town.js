@@ -50,7 +50,7 @@ var storyTown = {
         $("#saveStoryModal").on('shown.bs.modal', function(e){
             setTimeout(function() {
                 storyTownForm.init();
-            }, 100);
+            }, 300);
         });
 
         //윈도우 resize 이벤트
@@ -190,7 +190,7 @@ var formatter = {
     },
     registFlag : function(cellValue,rowObject,options){
         if(common.dataChk(rowObject)){
-            if(common.dataChkStr(options.eventId)){
+            if(common.dataChkStr(options.townStoryId)){
                 return "등록";
             }
             return "미등록";
@@ -201,25 +201,27 @@ var formatter = {
 var jqGridForm = {
     colModel : [
         { label: '아이디',			name: 'userId',             align: 'center', width: 45},
-        { label: '이름',        	name: 'userName',           align: 'center', width: 70,	formatter: formatter.updModal},
+        { label: '이름',        	name: 'userName',           align: 'center', width: 70,     formatter: formatter.updModal},
         { label: '등록여부',    	name: 'registFlag',			align: 'center', width: 55, 	formatter: formatter.registFlag},
         { label: '전화번호',    	name: 'mobile',             align: 'center', width: 100 	},
         { label: '이메일',      	name: 'email',              align: 'center', width: 120 	},
         { label: '청년부 등록일',	name: 'regDate',            align: 'center', width: 130 	},
         { label: '알파날짜',    	name: 'alphaDate',          align: 'center', width: 100 	},
         { label: '상담날짜',    	name: 'pastureJoinDate',    align: 'center', width: 100 	},
-        { label: 'userSeq',		    name: 'userSeq',            align: 'center', width: 100, 	hidden: true},
-        { label: '스토리아이디', 	name: 'storyId',			align: 'center', width: 90, 	hidden: true },
-        { label: '권한',        	name: 'roleDesc',           align: 'center', width: 100, 	hidden: true },
-        { label: '권한ID',      	name: 'roleId',             align: 'center', width: 100, 	hidden: true },
-        { label: '소속',        	name: 'groupDesc',			align: 'center', width: 100, 	hidden: true },
-        { label: '소속ID',      	name: 'groupId',            align: 'center', width: 100, 	hidden: true },
-        { label: '관리자여부',   	name: 'isAdmin',            align: 'center', width: 100, 	hidden: true },
-        { label: '주소',        	name: 'address',            align: 'center', width: 165, 	hidden: true },
-        { label: '스토리날짜',  	name: 'inputDate',          align: 'center', width: 100, 	hidden: true },
-        { label: '상태',        	name: 'status',             align: 'center', width: 100, 	hidden: true },
-        { label: '등록일',       	name: 'createDate',         align: 'center', width: 100, 	hidden: true },
-        { label: '수정일',       	name: 'updateDate',         align: 'center', width: 100, 	hidden: true }]
+        { label: 'userSeq',		    name: 'userSeq',            hidden: true},
+        { label: '스토리아이디', 	name: 'storyId',			hidden: true },
+        { label: '마을스토리아이디',name: 'townStoryId',		hidden: true },
+        { label: '마을동정아이디',  name: 'eventId',		    hidden: true },
+        { label: '권한',        	name: 'roleDesc',           hidden: true },
+        { label: '권한ID',      	name: 'roleId',             hidden: true },
+        { label: '소속ID',      	name: 'groupId',            hidden: true },
+        { label: '관리자여부',   	name: 'isAdmin',            hidden: true },
+        { label: '주소',        	name: 'address',            hidden: true },
+        { label: '스토리날짜',  	name: 'inputDate',          hidden: true },
+        { label: '상태',        	name: 'status',             hidden: true },
+        { label: '등록일',       	name: 'createDate',         hidden: true },
+        { label: '수정일',       	name: 'updateDate',         hidden: true }]
+
     ,setParam : function(){
         var data = common.serializeObject($("#GridForm"));
 

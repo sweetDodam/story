@@ -50,7 +50,7 @@ var storyPasture = {
         $("#saveStoryModal").on('shown.bs.modal', function(e){
             setTimeout(function() {
                 storyPastureForm.init();
-            }, 100);
+            }, 300);
         });
 
         //윈도우 resize 이벤트

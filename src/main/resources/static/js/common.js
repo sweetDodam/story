@@ -18,7 +18,7 @@ var common = {
         $(document).on('shown.bs.modal','.modal:not(#logoutModal)', function(e){
             setTimeout(function() {
                 $('#loadingArea').hide(); //첫 시작시 로딩바를 숨겨준다.
-            }, 200);
+            }, 400);
         });
         $(document).ready(function(){
            $('#loadingArea').hide(); //첫 시작시 로딩바를 숨겨준다.
@@ -51,7 +51,7 @@ var common = {
         for(var i = 0;i < required.length;i++){
             var tag = ($(required[i]).prop('tagName')).toUpperCase();
 
-            if(tag == "INPUT" || tag == "SELECT"){
+            if(tag == "INPUT" || tag == "SELECT" || tag == "TEXTAREA"){
                 if(!common.dataChk($(required[i]).val())){
                     alert("필수 입력 사항입니다.");
                     $(required[i]).focus();
@@ -73,7 +73,7 @@ var common = {
             }else if(tag == "TEXTAREA" ){
                 $(object).val(value);
             } else {
-                $(object).text(value);
+                $(object).text(value);3
             }
         }
     },

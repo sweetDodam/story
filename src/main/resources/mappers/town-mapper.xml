@@ -54,20 +54,17 @@
     <select id="getStoryByGroup" resultType="net.healingchurch.story.domain.TownStory" parameterType="net.healingchurch.story.domain.TownStory">
         /*  TownStoryMapper.getStoryByGroup  */
         select
-        A.*,
-        B.leader_care_story, B.pasture_care_story, B.town_story_id
+        A.*
         from ch_story_master A
-        inner join ch_story_town B
-        on A.story_id = B.master_id
         where A.group_id = #{groupId}
         and A.user_id = #{userId}
         and A.input_date = #{inputDate}
 
     </select>
 
-    <insert id="createStory" parameterType="net.healingchurch.story.domain.TownStory"
+    <insert id="createStorySum" parameterType="net.healingchurch.story.domain.TownStory"
             useGeneratedKeys="true" keyProperty="storyId">
-        /*  TownStoryMapper.createStory  */
+        /*  TownStoryMapper.createStorySum  */
         insert into ch_story_master
         (user_id, group_id, worship_yn, leader_yn, pasture_meet_yn, bible_count,
         qt_count, friday_worship_yn, dawn_pray_count, etc, input_date, create_date)
@@ -88,14 +85,18 @@
         inner join ch_story_pasture B on A.story_id = B.master_id
         where A.group_id = #{userId}
         and DATE_FORMAT(A.input_date, '%Y%m%d')  = #{inputDate};
+    </insert>
 
+    <insert id="createStory" parameterType="net.healingchurch.story.domain.TownStory"
+            useGeneratedKeys="true" keyProperty="townStoryId">
+        /*  TownStoryMapper.createStory  */
         insert into ch_story_town
         (master_id, leader_care_story, pasture_care_story)
         VALUES
         (
-            (select MAX(story_id) from ch_story_master),
-            null,
-            null
+            #{storyId},
+            #{leaderCareStory},
+            #{pastureCareStory}
         );
     </insert>
 
@@ -145,9 +146,6 @@
 
     <delete id="removeStory" parameterType="int">
         /*  TownStoryMapper.removeStory  */
-        delete from ch_story_master
-        where story_id = #{value};
-
         delete from ch_story_town
         where master_id = #{value};
     </delete>
@@ -159,7 +157,7 @@
         A.user_seq
         ,A.user_id
         ,A.role_id
-        ,#{groupId} AS group_id
+        ,B.parent_group_id AS group_id
         ,A.user_name
         ,A.is_admin
         ,A.birth_date
@@ -175,6 +173,7 @@
         ,C.description as role_desc
         <if test="inputDate!='' and inputDate!=null">
             ,D.event_id
+            ,E.town_story_id
         </if>
         from ch_user A
         inner join (select  	X.group_id,
@@ -188,6 +187,13 @@
         left join ch_user_role C on C.role_id = A.role_id
         <if test="inputDate!='' and inputDate!=null">
             left join ch_event D on D.group_id = B.parent_group_id and DATE_FORMAT(D.event_date, '%Y%m%d')  = #{inputDate}
+            left join (select
+                             X.group_id
+                            ,Y.town_story_id
+                        from ch_story_master X
+                        inner join ch_story_town Y on X.story_id = Y.master_id
+                        where DATE_FORMAT(X.input_date, '%Y%m%d') = #{inputDate}
+                        GROUP BY X.group_id) E on E.group_id = B.parent_group_id
         </if>
         where 1=1
 
@@ -218,6 +224,13 @@
         left join ch_user_role C on C.role_id = A.role_id
         <if test="inputDate!='' and inputDate!=null">
             left join ch_event D on D.group_id = B.parent_group_id and DATE_FORMAT(D.event_date, '%Y%m%d')  = #{inputDate}
+            left join (select
+                             X.group_id
+                            ,Y.town_story_id
+                        from ch_story_master X
+                        inner join ch_story_town Y on X.story_id = Y.master_id
+                        where DATE_FORMAT(X.input_date, '%Y%m%d') = #{inputDate}
+                        GROUP BY X.group_id) E on E.group_id = B.parent_group_id
         </if>
         where 1=1
 

@@ -3,7 +3,7 @@ package net.healingchurch.story.domain;
 import java.util.Objects;
 
 public class TownStory extends Story {
-    private int townStroyId;
+    private int townStoryId;
     private int masterId;
     private String leaderCareStory;
     private String pastureCareStory;
@@ -13,12 +13,12 @@ public class TownStory extends Story {
     public TownStory() {
     }
 
-    public int getTownStroyId() {
-        return townStroyId;
+    public int getTownStoryId() {
+        return townStoryId;
     }
 
-    public void setTownStroyId(int townStroyId) {
-        this.townStroyId = townStroyId;
+    public void setTownStoryId(int townStoryId) {
+        this.townStoryId = townStoryId;
     }
 
     public int getMasterId() {
@@ -67,19 +67,19 @@ public class TownStory extends Story {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         TownStory townStory = (TownStory) o;
-        return townStroyId == townStory.townStroyId &&
+        return townStoryId == townStory.townStoryId &&
                 masterId == townStory.masterId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), townStroyId, masterId);
+        return Objects.hash(super.hashCode(), townStoryId, masterId);
     }
 
     @Override
     public String toString() {
         return "TownStory{" +
-                "townStroyId=" + townStroyId +
+                "townStoryId=" + townStoryId +
                 "masterId=" + masterId +
                 ", leaderCareStory='" + leaderCareStory + '\'' +
                 ", pastureCareStory='" + pastureCareStory + '\'' +
