@@ -177,8 +177,9 @@ var jqGridForm = {
         { label: '이름',				    name: 'userName',           align: 'center', width: 110, formatter: formatter.updModal},
         { label: '권한',				    name: 'roleDesc',           align: 'center', width: 120 },
         { label: '소속',				    name: 'groupDesc',			align: 'center', width: 120 },
-        { label: '관리자여부',			    name: 'isAdmin',            align: 'center', width: 100, formatter: formatter.isFormatter},
+        { label: '시스템 관리자',           name: 'isAdmin',            align: 'center', width: 100, formatter: formatter.isFormatter},
         { label: '전화번호',			    name: 'mobile',             align: 'center', width: 130 },
+        { label: '개인정보<br>동의 여부',   name: 'isPermission',		align: 'center', width: 90, formatter: formatter.isFormatter},
         { label: '이메일',				    name: 'email',              align: 'center', width: 140 },
         { label: '주소',				    name: 'address',            align: 'center', width: 200 },
         { label: '청년부 등록일',		    name: 'regDate',            align: 'center', width: 110 },
@@ -189,8 +190,7 @@ var jqGridForm = {
         { label: '소속ID',			        name: 'groupId',            align: 'center', width: 100, hidden: true },
         { label: '상태',				    name: 'status',             align: 'center', width: 100, hidden: true },
         { label: '등록일',				    name: 'createDate',         align: 'center', width: 100, hidden: true },
-        { label: '수정일',				    name: 'update_Date',        align: 'center', width: 100, hidden: true },
-        { label: '개인정보 동의서 여부',	name: 'isPermission',		align: 'center', width: 100, hidden: true }]
+        { label: '수정일',				    name: 'update_Date',        align: 'center', width: 100, hidden: true }]
     ,setParam : function(){
         var data = common.serializeObject($("#GridForm"));
 

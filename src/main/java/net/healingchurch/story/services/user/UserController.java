@@ -52,8 +52,9 @@ public class UserController {
                             @RequestParam(value = "regDate", defaultValue = "") String regDate,
                             @RequestParam(value = "alphaDate", defaultValue = "") String alphaDate,
                             @RequestParam(value = "pastureJoinDate", defaultValue = "") String pastureJoinDate,
+                            @RequestParam(value = "isPermission", defaultValue = "false") boolean isPermission,
                             @RequestParam(value = "status", defaultValue = "") String status){
-        return userService.createUser(userId, password, roleId, groupId, userName, isAdmin, address, mobile, email, regDate, alphaDate, pastureJoinDate, status);
+        return userService.createUser(userId, password, roleId, groupId, userName, isAdmin, address, mobile, email, regDate, alphaDate, pastureJoinDate, isPermission, status);
     }
 
     @PostMapping("update")
@@ -69,8 +70,9 @@ public class UserController {
                           @RequestParam(value = "regDate", defaultValue = "") String regDate,
                           @RequestParam(value = "alphaDate", defaultValue = "") String alphaDate,
                           @RequestParam(value = "pastureJoinDate", defaultValue = "") String pastureJoinDate,
+                          @RequestParam(value = "isPermission", defaultValue = "false") boolean isPermission,
                           @RequestParam(value = "status", defaultValue = "") String status){
-        return userService.updateUser(userId, password, roleId, groupId, userName, isAdmin, address, mobile, email, regDate, alphaDate, pastureJoinDate, status);
+        return userService.updateUser(userId, password, roleId, groupId, userName, isAdmin, address, mobile, email, regDate, alphaDate, pastureJoinDate, isPermission, status);
     }
 
     @PostMapping("passwordUpdate")

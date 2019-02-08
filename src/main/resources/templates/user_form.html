@@ -76,10 +76,23 @@
             <label class="mr-4"><input type="radio" name="roleId" format="num" value="5" th:attr="checked=${registFlag || formUser.getRoleId() == 5 ? 'true' : 'false'}">목원</label>
         </div>
         <br>
-        <div class="checkbox">
-            <p class="my-2 ch-chk-label">시스템 관리자 여부</p>
-            <label class="mr-4"><input type="radio" name="isAdmin" format="numToBool" value="1" th:attr="checked=${!registFlag && formUser.getIsAdmin().toString() == 'true' ? 'true' : 'false'}">예</label>
-            <label class="mr-4"><input type="radio" name="isAdmin" format="numToBool" value="0" th:attr="checked=${registFlag || formUser.getIsAdmin().toString() == 'false' ? 'true' : 'false'}">아니오</label>
+        <div class="form-group">
+            <div class="form-row">
+                <div class="ch-input-row2">
+                    <div class="checkbox">
+                        <p class="my-2 ch-chk-label">시스템 관리자 여부</p>
+                        <label class="mr-4"><input type="radio" name="isAdmin" format="numToBool" value="1" th:attr="checked=${!registFlag && formUser.getIsAdmin().toString() == 'true' ? 'true' : 'false'}">예</label>
+                        <label class="mr-4"><input type="radio" name="isAdmin" format="numToBool" value="0" th:attr="checked=${registFlag || formUser.getIsAdmin().toString() == 'false' ? 'true' : 'false'}">아니오</label>
+                    </div>
+                </div>
+                <div class="ch-input-row2">
+                    <div class="checkbox">
+                        <p class="my-2 ch-chk-label">개인정보 동의 여부</p>
+                        <label class="mr-4"><input type="radio" name="isPermission" format="numToBool" value="1" th:attr="checked=${!registFlag && formUser.getIsPermission().toString() == 'true' ? 'true' : 'false'}">예</label>
+                        <label class="mr-4"><input type="radio" name="isPermission" format="numToBool" value="0" th:attr="checked=${registFlag || formUser.getIsPermission().toString() == 'false' ? 'true' : 'false'}">아니오</label>
+                    </div>
+                </div>
+            </div>
         </div>
         <br>
     </form>

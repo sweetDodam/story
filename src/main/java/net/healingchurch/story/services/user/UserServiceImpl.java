@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public int createUser(String userId, String password, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String regDate, String alphaDate, String pastureJoinDate, String status) {
+    public int createUser(String userId, String password, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String regDate, String alphaDate, String pastureJoinDate, boolean isPermission, String status) {
         User user = new User();
         user.setUserId(userId);
         user.setPassword(passwordEncoder.encode(password));
@@ -68,6 +68,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setRegDate(regDate);
         user.setAlphaDate(alphaDate);
         user.setPastureJoinDate(pastureJoinDate);
+        user.setIsPermission(isPermission);
         user.setStatus(status);
         return userMapper.createUser(user);
     }
@@ -78,7 +79,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public int updateUser(String userId, String password, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String regDate, String alphaDate, String pastureJoinDate, String status) {
+    public int updateUser(String userId, String password, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String regDate, String alphaDate, String pastureJoinDate, boolean isPermission, String status) {
         User user = new User();
         user.setUserId(userId);
 
@@ -96,6 +97,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setRegDate(regDate);
         user.setAlphaDate(alphaDate);
         user.setPastureJoinDate(pastureJoinDate);
+        user.setIsPermission(isPermission);
         user.setStatus(status);
 
         return userMapper.updateUser(user);

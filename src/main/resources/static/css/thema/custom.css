@@ -234,7 +234,7 @@ body, .form-control{
     font-size: 10pt !important;
 }
 
-.modal-body .ui-jqgrid-hdiv .ui-jqgrid-labels [role=columnheader]{
+.ui-jqgrid-hdiv .ui-jqgrid-labels [role=columnheader]{
     vertical-align: middle;
 }
 
@@ -344,4 +344,11 @@ div.ui-jqgrid-hdiv td, div.ui-jqgrid-hdiv th{
     padding: 5px;
     font-size: 10pt;
     margin: 2px;
+}
+
+label.required-icon{
+    color : #b21f2d;
+    font-weight: bold;
+    padding-right: 2px;
+    margin: 0px;
 }

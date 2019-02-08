@@ -14,9 +14,11 @@ var storyPastureForm = {
                 $("#worshipReason").children().first().attr("selected", true);
                 $("#worshipReason").attr("readonly", true);
                 $("#worshipReason").attr("required", false);
+                $("#worshipRequired").hide();
             }else{
                 $("#worshipReason").attr("readonly", false);
                 $("#worshipReason").attr("required", true);
+                $("#worshipRequired").show();
             }
         });
 
@@ -27,9 +29,11 @@ var storyPastureForm = {
                 $("#leaderReason").children().first().attr("selected", true);
                 $("#leaderReason").attr("readonly", true);
                 $("#leaderReason").attr("required", false);
+                $("#leaderRequired").hide();
             }else{
                 $("#leaderReason").attr("readonly", false);
                 $("#leaderReason").attr("required", true);
+                $("#leaderRequired").show();
             }
         });
     },

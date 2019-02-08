@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="ch-input-row2">
-                    <p class="my-2 ch-chk-label">예배 불참 사유</p>
+                    <p class="my-2 ch-chk-label"><label id="worshipRequired" class="required-icon" th:style="${registFlag || formStory.getWorshipYn().toString() == '0' ? 'display: ;' : 'display: none;'}">※</label>예배 불참 사유</p>
                     <div class="ch-group-pad-btm">
                         <select class="form-control comCode" id="worshipReason" name="worshipReason" parentCodeId="WORSHIP_REASON" th:attr="readonly=${registFlag || formStory.getWorshipYn().toString() == '0' ? 'false' : 'true'}
                                                                                                                                            ,required=${registFlag || formStory.getWorshipYn().toString() == '0' ? 'true' : 'false'}
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="ch-input-row2">
-                    <p class="my-2 ch-chk-label">리더모임 불참 사유</p>
+                    <p class="my-2 ch-chk-label"><label id="leaderRequired" class="required-icon" th:style="${registFlag || formStory.getLeaderYn().toString() == '0' ? 'display: ;' : 'display: none;'}">※</label>리더모임 불참 사유</p>
                     <div class="ch-group-pad-btm">
                         <select class="form-control comCode" id="leaderReason" name="leaderReason" parentCodeId="LEADER_REASON" th:attr="readonly=${registFlag || formStory.getLeaderYn().toString() == '0' ? 'false' : 'true'}
                                                                                                                                         ,required=${registFlag || formStory.getLeaderYn().toString() == '0' ? 'true' : 'false'}

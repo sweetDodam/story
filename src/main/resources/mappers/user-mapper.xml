@@ -140,7 +140,7 @@
         <if test="regDate!='' and regDate!=null">reg_date,</if>
         <if test="alphaDate!='' and alphaDate!=null">alpha_date,</if>
         <if test="pastureJoinDate!='' and regDate!=null">pasture_join_date,</if>
-        <if test="isPermission!='' and isPermission!=null">is_permission, </if>
+        is_permission,
         status)
         VALUES (
             CONCAT('ch_', (select * from (select MAX(user_seq)+1 from ch_user) tmp)),
@@ -155,7 +155,7 @@
         <if test="regDate!='' and regDate!=null">#{regDate},</if>
         <if test="alphaDate!='' and alphaDate!=null">#{alphaDate},</if>
         <if test="pastureJoinDate!='' and pastureJoinDate!=null">#{pastureJoinDate},</if>
-        <if test="isPermission!='' and isPermission!=null">#{isPermission}, </if>
+            #{isPermission},
             #{status}
             )
     </insert>
@@ -166,7 +166,7 @@
         update ch_user
         set
              is_admin = #{isAdmin}
-            <if test="isPermission!='' and isPermission!=null">,is_permission = #{isPermission}</if>
+            ,is_permission = #{isPermission}
             <if test="userName!='' and userName!=null">,user_name = #{userName}</if>
             <if test="password!='' and password!=null">,password = #{password}</if>
             <if test="roleId!='' and roleId!=null">,role_id = #{roleId}</if>
