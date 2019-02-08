@@ -11,7 +11,9 @@ var common = {
 
         //모달 열릴 때 이벤트
         $(document).on('show.bs.modal', '.modal:not(#logoutModal)', function(e){
-            $('#loadingArea').show(); //첫 시작시 로딩바를 숨겨준다.
+            if($(e.target) != null && !$(e.target).hasClass("datePicker")){
+                $('#loadingArea').show(); //첫 시작시 로딩바를 보여준다.
+            }
         });
 
         //모달 열린 후 이벤트
