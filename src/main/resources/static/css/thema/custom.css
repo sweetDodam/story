@@ -352,3 +352,8 @@ label.required-icon{
     padding-right: 2px;
     margin: 0px;
 }
+
+.pwdChgBtn{
+    left: 5px;
+    position: absolute;
+}

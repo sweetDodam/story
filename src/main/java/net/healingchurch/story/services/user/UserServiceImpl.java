@@ -79,14 +79,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public int updateUser(String userId, String password, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String regDate, String alphaDate, String pastureJoinDate, boolean isPermission, String status) {
+    public int updateUser(String userId, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String regDate, String alphaDate, String pastureJoinDate, boolean isPermission, String status) {
         User user = new User();
+
         user.setUserId(userId);
-
-        if(!"".equals(password)) {
-            user.setPassword(passwordEncoder.encode(password));
-        }
-
         user.setRoleId(roleId);
         user.setGroupId(groupId);
         user.setUserName(userName);
@@ -104,9 +100,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public Map<Object, Object> updateUserPassword(String userId, String password) {
+    public Map<Object, Object> updateUserPassword(String userId, String password, boolean validation) {
         //비밀번호 유효성 체크
-        Map<Object, Object> resutMap = passwordChk(userId, password);
+        Map<Object, Object> resutMap = passwordChk(userId, password, validation);
 
         //유효하다면 비밀번호 변경
         if("success".equals(resutMap.get("result").toString())){
@@ -140,24 +136,25 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getUserId(),user.getPassword(), grantedAuthorities);
     }
 
-    public  Map<Object, Object> passwordChk(String userId, String password){
+    public  Map<Object, Object> passwordChk(String userId, String password, boolean validation){
         Map<Object, Object> resutMap = new HashMap<>();
 
         String result = "success";
         String msg = "변경되었습니다.";
         String location = "/";
 
-        if(password.contains(" ")) {
-            result = "fail";
-            msg = "비밀번호에 공백을 넣을 수 없습니다.";
-        }
+        if(validation) {
+            if (password.contains(" ")) {
+                result = "fail";
+                msg = "비밀번호에 공백을 넣을 수 없습니다.";
+            }
 
-        String pattern = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,}$";
-        if(!Pattern.matches(pattern, password)){
-            result = "fail";
-            msg = "비밀번호는 8자리이상이고 숫자, 문자, 특수문자가 포함되어야합니다.";
+            String pattern = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,}$";
+            if (!Pattern.matches(pattern, password)) {
+                result = "fail";
+                msg = "비밀번호는 8자리이상이고 숫자, 문자, 특수문자[$@$!%*#?&]가 포함되어야합니다.";
+            }
         }
-
         resutMap.put("result", result);
         resutMap.put("msg", msg);
         resutMap.put("location", location);

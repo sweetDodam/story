@@ -59,7 +59,6 @@ public class UserController {
 
     @PostMapping("update")
     public int updateUser(@RequestParam(value = "userId", defaultValue = "") String userId,
-                          @RequestParam(value = "password", defaultValue = "") String password,
                           @RequestParam(value = "roleId", defaultValue = "0") int roleId,
                           @RequestParam(value = "groupId", defaultValue = "0") int groupId,
                           @RequestParam(value = "userName", defaultValue = "") String userName,
@@ -72,13 +71,14 @@ public class UserController {
                           @RequestParam(value = "pastureJoinDate", defaultValue = "") String pastureJoinDate,
                           @RequestParam(value = "isPermission", defaultValue = "false") boolean isPermission,
                           @RequestParam(value = "status", defaultValue = "") String status){
-        return userService.updateUser(userId, password, roleId, groupId, userName, isAdmin, address, mobile, email, regDate, alphaDate, pastureJoinDate, isPermission, status);
+        return userService.updateUser(userId, roleId, groupId, userName, isAdmin, address, mobile, email, regDate, alphaDate, pastureJoinDate, isPermission, status);
     }
 
     @PostMapping("passwordUpdate")
     public Map<Object, Object> updateUserPassword(@RequestParam(value = "userId", defaultValue = "") String userId,
-                          @RequestParam(value = "password", defaultValue = "") String password){
-        return userService.updateUserPassword(userId, password);
+                          @RequestParam(value = "password", defaultValue = "") String password,
+                          @RequestParam(value = "validation", defaultValue = "true") boolean validation){
+        return userService.updateUserPassword(userId, password, validation);
     }
 
     @PostMapping("remove")

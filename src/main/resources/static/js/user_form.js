@@ -23,18 +23,6 @@ var userForm = {
                 common.childSelectGroupLoad($(this).val(), level+1, '#UserForm');
             }
         });
-
-        //비밀번호 변경 체크박스 click 이벤트
-        $('#isPassword').on('click', function () {
-            if($(this).prop("checked")){
-                $(".passwordInput").show();
-                $("#password").attr("required", "required");
-            }else{
-                $(".passwordInput").hide();
-                $("#password").val("");
-                $("#password").removeAttr("required");
-            }
-        });
     },
     groupSelectLoad : function () {
         //해당 유저에 지정된 그룹아이디가 있다면
@@ -49,6 +37,38 @@ var userForm = {
             //그룹 셀렉트박스 최상위 그룹을 가져와 그리기
             common.childSelectGroupLoad(-1, 1, '#UserForm');
         }
+    },
+    passwordReset : function(){
+        var url = "/services/user/passwordUpdate";
+        var txt = "비밀번호 초기화";
+
+        if(!confirm(txt + "하시겠습니까?")){
+            return;
+        }
+
+        var form = $("#UserForm")[0];
+        var formData = new FormData(form);
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            processData: false,
+            contentType: false,
+            cache : false,
+            data : formData
+        }).done(function() {
+            alert(txt + '되었습니다.');
+
+            //그리드 재조회
+            user.gridSearch();
+
+            //팝업창 닫기
+            $("#saveUserModal .close").trigger("click");
+
+        }).fail(function (error) {
+            console.debug(txt + "실패");
+            alert(error);
+        });
     },
     save : function () {
         //필수체크 검사

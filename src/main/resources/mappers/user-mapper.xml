@@ -165,19 +165,24 @@
         /*  UserMapper.updateUser  */
         update ch_user
         set
-             is_admin = #{isAdmin}
-            ,is_permission = #{isPermission}
-            <if test="userName!='' and userName!=null">,user_name = #{userName}</if>
-            <if test="password!='' and password!=null">,password = #{password}</if>
-            <if test="roleId!='' and roleId!=null">,role_id = #{roleId}</if>
-            <if test="groupId!='' and groupId!=null">,group_id = #{groupId}</if>
-            <if test="address!='' and address!=null">,address = #{address}</if>
-            <if test="mobile!='' and mobile!=null">,mobile = #{mobile}</if>
-            <if test="email!='' and email!=null">,email = #{email}</if>
-            <if test="alphaDate!='' and alphaDate!=null">,alpha_date = #{alphaDate}</if>
-            <if test="pastureJoinDate!='' and pastureJoinDate!=null">,pasture_join_date = #{pastureJoinDate}</if>
-            <if test="status!='' and status!=null">,status = #{status}</if>
-
+          <choose>
+              <when test="password!='' and password!=null">
+                  password = #{password}
+              </when>
+              <otherwise>
+                   is_admin = #{isAdmin}
+                  ,is_permission = #{isPermission}
+                  <if test="userName!='' and userName!=null">,user_name = #{userName}</if>
+                  <if test="roleId!='' and roleId!=null">,role_id = #{roleId}</if>
+                  <if test="groupId!='' and groupId!=null">,group_id = #{groupId}</if>
+                  <if test="address!='' and address!=null">,address = #{address}</if>
+                  <if test="mobile!='' and mobile!=null">,mobile = #{mobile}</if>
+                  <if test="email!='' and email!=null">,email = #{email}</if>
+                  <if test="alphaDate!='' and alphaDate!=null">,alpha_date = #{alphaDate}</if>
+                  <if test="pastureJoinDate!='' and pastureJoinDate!=null">,pasture_join_date = #{pastureJoinDate}</if>
+                  <if test="status!='' and status!=null">,status = #{status}</if>
+              </otherwise>
+          </choose>
         where user_id = #{userId}
     </update>
 

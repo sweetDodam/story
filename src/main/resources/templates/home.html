@@ -37,7 +37,7 @@
         <a class="navbar-brand mr-1 my-1 txt-ch-white txt-ch-size-small"><span th:text="${userInfo.getUserName()}"></span>님, <span th:text="${message}"></span></a>
       </li>
       <li class="nav-item no-arrow">
-        <a class="navbar-brand mr-0 my-1 txt-ch-white txt-ch-size-small" id="created" th:text="${#dates.format(date, 'YYYY-MM-DD(E)')}">날짜</a>
+        <a class="navbar-brand mr-0 my-1 txt-ch-white txt-ch-size-small" id="created" th:text="${#dates.format(date, 'YYYY-MM-dd(E)')}">날짜</a>
       </li>
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

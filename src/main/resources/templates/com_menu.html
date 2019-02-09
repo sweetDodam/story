@@ -1,4 +1,4 @@
-<li class="nav-item dropdown">
+<li class="nav-item dropdown" th:if="${userInfo.getRoleId() <= 4}">
     <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-fw fa-folder"></i>
         <span>chyou 웹스토리</span>

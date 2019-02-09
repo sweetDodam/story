@@ -12,9 +12,9 @@ public interface UserService {
 
     User getUser(String userId);
 
-    int updateUser(String userId, String password, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String regDate, String alphaDate, String pastureJoinDate, boolean isPermission, String status);
+    int updateUser(String userId, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String regDate, String alphaDate, String pastureJoinDate, boolean isPermission, String status);
 
-    Map<Object, Object> updateUserPassword(String userId, String password);
+    Map<Object, Object> updateUserPassword(String userId, String password, boolean validation);
 
     void removeUser(String userId);
 }

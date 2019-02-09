@@ -7,28 +7,13 @@
 <div class="modal-body" th:with="registFlag=${(formUser == null || formUser.getUserId() == '') ? true : false}, groupFlag=${(formUserGroup == null || formUserGroup.getGroupId() == '') ? false : true}">
     <form id="UserForm" th:action="@{registFlag ? /services/user/create : /services/user/update}" method="POST">
         <input type="hidden" id="userId" name="userId" th:value="${registFlag ? '' :formUser.getUserId()}"/>
+        <input type="hidden" id="password" name="password" value="1111">
+        <input type="hidden" id="validation" name="validation" value="0">
 
         <div class="form-group">
             <div class="form-label-group">
                 <input type="text" class="form-control" id="userName" name="userName" th:value="${registFlag ? '' : formUser.getUserName()}" placeholder="이름을 입력하세요" required="required" autofocus="autofocus">
                 <label for="userName">이름</label>
-            </div>
-        </div>
-        <br>
-        <div class="form-group" th:if="${registFlag}">
-            <div class="form-label-group">
-                <input type="password" class="form-control" id="password" name="password" value="1111" placeholder="비밀번호를 입력하세요" required="required">
-                <label for="password">비밀번호</label>
-            </div>
-        </div>
-
-        <div class="form-group" th:if="${!registFlag}">
-            <div class="checkbox">
-                <label class="mr-1"><input type="checkbox" id="isPassword" value="1">비밀번호 변경 여부</label>
-            </div>
-            <div class="form-label-group passwordInput" style="display:none;">
-                <input type="password" class="form-control" id="password" name="password" value="" placeholder="비밀번호를 입력하세요">
-                <label for="password">비밀번호</label>
             </div>
         </div>
         <br>
@@ -97,8 +82,10 @@
         <br>
     </form>
     <div class="modal-footer" th:with="role=${userInfo.getRoleId()}, isAdmin=${userInfo.getIsAdmin()}">
+        <a class="btn btn-primary bg-ch-blue txt-ch-white pwdChgBtn" onclick="userForm.passwordReset();" th:if="${!registFlag}">비밀번호 초기화</a>
+
         <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="userForm.save();">저장</a>
-        <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="userForm.delete();" th:if="${role <= 3 && role != 0 && !registFlag}">삭제</a>
+        <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="userForm.delete();" th:if="${!registFlag}">삭제</a>
     </div>
 </div>
 
