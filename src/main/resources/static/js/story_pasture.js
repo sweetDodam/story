@@ -96,7 +96,7 @@ var storyPasture = {
                 records:  "records",
                 total : "total"
             },
-            rowNum:10,
+            rowNum:20,
             rowList:[10,20,30],
             rownumbers: true,
             colModel: jqGridForm.colModel,
