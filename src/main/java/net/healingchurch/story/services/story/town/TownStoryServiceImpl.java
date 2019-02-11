@@ -31,6 +31,40 @@ public class TownStoryServiceImpl implements TownStoryService {
     }
 
     @Override
+    public Map<Object, Object> findStorySumList(int groupId, String fromDate, String toDate) {
+        TownStory townStory = new TownStory();
+
+        townStory.setGroupId(groupId);
+        townStory.setFromDate(fromDate);
+        townStory.setToDate(toDate);
+
+        Map<Object, Object> resutMap = new HashMap<>();
+
+        //데이터
+        resutMap.put("rows", townStoryMapper.findStorySumList(townStory));
+
+        return resutMap;
+    }
+
+
+    @Override
+    public Map<Object, Object> findStoryCareList(int groupId, String userId, String fromDate, String toDate) {
+        TownStory townStory = new TownStory();
+
+        townStory.setGroupId(groupId);
+        townStory.setUserId(userId);
+        townStory.setFromDate(fromDate);
+        townStory.setToDate(toDate);
+
+        Map<Object, Object> resutMap = new HashMap<>();
+
+        //데이터
+        resutMap.put("rows", townStoryMapper.findStoryCareList(townStory));
+
+        return resutMap;
+    }
+
+    @Override
     public TownStory getStory(int storyId) {
         return townStoryMapper.getStory(storyId);
     }

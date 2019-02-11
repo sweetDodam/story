@@ -118,6 +118,10 @@ select.ui-pg-selbox.form-control{
     height: 38px;
 }
 
+.ui-jqgrid table.dtlView tr.jqgrow td {
+    height: 30px !important;
+}
+
 .ui-jqgrid-view table-responsive{
     font-size: 14px;
 }

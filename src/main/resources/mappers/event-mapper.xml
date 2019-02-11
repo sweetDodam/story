@@ -3,14 +3,22 @@
 <mapper namespace="net.healingchurch.story.services.event.EventMapper">
     <select id="findEventList" parameterType="net.healingchurch.story.domain.Event" resultType="net.healingchurch.story.domain.Event">
         /*  EventMapper.findEventList  */
-        select * from ch_event
+        select
+             event_id
+            ,group_id
+            ,FN_DATE_FORMAT(event_date) as event_date
+            ,event_content
+            ,writer
+            ,FN_DATE_FORMAT(create_date) as create_date
+            ,FN_DATE_FORMAT(update_date) as update_date
+         from ch_event
         <where>
             <if test="groupId!=null and groupId!=''">group_id=#{groupId}</if>
             <if test="fromDate!=null and fromDate!=''">
-                and CAST(event_date AS CHARACTER)<![CDATA[ >= ]]> CONCAT( #{fromDate}, ' 00:00:00')
+                and DATE_FORMAT(event_date, '%Y%m%d')<![CDATA[ >= ]]> #{fromDate}
             </if>
             <if test="toDate!=null and toDate!=''">
-                and CAST(event_date AS CHARACTER)<![CDATA[ <= ]]> CONCAT( #{toDate}, ' 23:59:59')
+                and DATE_FORMAT(event_date, '%Y%m%d')<![CDATA[ <= ]]>  #{toDate}
             </if>
         </where>
         <if test="page!=null and page!=''">LIMIT #{offset}, #{limit}</if>
@@ -18,7 +26,15 @@
 
     <select id="getEvent" resultType="net.healingchurch.story.domain.Event" parameterType="int">
         /*  EventMapper.getEvent  */
-        select * from ch_event
+        select
+             event_id
+            ,group_id
+            ,FN_DATE_FORMAT(event_date) as event_date
+            ,event_content
+            ,writer
+            ,FN_DATE_FORMAT(create_date) as create_date
+            ,FN_DATE_FORMAT(update_date) as update_date
+        from ch_event
         where event_id = #{value}
     </select>
 

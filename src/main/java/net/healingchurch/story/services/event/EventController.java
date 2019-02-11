@@ -16,13 +16,11 @@ public class EventController {
     private EventService eventService;
 
     @GetMapping("list")
-    public List<Event> findStoryList(
+    public List<Event> findEventList(
             @RequestParam(value = "groupId", defaultValue = "") int groupId,
             @RequestParam(value = "fromDate", defaultValue = "") String fromDate,
-            @RequestParam(value = "toDate", defaultValue = "") String toDate,
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "limit", defaultValue = "20") int limit) throws Exception {
-        return eventService.findEventList(groupId, fromDate, toDate, page, limit);
+            @RequestParam(value = "toDate", defaultValue = "") String toDate) throws Exception {
+        return eventService.findEventList(groupId, fromDate, toDate);
     }
 
     @GetMapping("get")

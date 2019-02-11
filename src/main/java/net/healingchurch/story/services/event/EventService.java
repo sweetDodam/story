@@ -5,7 +5,7 @@ import net.healingchurch.story.domain.Event;
 import java.util.List;
 
 public interface EventService {
-    List<Event> findEventList(int groupId, String fromDate, String toDate, int page, int limit);
+    List<Event> findEventList(int groupId, String fromDate, String toDate);
 
     Event getEvent(int eventId);
 

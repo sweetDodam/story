@@ -29,7 +29,7 @@ var storyTownForm = {
             rownumbers: true,
             colModel: jqGridPopForm.colModel,
             viewrecords: true,
-            height: $(".modal-body").height() * 0.3,
+            height: $(".modal-body").height() * 0.31,
             width: ($(".modal-body").width() - 2) < 1000 ? 1000 : ($(".modal-body").width() - 2),
             rowheight: 20,
             shrinkToFit: true,

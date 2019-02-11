@@ -40,6 +40,74 @@
         <if test="page!=null and page!=''">LIMIT #{offset}, #{limit}</if>
     </select>
 
+    <select id="findStorySumList" parameterType="net.healingchurch.story.domain.TownStory" resultType="net.healingchurch.story.domain.TownStory">
+        /*  TownStoryMapper.findStorySumList  */
+        select
+             t.user_name
+            ,t.story_id
+            ,t.group_id
+            ,t.user_id
+            ,sum(t.worship_yn) as worship_yn
+            ,sum(t.leader_yn) as leader_yn
+            ,sum(t.pasture_meet_yn) as pasture_meet_yn
+            ,sum(t.bible_count) as bible_count
+            ,sum(t.qt_count) as qt_count
+            ,sum(t.friday_worship_yn) as friday_worship_yn
+            ,sum(t.dawn_pray_count) as dawn_pray_count
+            ,t.user_cnt
+        from(
+            select
+                 A.user_name
+                ,C.story_id
+                ,C.group_id
+                ,C.user_id
+                ,FN_DATE_FORMAT(C.input_date) as input_date
+                ,C.worship_yn
+                ,C.leader_yn
+                ,C.pasture_meet_yn
+                ,C.bible_count
+                ,C.qt_count
+                ,C.friday_worship_yn
+                ,C.dawn_pray_count
+                ,C.etc
+                ,count(E.user_id) as user_cnt
+            from ch_user A
+            left join ch_user_group B on B.group_id = A.group_id
+            left join ch_story_master C on C.user_id = A.group_id and DATE_FORMAT(C.input_date, '%Y%m%d')<![CDATA[ >= ]]> #{fromDate} and DATE_FORMAT(C.input_date, '%Y%m%d')<![CDATA[ <= ]]>  #{toDate}
+            left join ch_user E  on E.group_id = A.group_id
+
+            where 1=1
+            and A.role_id = 4
+            and B.parent_group_id = #{groupId}
+
+            group by A.group_id, C.input_date
+            order by A.user_name) t
+
+        group by t.user_id
+        order by t.user_name
+    </select>
+
+    <select id="findStoryCareList" parameterType="net.healingchurch.story.domain.TownStory" resultType="net.healingchurch.story.domain.TownStory">
+        /*  TownStoryMapper.findStoryCareList  */
+        select
+             FN_DATE_FORMAT(A.input_date) as input_date
+            ,B.*
+            ,C.user_name
+
+        from ch_story_master A
+        inner join ch_story_town B on A.story_id = B.master_id
+        left join ch_user C  on A.user_id = C.group_id and C.role_id = 4
+
+        where 1=1
+        and A.group_id = #{groupId}
+        and A.user_id = #{userId}
+        and DATE_FORMAT(A.input_date, '%Y%m%d')<![CDATA[ >= ]]> #{fromDate}
+        and DATE_FORMAT(A.input_date, '%Y%m%d')<![CDATA[ <= ]]>  #{toDate}
+
+        group by B.master_id
+        order by A.input_date desc
+    </select>
+
     <select id="getStory" resultType="net.healingchurch.story.domain.TownStory" parameterType="int">
         /*  TownStoryMapper.getStory  */
         select

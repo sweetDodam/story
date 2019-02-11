@@ -7,6 +7,9 @@ var storyTownDetail = {
         //DatePicker 셋팅
         _this.datePickerLoad();
 
+        //그리드 마을동정 셋팅
+        _this.gridEventLoad();
+        
         //그리드 셋팅
         _this.gridLoad();
         _this.gridSearch();
@@ -23,49 +26,42 @@ var storyTownDetail = {
         //윈도우 resize 이벤트
         $(window).bind('resize', function() {
             //그리드 크기 변경
-            //common.resizeGridWidth('#jqGridPop', '.modal-body', 2);
+            common.resizeGridWidth('#jqGridPop', '.modal-body', 2);
 
             //상세 그리드 크기 변경
-            //common.resizeGridWidth('#jqGridPopDtl', '.modal-body', 2);
+            common.resizeGridWidth('#jqGridPopDtl', '.modal-body', 2);
+
+            //상세 그리드 크기 변경
+            common.resizeGridWidth('#jqGridPopEvent', '.modal-body', 5);
         }).trigger('resize');
     },
     gridLoad : function () {
         $("#jqGridPop").jqGrid({
-            url: '/services/story/pasture/list',
+            url: '/services/story/town/sumList',
             mtype: "GET",
             styleUI : 'Bootstrap',
             datatype: "local",
-            jsonReader: {
-                root : "rows",  // list 이름
-                page :  "page",
-                records:  "records",
-                total : "total"
-            },
-            rowNum:10,
-            rowList:[10,20,30],
             rownumbers: true,
             colModel: jqGridPopForm.colModel,
             viewrecords: true,
-            height: $(".modal-body").height() * 0.35,
+            height: $(".modal-body").height() * 0.31,
             width: ($(".modal-body").width() - 2) < 1000 ? 1000 : ($(".modal-body").width() - 2),
             rowheight: 20,
-            pager: "#pagerPop",
-            pgbuttons: true,
-            pginput : true,
             shrinkToFit: true,
             sortable: false,
             footerrow: true,
             userDataOnFooter : false,
             loadComplete : function(data){
                 var col = jqGridPopForm.colModel;
-                var sumData = { inputDate: '합계' };
+                var sumData = { userName: '합계' };
 
                 for(var i = 0;i < col.length;i++){
                     if(common.dataChk(col[i]["index"])){
                         var colName = col[i]["name"];
                         var sum = $("#jqGridPop").jqGrid('getCol',colName, false, 'sum');
 
-                        if(colName.indexOf('Yn') != -1){
+                        //재적 컬럼 제외
+                        if(colName.indexOf('userCnt') == -1){
                             sum = sum + "_"
                         }
                         sumData[colName] = sum;
@@ -74,53 +70,25 @@ var storyTownDetail = {
                 $('#jqGridPop').jqGrid('footerData', 'set', sumData);
 
             },onPaging: function (pgButton) {
-                var gridPage = $("#jqGridPop").getGridParam("page");
-                var totalPage = $("#jqGridPop").getGridParam("total");
 
-                if(pgButton == "next"){            // 다음 페이지
-                    if(gridPage < totalPage){
-                        gridPage += 1;
-                    }else{
-                        gridPage = page;
-                    }
-                } else if (pgButton == "prev") {    // 이전 페이지
-                    if(gridPage > 1){
-                        gridPage -= 1;
-                    }else{
-                        gridPage = page;
-                    }
-                } else if (pgButton == "first") {    // 첫 페이지
-                    gridPage = 1;
-                } else if (pgButton == "last") {    // 마지막 페이지
-                    gridPage = totalPage;
-                } else if (pgButton == "user") {                // 사용자 입력 페이징 처리
-                    var nowPage = Number($("#pagerPop .ui-pg-input").val());
-                    // 입력한 값이 총 페이지수보다 크다면 수행
-                    if (totalPage >= nowPage && nowPage > 0) {
-                        gridPage = nowPage;
-                    }else{
-                        $("#pagerPop .ui-pg-input").val(page);
-                        gridPage = page;
-                    }
-                } else if(pgButton == "records"){
-                    gridPage = 1;
-                }
-
-                $("#jqGridPop").setGridParam("page", gridPage);
-                popPage = gridPage;
-
-                $("#jqGridPop").setGridParam({
-                    postData	: jqGridPopForm.setParam()
-                });
             }
         });
     },
     gridSearch : function(){
+        //영적돌봄 상세 그리드 초기화
         $("#jqGridPopDtl").jqGrid('clearGridData');
 
         popPage = 1;
 
+        //목자 리스트 그리드
         $("#jqGridPop").setGridParam({
+            datatype	: "json",
+            postData	: jqGridPopForm.setParam(),
+            page        : 1
+        }).trigger("reloadGrid");
+
+        //마을동정 그리드
+        $("#jqGridPopEvent").setGridParam({
             datatype	: "json",
             postData	: jqGridPopForm.setParam(),
             page        : 1
@@ -201,84 +169,107 @@ var storyTownDetail = {
     },
     gridDtlLoad : function () {
         $("#jqGridPopDtl").jqGrid({
+            url: '/services/story/town/careList',
+            mtype: "GET",
             styleUI : 'Bootstrap',
             datatype: "local",
-       //     rowNum: -1,
             rownumbers: true,
             colModel: jqGridPopDtlForm.colModel,
             viewrecords: true,
-            height: $(".modal-body").height() * 0.15,
+            height: $(".modal-body").height() * 0.17,
             width: ($(".modal-body").width() - 2) < 1000 ? 1000 : ($(".modal-body").width() - 2),
+            rowheight: 15,
             shrinkToFit: true,
             sortable: false,
             loadComplete : function(data){
 
+            },onPaging: function (pgButton) {
+
             }
         });
     },
-    setGridDtlData : function (rowId) {
+    setGridDtlData : function (groupId, userId) {
         //해당 그리드 데이터 가져오기
-        var data = new Array();
-        data.push($("#jqGridPop").getRowData(rowId));
+        var data = {};
 
-        $("#jqGridPopDtl").jqGrid('clearGridData');
-        $("#jqGridPopDtl").jqGrid('setGridParam', { data: data });
-        $("#jqGridPopDtl").trigger("reloadGrid");
-    }
+        data["groupId"] = groupId;
+        data["userId"] = userId;
+        data["fromDate"] = $("#fromDate").val().replace(/[^0-9]/g, "");
+        data["toDate"] = $("#toDate").val().replace(/[^0-9]/g, "");
+
+        $("#jqGridPopDtl").setGridParam({
+            datatype	: "json",
+            postData	: data,
+            page        : 1
+        }).trigger("reloadGrid");
+    },
+    gridEventLoad : function () {
+        $("#jqGridPopEvent").jqGrid({
+            url: '/services/event/list',
+            mtype: "GET",
+            styleUI : 'Bootstrap',
+            datatype: "local",
+            rownumbers: true,
+            colModel: jqGridPopEventForm.colModel,
+            viewrecords: true,
+            height: $(".modal-body").height() * 0.17,
+            width: ($(".modal-body").width() - 2) < 1000 ? 1000 : ($(".modal-body").width() - 2),
+            rowheight: 15,
+            shrinkToFit: true,
+            sortable: false,
+            loadComplete : function(data){
+
+            },onPaging: function (pgButton) {
+
+            }
+        });
+    },
 };
 
 var popPage = 1;
 var popFormatter = {
     dtlModal : function(cellValue,rowObject,options){
         return "<a href='javascript:void(0);' " +
-            "onclick='storyTownDetail.setGridDtlData("+ rowObject.rowId +")'>상세</a>";
+            "onclick='storyTownDetail.setGridDtlData("+ options.groupId +", "+ options.userId +")'>상세</a>";
     },
-    YnDesc : function(cellValue,rowObject,options){
+    nullChk : function(cellValue,rowObject,options){
         var val = String(cellValue);
 
         //합계 포맷터일 경우
         if(val.indexOf('_') != -1){
             return val.replace("_", "");
-        }else{
-            var str = "참석";
-
-            if(val == '0'){
-                str = "불참석";
+        }else {
+            //등록된 스토리가 있는 경우
+            if (common.dataChk(options.storyId)) {
+                return val;
+            } else {
+                return '-';
             }
-            return str;
         }
     },
-    YnToNum : function(cellValue,rowObject,options){
-        var num = 1;
-
-        if(cellValue == '불참석'){
-            num = 0;
+    nullToNum : function(cellValue,rowObject,options){
+        if(cellValue == '-'){
+            return 0;
         }
-        return num;
+        return cellValue;
     }
 };
 
 var jqGridPopForm = {
     colModel : [
-        { label: '모임날짜',    		    name: 'inputDate',          align: 'center', width: 120     },
-        { label: '예배</br>참석여부',	    name: 'worshipYn',       	align: 'center', width: 100, 	formatter: popFormatter.YnDesc, unformat:popFormatter.YnToNum,  index:'worshipYn',        summaryType:'sum'},
-        { label: '예배</br>불참사유',	    name: 'worshipDesc',    	align: 'center', width: 120     },
-        { label: '리더모임</br>참석여부',	name: 'leaderYn',          	align: 'center', width: 100 , 	formatter: popFormatter.YnDesc, unformat:popFormatter.YnToNum, index:'leaderYn',         summaryType:'sum'},
-        { label: '리더모임</br>불참사유',	name: 'leaderDesc',       	align: 'center', width: 120     },
-        { label: '목장모임</br>참석여부',	name: 'pastureMeetYn',   	align: 'center', width: 100, 	formatter: popFormatter.YnDesc, unformat:popFormatter.YnToNum, index:'pastureMeetYn',    summaryType:'sum'},
-        { label: '금요철야</br>참석여부',	name: 'fridayWorshipYn',	align: 'center', width: 100, 	formatter: popFormatter.YnDesc, unformat:popFormatter.YnToNum, index:'fridayWorshipYn',  summaryType:'sum'},
-        { label: '성경',				    name: 'bibleCount',			align: 'center', width: 100,    index:'bibleCount',               summaryType:'sum'       },
-        { label: 'QT',    			        name: 'qtCount',          	align: 'center', width: 100,    index:'qtCount',                  summaryType:'sum'       },
-        { label: '새벽기도',    		    name: 'dawnPrayCount',   	align: 'center', width: 100,    index:'dawnPrayCount',            summaryType:'sum'       },
-        { label: '상세',       		        name: 'dtl',               	align: 'center', width: 50, 	formatter: popFormatter.dtlModal},
-        { label: '기도제목',                name: 'prayers',            align: 'center', width: 100,	hidden: true	},
-        { label: '기타사항',                name: 'etc',            	align: 'center', width: 100,	hidden: true	},
-        { label: '아이디',      		    name: 'userId',             align: 'center', width: 75,		hidden: true	},
-        { label: '스토리아이디', 		    name: 'storyId',         	align: 'center', width: 90, 	hidden: true 	},
-        { label: '권한ID',      		    name: 'roleId',             align: 'center', width: 100, 	hidden: true 	},
-        { label: '소속ID',      		    name: 'groupId',            align: 'center', width: 100, 	hidden: true 	},
-        { label: '등록일',       		    name: 'createDate',         align: 'center', width: 100, 	hidden: true 	},
-        { label: '수정일',       		    name: 'updateDate',        	align: 'center', width: 100, 	hidden: true 	}]
+        { label: '목자이름',    		    name: 'userName',           align: 'center', width: 120     },
+        { label: '재적',    		        name: 'userCnt',            align: 'center', width: 100,    index:'userCnt',       summaryType:'sum'},
+        { label: '예배참석',	            name: 'worshipYn',       	align: 'center', width: 100, 	formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'worshipYn',        summaryType:'sum'},
+        { label: '리더모임참석',	        name: 'leaderYn',          	align: 'center', width: 100, 	formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'leaderYn',         summaryType:'sum'},
+        { label: '목장모임참석',	        name: 'pastureMeetYn',   	align: 'center', width: 100, 	formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'pastureMeetYn',    summaryType:'sum'},
+        { label: '금요철야참석',	        name: 'fridayWorshipYn',	align: 'center', width: 100, 	formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'fridayWorshipYn',  summaryType:'sum'},
+        { label: '성경',				    name: 'bibleCount',			align: 'center', width: 100,    formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'bibleCount',       summaryType:'sum'},
+        { label: 'QT',    			        name: 'qtCount',          	align: 'center', width: 100,    formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'qtCount',          summaryType:'sum'},
+        { label: '새벽기도',    		    name: 'dawnPrayCount',   	align: 'center', width: 100,    formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'dawnPrayCount',    summaryType:'sum'},
+        { label: '영적돌봄',       		    name: 'dtl',               	align: 'center', width: 100, 	formatter: popFormatter.dtlModal},
+        { label: '스토리아이디', 		    name: 'storyId',         	hidden: true 	},
+        { label: '소속ID(마을)', 		    name: 'groupId',            hidden: true 	},
+        { label: '소속ID(목장)',            name: 'userId',             hidden: true 	}]
     ,setParam : function(){
         var data = common.serializeObject($("#GridPopForm"));
 
@@ -293,7 +284,14 @@ var jqGridPopForm = {
 
 var jqGridPopDtlForm = {
     colModel : [
-        { label: '모임날짜',    name: 'inputDate',      align: 'center',    width: 100 },
-        { label: '기도제목',    name: 'prayers',        align: 'left',      width: 600 },
-        { label: '기타사항',    name: 'etc',            align: 'left',      width: 400 }]
+        { label: '모임날짜',        name: 'inputDate',          align: 'center',    width: 100 },
+        { label: '목자이름',        name: 'userName',           align: 'center',    width: 80 },
+        { label: '목자영적돌봄',    name: 'leaderCareStory',    align: 'left',      width: 400 },
+        { label: '목장영적돌봄',    name: 'pastureCareStory',   align: 'left',      width: 400 }]
+};
+
+var jqGridPopEventForm = {
+    colModel : [
+        { label: '모임날짜',    name: 'eventDate',      align: 'center',    width: 100 },
+        { label: '마을동정',    name: 'eventContent',   align: 'left',      width: 900 }]
 };

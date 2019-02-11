@@ -7,7 +7,7 @@
 <div class="modal-body">
     <form id="GridPopForm" th:action="@{/services/story/pasture/create}" method="POST">
         <input type="hidden" id="userId" name="userId" th:value="${formUser.getUserId()}"/>
-        <input type="hidden" id="groupId" name="groupId" th:value="${formUser.getGroupId()}"/>
+        <input type="hidden" id="groupId" name="groupId" th:value="${formUser.getParentGroupId()}"/>
         <div class="ch-search-area ch-group-pad-btm">
             <div class="form-row">
                 <div class="form-label-group ch-mgn-5r">
@@ -16,7 +16,7 @@
                 </div>
                 <div class="form-label-group ch-mgn-5r">
                     <input type="text" class="form-control notClear" id="disRoleDesc" th:value="${formUser.getRoleDesc()}" readonly>
-                    <label for="disRoleDesc">아이디</label>
+                    <label for="disRoleDesc">권한</label>
                 </div>
                 <div class="form-label-group ch-mgn-5r">
                     <input type="text" id="fromDate" name="fromDate" class="form-control datePicker fromDate notClear" readonly>
@@ -33,17 +33,17 @@
             </div>
         </div>
         <div class="table-responsive ch-group-pad-btm" >
-            <table id="jqGridPop" class="table table-bordered"></table>
-            <div id="pagerPop"></div>
+            <table id="jqGridPop" class="table table-bordered dtlView"></table>
+        </div>
+
+        <div class="table-responsive ch-group-pad-btm">
+            <table id="jqGridPopDtl" class="table table-bordered dtlView"></table>
         </div>
 
         <div class="table-responsive">
-            <table id="jqGridPopDtl" class="table table-bordered"></table>
+            <table id="jqGridPopEvent" class="table table-bordered dtlView"></table>
         </div>
     </form>
-    <div class="modal-footer">
-        <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="$('#detailStoryModal .close').trigger('click');">닫기</a>
-    </div>
 </div>
 
 <script src="../../js/story_town_detail.js"></script>

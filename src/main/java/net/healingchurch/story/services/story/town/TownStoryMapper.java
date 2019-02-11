@@ -9,6 +9,10 @@ import java.util.List;
 public interface TownStoryMapper {
     List<TownStory> findStoryList(TownStory townStory);
 
+    List<TownStory> findStorySumList(TownStory townStory);
+
+    List<TownStory> findStoryCareList(TownStory townStory);
+
     int createStorySum(TownStory townStory);
 
     int createStory(TownStory townStory);

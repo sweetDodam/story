@@ -199,12 +199,11 @@ public class WebAppContoller {
     public String storyTownDetail(Map<String, Object> model,
                                      @RequestParam(value = "userId", defaultValue = "") String userId,
                                      @AuthenticationPrincipal UserDetails userDetails) {
-
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
 
-        //선택된 목장의 정보
+        //마을 목자 유저의 정보
         User formUser = userService.getUser(userId);
         model.put("formUser", formUser);
 

@@ -8,6 +8,10 @@ import java.util.Map;
 public interface TownStoryService {
     Map<Object, Object> findStoryList(int groupId, String inputDate);
 
+    Map<Object, Object> findStorySumList(int groupId, String fromDate, String toDate);
+
+    Map<Object, Object> findStoryCareList(int groupId, String userId, String fromDate, String toDate);
+
     TownStory getStory(int storyId);
 
     TownStory getStoryByGroup(String groupId, int parentGroupId, String inputDate);

@@ -14,14 +14,13 @@ public class EventServiceImpl implements EventService {
 
     @Override
     //@PreAuthorize("hasAnyRole('ROLE_TOWN_MANAGER', 'ROLE_PASTER')")
-    public List<Event> findEventList(int groupId, String fromDate, String toDate, int page, int limit) {
+    public List<Event> findEventList(int groupId, String fromDate, String toDate) {
         Event event = new Event();
+
         event.setGroupId(groupId);
         event.setFromDate(fromDate);
         event.setToDate(toDate);
-        event.setPage(page);
-        event.setOffset((page-1)*limit);
-        event.setLimit(limit);
+
         return eventMapper.findEventList(event);
     }
 

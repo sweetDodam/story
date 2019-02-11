@@ -26,6 +26,23 @@ public class TownStoryController {
         return townStoryService.findStoryList(groupId, inputDate);
     }
 
+    @GetMapping("sumList")
+    public Map<Object, Object> findStorySumList(
+            @RequestParam(value = "groupId", required = true, defaultValue = "") int groupId,
+            @RequestParam(value = "fromDate", defaultValue = "") String fromDate,
+            @RequestParam(value = "toDate", defaultValue = "") String toDate) throws Exception {
+        return townStoryService.findStorySumList(groupId, fromDate, toDate);
+    }
+
+    @GetMapping("careList")
+    public Map<Object, Object> findStoryCareList(
+            @RequestParam(value = "groupId", required = true, defaultValue = "") int groupId,
+            @RequestParam(value = "userId", required = true, defaultValue = "") String userId,
+            @RequestParam(value = "fromDate", defaultValue = "") String fromDate,
+            @RequestParam(value = "toDate", defaultValue = "") String toDate) throws Exception {
+        return townStoryService.findStoryCareList(groupId, userId, fromDate, toDate);
+    }
+
     @GetMapping("get")
     public TownStory getStory(
             @RequestParam(value = "storyId", required = true, defaultValue = "0") int storyId) {
