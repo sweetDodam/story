@@ -187,8 +187,8 @@ public class WebAppContoller {
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
 
-        //로그인한 유저의 그룹 상세 정보
-        UserGroup formUserGroup = userGroupService.getUserGroup(user.getGroupId());
+        //로그인한 유저의 마을 그룹 상세 정보
+        UserGroup formUserGroup = userGroupService.getUserGroup(user.getParentGroupId());
         model.put("formUserGroup", formUserGroup);
 
         return "story_town_list";
