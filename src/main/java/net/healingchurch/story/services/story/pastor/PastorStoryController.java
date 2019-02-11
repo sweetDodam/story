@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @EnableAutoConfiguration
@@ -16,13 +17,14 @@ public class PastorStoryController {
     private PastorStoryService pastorStoryService;
 
     @GetMapping("list")
-    public List<PastorStory> findStoryList(
-            @RequestParam(value = "pastorId", required = true, defaultValue = "") String pastorId,
+    public Map<Object, Object> findStoryList(
+            @RequestParam(value = "visitUserId", required = true, defaultValue = "") String visitUserId,
+            @RequestParam(value = "pastorId", defaultValue = "") String pastorId,
             @RequestParam(value = "fromDate", defaultValue = "") String fromDate,
             @RequestParam(value = "toDate", defaultValue = "") String toDate,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "limit", defaultValue = "20") int limit) throws Exception {
-        return pastorStoryService.findStoryList(pastorId, fromDate, toDate, page, limit);
+        return pastorStoryService.findStoryList(visitUserId, pastorId, fromDate, toDate, page, limit);
     }
 
     @GetMapping("get")
@@ -34,13 +36,14 @@ public class PastorStoryController {
     @PostMapping("create")
     public int createStory(
             @RequestParam(value = "pastorId", required = true, defaultValue = "") String pastorId,
-            @RequestParam(value = "fromDate", defaultValue = "") String visitUserId,
-            @RequestParam(value = "toDate", defaultValue = "") String visitDate,
-            @RequestParam(value = "toDate", defaultValue = "") String summary,
-            @RequestParam(value = "toDate", defaultValue = "") String prayers,
-            @RequestParam(value = "toDate", defaultValue = "") String etc
+            @RequestParam(value = "visitUserId", defaultValue = "") String visitUserId,
+            @RequestParam(value = "visitDate", defaultValue = "") String visitDate,
+            @RequestParam(value = "visitPlace", defaultValue = "") String visitPlace,
+            @RequestParam(value = "summary", defaultValue = "") String summary,
+            @RequestParam(value = "prayers", defaultValue = "") String prayers,
+            @RequestParam(value = "etc", defaultValue = "") String etc
     ) throws Exception {
-        return pastorStoryService.createStory(pastorId, visitUserId, visitDate, summary, prayers, etc);
+        return pastorStoryService.createStory(pastorId, visitUserId, visitDate, visitPlace, summary, prayers, etc);
     }
 
     @PostMapping("update")
@@ -49,11 +52,12 @@ public class PastorStoryController {
             @RequestParam(value = "pastorId", required = true, defaultValue = "") String pastorId,
             @RequestParam(value = "fromDate", defaultValue = "") String visitUserId,
             @RequestParam(value = "toDate", defaultValue = "") String visitDate,
+            @RequestParam(value = "visitPlace", defaultValue = "") String visitPlace,
             @RequestParam(value = "toDate", defaultValue = "") String summary,
             @RequestParam(value = "toDate", defaultValue = "") String prayers,
             @RequestParam(value = "toDate", defaultValue = "") String etc
     ) throws Exception {
-        return pastorStoryService.updateStory(storyId, pastorId, visitUserId, visitDate, summary, prayers, etc);
+        return pastorStoryService.updateStory(storyId, pastorId, visitUserId, visitDate, visitPlace, summary, prayers, etc);
     }
 
     @PostMapping("remove")
@@ -63,4 +67,16 @@ public class PastorStoryController {
         return 1;
     }
 
+
+    @GetMapping("storyList")
+    public Map<Object, Object> findUserStoryList(@RequestParam(value = "userId", defaultValue = "") String userId,
+                                                 @RequestParam(value = "groupId", defaultValue = "0") int groupId,
+                                                 @RequestParam(value = "roleId", defaultValue = "0") int roleId,
+                                                 @RequestParam(value = "userName", defaultValue = "") String userName,
+                                                 @RequestParam(value = "visitDate", defaultValue = "") String visitDate,
+                                                 @RequestParam(value = "pastorId", defaultValue = "") String pastorId,
+                                                 @RequestParam(value = "page", defaultValue = "0") int page,
+                                                 @RequestParam(value = "limit", defaultValue = "20") int limit) {
+        return pastorStoryService.findUserStoryList(userId, groupId, roleId, userName, visitDate, pastorId, page, limit);
+    }
 }

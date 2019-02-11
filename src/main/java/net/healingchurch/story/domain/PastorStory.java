@@ -2,11 +2,12 @@ package net.healingchurch.story.domain;
 
 import java.util.Objects;
 
-public class PastorStory {
+public class PastorStory extends User{
     private int storyId;
     private String pastorId;
     private String visitUserId;
     private String visitDate;
+    private String visitPlace;
     private String summary;
     private String prayers;
     private String etc;
@@ -52,6 +53,14 @@ public class PastorStory {
 
     public void setVisitDate(String visitDate) {
         this.visitDate = visitDate;
+    }
+
+    public String getVisitPlace() {
+        return visitPlace;
+    }
+
+    public void setVisitPlace(String visitPlace) {
+        this.visitPlace = visitPlace;
     }
 
     public String getSummary() {
@@ -154,6 +163,7 @@ public class PastorStory {
                 ", pastorId='" + pastorId + '\'' +
                 ", visitUserId='" + visitUserId + '\'' +
                 ", visitDate='" + visitDate + '\'' +
+                ", visitPlace='" + visitPlace + '\'' +
                 ", summary='" + summary + '\'' +
                 ", prayers='" + prayers + '\'' +
                 ", etc='" + etc + '\'' +

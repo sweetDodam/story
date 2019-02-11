@@ -1,0 +1,60 @@
+<div class="modal-header" th:with="registFlag=${(formStory == null || formStory.getStoryId() == '') ? true : false}">
+    <h5 class="modal-title" id="saveUserLabel" th:text="${registFlag ? '사역자 스토리 등록' : '사역자 스토리 수정'}">사역자 스토리 등록</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" th:with="registFlag=${(formStory == null || formStory.getStoryId() == '') ? true : false}">
+    <form id="StoryForm" th:action="@{registFlag ? /services/story/pastor/create : /services/story/pastor/update}" method="POST">
+        <input type="hidden" id="visitUserId" name="visitUserId" th:value="${formUser.getUserId()}"/>
+        <input type="hidden" id="pastorId" name="pastorId" th:value="${userInfo.getUserId()}"/>
+        <input type="hidden" id="visitDate" name="visitDate" th:value="${formVisitDate}"/>
+        <input type="hidden" id="storyId" name="storyId" th:value="${registFlag ? '' :formStory.getStoryId()}"/>
+
+        <div class="form-group ch-group-pad-btm">
+            <div class="form-row">
+                <div class="ch-input-row2">
+                    <div class="form-label-group">
+                        <input type="text" class="form-control" id="userName" name="userName" th:value="${formUser.getUserName()}" readonly>
+                        <label for="userName">이름</label>
+                    </div>
+                </div>
+                <div class="ch-input-row2">
+                    <div class="form-label-group">
+                        <input type="text" class="form-control" id="roleDesc" name="roleDesc" th:value="${formUser.getRoleDesc()}" readonly>
+                        <label for="roleDesc">역할</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <p class="my-2 ch-chk-label">심방장소</p>
+                <textarea class="form-control" id="visitPlace" name="visitPlace" th:utext="${registFlag ? '' : formStory.getVisitPlace()}" style="height:50px;"></textarea>
+            </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <p class="my-2 ch-chk-label">심방내용</p>
+                <textarea class="form-control" id="summary" name="summary" th:utext="${registFlag ? '' : formStory.getSummary()}" style="height:90px;"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <p class="my-2 ch-chk-label">기도제목</p>
+                <textarea class="form-control" id="prayers" name="prayers" th:utext="${registFlag ? '' : #strings.replace(formStory.getPrayers(), '\n','<br/>')}" style="height:90px;"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <p class="my-2 ch-chk-label">기타사항</p>
+                <textarea class="form-control" id="etc" name="etc" th:utext="${registFlag ? '' : formStory.getEtc()}" style="height:90px;"></textarea>
+            </div>
+        </div>
+    </form>
+    <div class="modal-footer" th:with="role=${userInfo.getRoleId()}, isAdmin=${userInfo.getIsAdmin()}">
+        <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="storyPastorForm.save();">저장</a>
+        <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="storyPastorForm.delete();" th:if="${!registFlag}">삭제</a>
+    </div>
+</div>
+
+<script src="../../js/story_pastor_form.js"></script>

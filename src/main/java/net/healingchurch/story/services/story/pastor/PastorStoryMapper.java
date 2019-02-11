@@ -10,6 +10,8 @@ import java.util.Map;
 public interface PastorStoryMapper {
     List<PastorStory> findStoryList(PastorStory pastorStory);
 
+    int findStoryListCnt(PastorStory pastorStory);
+
     int createStory(PastorStory pastorStory);
 
     PastorStory getStory(int storyId);
@@ -17,4 +19,8 @@ public interface PastorStoryMapper {
     int updateStory(PastorStory pastorStory);
 
     void removeStory(int storyId);
+
+    List<PastorStory> findUserStoryList(PastorStory pastorStory);
+
+    int findUserStoryListCnt(PastorStory pastorStory);
 }

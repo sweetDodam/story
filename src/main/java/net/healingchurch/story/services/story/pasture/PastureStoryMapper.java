@@ -8,20 +8,20 @@ import java.util.List;
 
 @Mapper
 public interface PastureStoryMapper {
-    List<PastureStory> findStoryList(PastureStory pastorStory);
+    List<PastureStory> findStoryList(PastureStory pastureStory);
 
-    int findStoryListCnt(PastureStory pastorStory);
+    int findStoryListCnt(PastureStory pastureStory);
 
-    int createStory(PastureStory pastorStory);
+    int createStory(PastureStory pastureStory);
 
     PastureStory getStory(int storyId);
 
-    int updateStory(PastureStory pastorStory);
+    int updateStory(PastureStory pastureStory);
 
     void removeStory(int storyId);
 
-    List<PastureStory> findUserStoryList(PastureStory pastorStory);
+    List<PastureStory> findUserStoryList(PastureStory pastureStory);
 
-    int findUserStoryListCnt(PastureStory pastorStory);
+    int findUserStoryListCnt(PastureStory pastureStory);
 
 }

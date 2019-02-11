@@ -210,6 +210,7 @@ public class WebAppContoller {
         return "story_town_detail";
     }
 
+    //사역자 스토리 관리
     @GetMapping("/story/pastor")
     public String storyPastor(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
         //로그인한 유저의 정보
@@ -223,18 +224,60 @@ public class WebAppContoller {
         return "story_pastor";
     }
 
+    //사역자 스토리 등록/수정
     @GetMapping("/story/pastor/form")
-    public String storyPastorForm(Map<String, Object> model, @RequestParam(value = "storyId", defaultValue = "") int storyId, @AuthenticationPrincipal UserDetails userDetails) {
+    public String storyPastorForm(Map<String, Object> model,
+                                  @RequestParam(value = "userId", defaultValue = "") String userId,
+                                  @RequestParam(value = "storyId", defaultValue = "0") int storyId,
+                                  @RequestParam(value = "visitDate", defaultValue = "") String visitDate,
+                                  @AuthenticationPrincipal UserDetails userDetails) {
 
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
 
-        //선택된 마을의 스토리 정보
+        //선택된 유저의 스토리 정보
         PastorStory formStory = pastorStoryService.getStory(storyId);
         model.put("formStory", formStory);
 
+        //선택된 유저의 정보
+        User formUser = userService.getUser(userId);
+        model.put("formUser", formUser);
+
+        //선택한 스토리 날짜
+        model.put("formVisitDate", visitDate);
+
         return "story_pastor_form";
+    }
+
+    //사역자 스토리 조회
+    @GetMapping("/story/pastor/list")
+    public String storyPastorList(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
+        //로그인한 유저의 정보
+        User user = userService.getUser(userDetails.getUsername());
+        model.put("userInfo", user);
+
+        //로그인한 유저의 그룹 상세 정보
+        UserGroup formUserGroup = userGroupService.getUserGroup(user.getGroupId());
+        model.put("formUserGroup", formUserGroup);
+
+        return "story_pastor_list";
+    }
+
+    //사역자 스토리 상세
+    @GetMapping("/story/pastor/detail")
+    public String storyPastorDetail(Map<String, Object> model,
+                                     @RequestParam(value = "userId", defaultValue = "") String userId,
+                                     @AuthenticationPrincipal UserDetails userDetails) {
+        //로그인한 유저의 정보
+        User user = userService.getUser(userDetails.getUsername());
+        model.put("userInfo", user);
+
+        //선택된 유저의 정보
+        User formUser = userService.getUser(userId);
+        model.put("formUser", formUser);
+
+        return "story_pastor_detail";
     }
 
     /*****공통 템플릿 페이지*****/

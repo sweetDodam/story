@@ -6,13 +6,15 @@ import java.util.List;
 import java.util.Map;
 
 public interface PastorStoryService {
-    List<PastorStory> findStoryList(String pastorId, String fromDate, String toDate, int page, int limit);
+    Map<Object, Object> findStoryList(String visitUserId, String pastorId, String fromDate, String toDate, int page, int limit);
 
-    int createStory(String pastorId, String visitUserId, String visitDate, String summary, String prayers, String etc);
+    int createStory(String pastorId, String visitUserId, String visitDate, String visitPlace, String summary, String prayers, String etc);
 
     PastorStory getStory(int storyId);
 
-    int updateStory(int storyId, String pastorId, String visitUserId, String visitDate, String summary, String prayers, String etc);
+    int updateStory(int storyId, String pastorId, String visitUserId, String visitDate, String visitPlace, String summary, String prayers, String etc);
 
     void removeStory(int storyId);
+
+    Map<Object, Object> findUserStoryList(String userId, int groupId, int roleId, String userName, String visitDate, String pastorId, int page, int limit);
 }
