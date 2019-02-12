@@ -176,7 +176,7 @@ var page = 1;
 var formatter = {
     dtlModal : function(cellValue,rowObject,options){
             return "<a href='javascript:void(0);' " +
-                "onclick='storyTownList.detailModalLoad(\""+ common.dataChkStr(options.userId) +"\")'>"+cellValue +"</a>";
+                "onclick='storyTownList.detailModalLoad(\""+ common.dataChkStr(options.userId) +"\");$(this).parents(\"tr\").trigger(\"click\");'>"+cellValue +"</a>";
     }
 };
 

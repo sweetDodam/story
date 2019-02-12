@@ -217,9 +217,6 @@ var storyPasture = {
         $("#jqGridDtl").setGridHeight( $(".modal-body").height() * 0.9);
 
         //해당 그리드 데이터 가져오기
-        var data = new Array();
-        data.push($("#jqGrid").getRowData());
-
         $("#jqGridDtl").jqGrid('clearGridData');
         $("#jqGridDtl").jqGrid('setGridParam', { data: $("#jqGrid").getRowData() });
         $("#jqGridDtl").trigger("reloadGrid");
@@ -232,7 +229,7 @@ var formatter = {
             return "<a href='javascript:void(0);' " +
                 "onclick='storyPasture.updatModalLoad(\""+ common.dataChkStr(options.userId) +"\""+
                                                      ", \""+ common.dataChkStr(options.storyId) +"\""+
-                                                     ", \""+ $("#inputDate").val().replace(/[^0-9]/g, "") +"\")'>"+
+                                                     ", \""+ $("#inputDate").val().replace(/[^0-9]/g, "") +"\"); $(this).parents(\"tr\").trigger(\"click\");'>"+
                 cellValue +"</a>";
     },
     registFlag : function(cellValue,rowObject,options){

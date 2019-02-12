@@ -188,7 +188,7 @@ var formatter = {
                 "onclick='storyTown.updatModalLoad(     \""+ common.dataChkStr(options.userId) +"\""+
                                                      ", \""+ common.dataChkStr(options.groupId) +"\""+
                                                      ", \""+ common.dataChkStr(options.eventId) +"\""+
-                                                     ", \""+ $("#inputDate").val().replace(/[^0-9]/g, "") +"\")'>"+
+                                                     ", \""+ $("#inputDate").val().replace(/[^0-9]/g, "") +"\");$(this).parents(\"tr\").trigger(\"click\");'>"+
                 cellValue +"</a>";
     },
     registFlag : function(cellValue,rowObject,options){

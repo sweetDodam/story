@@ -128,6 +128,28 @@ var common = {
 
         return rs;
     },
+    groupChildData : function (groupId) {
+    var data = {
+        parentGroupId: groupId
+    };
+
+    var rs = null;
+
+    $.ajax({
+        type: 'GET',
+        url: '/services/user/group/childList',
+        contentType: 'application/json',
+        async : false,
+        data: data
+    }).done(function(result) {
+        rs = result;
+    }).fail(function (error) {
+        console.debug(error);
+        alert("관리자에게 문의하거나 다시 시도해주세요.");
+    });
+
+    return rs;
+},
     childSelectGroupLoad : function (parentGroupId, level, selector) {
         var data = {
             parentGroupId: parentGroupId

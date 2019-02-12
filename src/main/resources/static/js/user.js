@@ -159,7 +159,7 @@ var page = 1;
 var formatter = {
     updModal : function(cellValue,rowObject,options){
         if(common.dataChk(rowObject)){
-            return "<a href='javascript:void(0);' onclick='user.updatModalLoad(\""+ options.userId +"\")'>"+ cellValue +"</a>";
+            return "<a href='javascript:void(0);' onclick='user.updatModalLoad(\""+ options.userId +"\");$(this).parents(\"tr\").trigger(\"click\");'>"+ cellValue +"</a>";
         }
     },isFormatter : function(cellValue,rowObject,options){
         if(cellValue){

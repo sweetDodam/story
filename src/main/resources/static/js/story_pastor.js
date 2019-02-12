@@ -195,7 +195,7 @@ var formatter = {
                 "onclick='storyPastor.updatModalLoad(\""+ common.dataChkStr(options.userId) +"\""+
                                                      ", \""+ $("#pastorId").val() +"\""+
                                                      ", \""+ common.dataChkStr(options.storyId) +"\""+
-                                                     ", \""+ $("#visitDate").val().replace(/[^0-9]/g, "") +"\")'>"+
+                                                     ", \""+ $("#visitDate").val().replace(/[^0-9]/g, "") +"\");$(this).parents(\"tr\").trigger(\"click\");'>"+
                 cellValue +"</a>";
     },
     registFlag : function(cellValue,rowObject,options){

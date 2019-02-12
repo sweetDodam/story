@@ -227,10 +227,10 @@ var popFormatter = {
         if (common.dataChk(options.storyId)) {
             if (common.dataChk(options.townStoryId)) {
                 return "<a href='javascript:void(0);' " +
-                    "onclick='storyTownForm.setGridDtlData("+ rowObject.rowId +")'>등록</a>";
+                    "onclick='storyTownForm.setGridDtlData("+ rowObject.rowId +");$(this).parents(\"tr\").trigger(\"click\");'>등록</a>";
             }else{
                 return "<a href='javascript:void(0);' " +
-                    "onclick='storyTownForm.setGridDtlData("+ rowObject.rowId +")'>미등록</a>";
+                    "onclick='storyTownForm.setGridDtlData("+ rowObject.rowId +");$(this).parents(\"tr\").trigger(\"click\");'>미등록</a>";
             }
         } else {
             return '-';

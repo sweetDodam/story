@@ -230,7 +230,7 @@ var popPage = 1;
 var popFormatter = {
     dtlModal : function(cellValue,rowObject,options){
         return "<a href='javascript:void(0);' " +
-            "onclick='storyTownDetail.setGridDtlData("+ options.groupId +", "+ options.userId +")'>상세</a>";
+            "onclick='storyTownDetail.setGridDtlData("+ options.groupId +", "+ options.userId +");$(this).parents(\"tr\").trigger(\"click\");'>상세</a>";
     },
     nullChk : function(cellValue,rowObject,options){
         var val = String(cellValue);

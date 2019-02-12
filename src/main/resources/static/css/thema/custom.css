@@ -335,6 +335,14 @@ div.ui-jqgrid-hdiv td, div.ui-jqgrid-hdiv th{
     text-align: center !important;
 }
 
+.ch-txt-align-r{
+    text-align: right !important;
+}
+
+.ch-txt-align-l{
+    text-align: left !important;
+}
+
 .careTable{
     width: 100%;
     border: 1px solid #dee2e6;
@@ -381,4 +389,22 @@ label.required-icon{
 
 .ui-jqgrid .ui-jqgrid-btable tbody tr.jqgrow td {
     white-space: normal !important;
+}
+
+.div-3{
+    width: 295px;
+    float: left;
+}
+
+tr[aria-selected=true]{
+    background-color: #e9ecef;
+}
+
+.selectGrid tr.jqgrow{
+    cursor: pointer;
+}
+
+.div-3 td{
+    padding: 5px;
+    border: 1px solid #dee2e6;
 }

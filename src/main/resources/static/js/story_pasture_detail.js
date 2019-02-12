@@ -231,7 +231,7 @@ var popPage = 1;
 var popFormatter = {
     dtlModal : function(cellValue,rowObject,options){
         return "<a href='javascript:void(0);' " +
-            "onclick='storyPastureDetail.setGridDtlData("+ rowObject.rowId +")'>상세</a>";
+            "onclick='storyPastureDetail.setGridDtlData("+ rowObject.rowId +");$(this).parents(\"tr\").trigger(\"click\");'>상세</a>";
     },
     YnDesc : function(cellValue,rowObject,options){
         var val = String(cellValue);
