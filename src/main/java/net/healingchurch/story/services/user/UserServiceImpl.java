@@ -54,6 +54,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public List<User> findUserSimpleList(String userId, int roleId, int groupId, String userName) {
+        User user = new User();
+
+        user.setUserId(userId);
+        user.setRoleId(roleId);
+        user.setGroupId(groupId);
+        user.setUserName(userName);
+
+        return userMapper.findUserList(user);
+    }
+
+    @Override
     public int createUser(String userId, String password, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String regDate, String alphaDate, String pastureJoinDate, boolean isPermission, String status) {
         User user = new User();
         user.setUserId(userId);

@@ -86,25 +86,25 @@ select.ui-pg-selbox.form-control{
 .glyphicon-step-backward:before{
     content:"《";
     font-size: 20px;
-    font-weight: blod;
+    font-weight: bold;
 }
 
 .glyphicon-backward:before{
     content:"〈";
     font-size: 20px;
-    font-weight: blod;
+    font-weight: bold;
 }
 
 .glyphicon-forward:before{
     content:"〉";
     font-size: 20px;
-    font-weight: blod;
+    font-weight: bold;
 }
 
 .glyphicon-step-forward:before{
     content:"》";
     font-size: 20px;
-    font-weight: blod;
+    font-weight: bold;
 }
 
 .ui-jqgrid-hdiv{
@@ -146,6 +146,18 @@ select[readonly=readonly], .datePicker{
 
 .ch-group-pad-btm{
     padding-bottom: 5px;
+}
+
+.ch-group-pad-btm-l{
+    padding-bottom: 10px;
+}
+
+.ch-mgn-btm{
+    margin-bottom: 5px;
+}
+
+.ch-mgn-btm-l{
+    margin-bottom: 20px;
 }
 
 .ch-mgn-5r{
@@ -211,6 +223,11 @@ label.calendar-icon.dis {
     padding-bottom: calc(var(--input-padding-y) / 3);
     font-size: 1rem;
 }
+
+.form-label-group select{
+    height: calc(2.25rem + 9px);
+}
+
 
 .ch-search-area {
     display:table;

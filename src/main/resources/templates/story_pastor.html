@@ -10,24 +10,38 @@
                 <input type="hidden" id="formLevel" th:value="${groupFlag ? formUserGroup.getGroupLevel() : ''}"/>
                 <input type="hidden" id="formRoleId" th:value="${userInfo.getRoleId()}"/>
                 <input type="hidden" id="formUserId" th:value="${userInfo.getUserId()}"/>
-                <div class="form-group group-selectBox ch-max-width750">
-                    <p class="my-2">소속 그룹</p>
-                    <div class="form-row">
-                        <div class="col-md-3 ch-group-pad-btm">
-                            <select class="form-control" group-level="1" tabindex="-1"></select>
+
+                <div class="ch-search-area">
+                    <div class="form-group group-selectBox ch-search-obj-l">
+                        <p class="my-2">소속 그룹</p>
+                        <div class="form-row">
+                            <div class="col-md-4 ch-group-pad-btm">
+                                <select class="form-control notClear" group-level="1" tabindex="-1"></select>
+                            </div>
+                            <div class="col-md-4 ch-group-pad-btm">
+                                <select class="form-control notClear" group-level="2" tabindex="-1"></select>
+                            </div>
+                            <div class="col-md-4 ch-group-pad-btm">
+                                <select class="form-control notClear" group-level="3" tabindex="-1"></select>
+                            </div>
                         </div>
-                        <div class="col-md-3 ch-group-pad-btm">
-                            <select class="form-control" group-level="2" tabindex="-1"></select>
-                        </div>
-                        <div class="col-md-3 ch-group-pad-btm">
-                            <select class="form-control" group-level="3" tabindex="-1"></select>
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" id="visitDate" name="visitDate" class="form-control datePicker" readonly>
-                            <label class="calendar-icon" target="visitDate"></label>
+                    </div>
+                    <div class="form-group ch-search-obj-r">
+                        <p class="my-2">목회자</p>
+                        <div class="form-row">
+                            <div class="col-md-4 ch-group-pad-btm">
+                                <select class="form-control" id="pastorId" name="pastorId">
+                                    <option  th:each="list : ${pastorList}" th:value="${list.getUserId()}" th:text="${list.getUserName()}" th:attr="selected=${userInfo.getUserId() == list.getUserId() ? true : false}"></option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" id="visitDate" name="visitDate" class="form-control datePicker" readonly>
+                                <label class="calendar-icon" target="visitDate"></label>
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="table-responsive" >
                     <table id="jqGrid" class="table table-bordered"></table>
                     <div id="pager"></div>

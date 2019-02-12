@@ -7,9 +7,10 @@
 <div class="modal-body" th:with="registFlag=${(formStory == null || formStory.getStoryId() == '') ? true : false}">
     <form id="StoryForm" th:action="@{registFlag ? /services/story/pastor/create : /services/story/pastor/update}" method="POST">
         <input type="hidden" id="visitUserId" name="visitUserId" th:value="${formUser.getUserId()}"/>
-        <input type="hidden" id="pastorId" name="pastorId" th:value="${userInfo.getUserId()}"/>
+        <input type="hidden" id="pastorId" name="pastorId" th:value="${formPastorId}"/>
         <input type="hidden" id="visitDate" name="visitDate" th:value="${formVisitDate}"/>
         <input type="hidden" id="storyId" name="storyId" th:value="${registFlag ? '' :formStory.getStoryId()}"/>
+        <input type="hidden" id="myUserId" name="myUserId" th:value="${userInfo.getUserId()}"/>
 
         <div class="form-group ch-group-pad-btm">
             <div class="form-row">

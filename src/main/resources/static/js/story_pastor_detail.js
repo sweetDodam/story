@@ -51,24 +51,7 @@ var storyPastorDetail = {
             pginput : true,
             shrinkToFit: true,
             sortable: false,
-            footerrow: true,
-            userDataOnFooter : false,
             loadComplete : function(data){
-                var col = jqGridPopForm.colModel;
-                var sumData = { inputDate: '합계' };
-
-                for(var i = 0;i < col.length;i++){
-                    if(common.dataChk(col[i]["index"])){
-                        var colName = col[i]["name"];
-                        var sum = $("#jqGridPop").jqGrid('getCol',colName, false, 'sum');
-
-                        if(colName.indexOf('Yn') != -1){
-                            sum = sum + "_"
-                        }
-                        sumData[colName] = sum;
-                    }
-                }
-                $('#jqGridPop').jqGrid('footerData', 'set', sumData);
 
             },onPaging: function (pgButton) {
                 var gridPage = $("#jqGridPop").getGridParam("page");

@@ -21,6 +21,10 @@ var storyPastorForm = {
             txt = "수정";
         }
 
+        if($("#myUserId").val() != $("#pastorId").val()){
+            txt = "다른 목회자의 스토리입니다. " + txt;
+        }
+
         if(!confirm(txt + "하시겠습니까?")){
             return;
         }
@@ -51,6 +55,10 @@ var storyPastorForm = {
 
         var url = "/services/story/pastor/remove";
         var txt = "삭제";
+
+        if($("#myUserId").val() != $("#pastorId").val()){
+            txt = "다른 목회자의 스토리입니다. " + txt;
+        }
 
         if(!confirm(txt + "하시겠습니까?")){
             return;

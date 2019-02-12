@@ -26,13 +26,13 @@ var storyTownDetail = {
         //윈도우 resize 이벤트
         $(window).bind('resize', function() {
             //그리드 크기 변경
-            common.resizeGridWidth('#jqGridPop', '.modal-body', 2);
+            //common.resizeGridWidth('#jqGridPop', '.modal-body', 2);
 
             //상세 그리드 크기 변경
-            common.resizeGridWidth('#jqGridPopDtl', '.modal-body', 2);
+            //common.resizeGridWidth('#jqGridPopDtl', '.modal-body', 2);
 
             //상세 그리드 크기 변경
-            common.resizeGridWidth('#jqGridPopEvent', '.modal-body', 5);
+            //common.resizeGridWidth('#jqGridPopEvent', '.modal-body', 5);
         }).trigger('resize');
     },
     gridLoad : function () {
@@ -44,8 +44,8 @@ var storyTownDetail = {
             rownumbers: true,
             colModel: jqGridPopForm.colModel,
             viewrecords: true,
-            height: $(".modal-body").height() * 0.31,
-            width: ($(".modal-body").width() - 2) < 1000 ? 1000 : ($(".modal-body").width() - 2),
+            height: $(".modal-body").height() * 0.3,
+            width: ($(".modal-body").width() - 5) < 1000 ? 1000 : ($(".modal-body").width() - 5),
             rowheight: 20,
             shrinkToFit: true,
             sortable: false,
@@ -176,8 +176,8 @@ var storyTownDetail = {
             rownumbers: true,
             colModel: jqGridPopDtlForm.colModel,
             viewrecords: true,
-            height: $(".modal-body").height() * 0.17,
-            width: ($(".modal-body").width() - 2) < 1000 ? 1000 : ($(".modal-body").width() - 2),
+            height: $(".modal-body").height() * 0.16,
+            width: ($(".modal-body").width() - 5) < 1000 ? 1000 : ($(".modal-body").width() - 5),
             rowheight: 15,
             shrinkToFit: true,
             sortable: false,
@@ -212,8 +212,8 @@ var storyTownDetail = {
             rownumbers: true,
             colModel: jqGridPopEventForm.colModel,
             viewrecords: true,
-            height: $(".modal-body").height() * 0.17,
-            width: ($(".modal-body").width() - 2) < 1000 ? 1000 : ($(".modal-body").width() - 2),
+            height: $(".modal-body").height() * 0.16,
+            width: ($(".modal-body").width() - 5) < 1000 ? 1000 : ($(".modal-body").width() - 5),
             rowheight: 15,
             shrinkToFit: true,
             sortable: false,
@@ -284,8 +284,8 @@ var jqGridPopForm = {
 
 var jqGridPopDtlForm = {
     colModel : [
-        { label: '모임날짜',        name: 'inputDate',          align: 'center',    width: 100 },
         { label: '목자이름',        name: 'userName',           align: 'center',    width: 80 },
+        { label: '모임날짜',        name: 'inputDate',          align: 'center',    width: 100 },
         { label: '목자영적돌봄',    name: 'leaderCareStory',    align: 'left',      width: 400 },
         { label: '목장영적돌봄',    name: 'pastureCareStory',   align: 'left',      width: 400 }]
 };

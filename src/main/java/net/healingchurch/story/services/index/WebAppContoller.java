@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -221,6 +222,10 @@ public class WebAppContoller {
         UserGroup formUserGroup = userGroupService.getUserGroup(user.getGroupId());
         model.put("formUserGroup", formUserGroup);
 
+        //목회자 리스트
+        List<User> pastorList = userService.findUserSimpleList("", 0, 2, "");
+        model.put("pastorList", pastorList);
+
         return "story_pastor";
     }
 
@@ -228,6 +233,7 @@ public class WebAppContoller {
     @GetMapping("/story/pastor/form")
     public String storyPastorForm(Map<String, Object> model,
                                   @RequestParam(value = "userId", defaultValue = "") String userId,
+                                  @RequestParam(value = "pastorId", defaultValue = "") String pastorId,
                                   @RequestParam(value = "storyId", defaultValue = "0") int storyId,
                                   @RequestParam(value = "visitDate", defaultValue = "") String visitDate,
                                   @AuthenticationPrincipal UserDetails userDetails) {
@@ -243,6 +249,9 @@ public class WebAppContoller {
         //선택된 유저의 정보
         User formUser = userService.getUser(userId);
         model.put("formUser", formUser);
+
+        //선택한 목회자 ID
+        model.put("formPastorId", pastorId);
 
         //선택한 스토리 날짜
         model.put("formVisitDate", visitDate);
@@ -276,6 +285,10 @@ public class WebAppContoller {
         //선택된 유저의 정보
         User formUser = userService.getUser(userId);
         model.put("formUser", formUser);
+
+        //목회자 리스트
+        List<User> pastorList = userService.findUserSimpleList("", 0, 2, "");
+        model.put("pastorList", pastorList);
 
         return "story_pastor_detail";
     }

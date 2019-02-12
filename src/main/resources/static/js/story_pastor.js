@@ -34,6 +34,12 @@ var storyPastor = {
             _this.gridSearch();
         });
 
+        //목회자 셀렉트박스 change 이벤트
+        $('#pastorId').on('change', function () {
+            //검색
+            _this.gridSearch();
+        });
+        
         //달력아이콘 click 이벤트
         $('.calendar-icon').click(function(){
             var target = $(this).attr("target");
@@ -59,9 +65,9 @@ var storyPastor = {
             //common.resizeGridWidth('#jqGrid', '.card-body', 5);
         }).trigger('resize');
     },
-    updatModalLoad : function (userId, storyId, visitDate) {
+    updatModalLoad : function (userId, pastorId, storyId, visitDate) {
         $("#saveStoryModal").modal();
-        $("#saveStoryModal .modal-content").load("/story/pastor/form?", "userId=" + userId + "&storyId=" + storyId + "&visitDate=" + visitDate);
+        $("#saveStoryModal .modal-content").load("/story/pastor/form?", "userId=" + userId + "&pastorId=" + pastorId + "&storyId=" + storyId + "&visitDate=" + visitDate);
     },
     groupSelectLoad : function () {
         var roleId = Number($("#formRoleId").val());
@@ -184,6 +190,7 @@ var formatter = {
     updModal : function(cellValue,rowObject,options){
             return "<a href='javascript:void(0);' " +
                 "onclick='storyPastor.updatModalLoad(\""+ common.dataChkStr(options.userId) +"\""+
+                                                     ", \""+ $("#pastorId").val() +"\""+
                                                      ", \""+ common.dataChkStr(options.storyId) +"\""+
                                                      ", \""+ $("#visitDate").val().replace(/[^0-9]/g, "") +"\")'>"+
                 cellValue +"</a>";
@@ -227,7 +234,6 @@ var jqGridForm = {
         data["page"] = page;
         data["limit"] = $('#pager .ui-pg-selbox').val();
         data["visitDate"] = $("#visitDate").val().replace(/[^0-9]/g, "");
-        data["pastorId"] = $("#formUserId").val();
 
         //그룹셀렉트 박스
         var selectCnt = $('.group-selectBox select').length;

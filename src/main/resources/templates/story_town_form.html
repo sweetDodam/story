@@ -29,6 +29,23 @@
                 </div>
             </div>
         </div>
+        <div class="table-responsive ch-mgn-btm-l ch-txt-align-c">
+            <table class="careTable">
+                <tr class="careTitle">
+                    <td><p>마을동정</p></td>
+                    <td rowspan="2" style="width: 5%;">
+                        <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="storyTownForm.save(false);">저장</a>
+                        <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="storyTownForm.delete(false);" th:if="${role <= 2 && role != 0}">삭제</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <textarea class="form-control eventRequired" id="eventContent" name="eventContent" th:text="${registFlag ? '' : formEvent.getEventContent()}" style="height:90px;"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
         <div class="table-responsive ch-group-pad-btm" >
             <table id="jqGridPop" class="table table-bordered dtlView"></table>
         </div>
@@ -50,22 +67,6 @@
                     </td>
                     <td>
                         <textarea class="form-control careRequired" id="pastureCareStory" name="pastureCareStory" style="height:90px;"></textarea>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="table-responsive ch-group-pad-btm ch-txt-align-c">
-            <table class="careTable">
-                <tr class="careTitle">
-                    <td><p>마을동정</p></td>
-                    <td rowspan="2" style="width: 5%;">
-                        <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="storyTownForm.save(false);">저장</a>
-                        <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="storyTownForm.delete(false);" th:if="${role <= 2 && role != 0}">삭제</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <textarea class="form-control eventRequired" id="eventContent" name="eventContent" th:text="${registFlag ? '' : formEvent.getEventContent()}" style="height:90px;"></textarea>
                     </td>
                 </tr>
             </table>
