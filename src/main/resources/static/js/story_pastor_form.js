@@ -46,7 +46,7 @@ var storyPastorForm = {
 
         }).fail(function (error) {
             console.debug(txt + "실패");
-            alert(error);
+            alert("관리자에게 문의하거나 다시 시도해주세요.");
         });
     },
     delete : function () {
@@ -82,7 +82,7 @@ var storyPastorForm = {
 
         }).fail(function (error) {
             console.debug(txt + "실패");
-            alert(error);
+            alert("관리자에게 문의하거나 다시 시도해주세요.");
         });
     }
 };

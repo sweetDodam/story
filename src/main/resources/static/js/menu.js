@@ -43,7 +43,7 @@ var menu = {
 
         }).fail(function (error) {
             console.debug(error);
-            alert(error);
+            alert("관리자에게 문의하거나 다시 시도해주세요.");
         });
     }
 };

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title th:text="${title}">Title</title>
+    <title>에러</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,29 +17,29 @@
     <link rel="stylesheet" th:href="@{/css/thema/sb-admin.css}" href="../../css/thema/sb-admin.css">
     <link rel="stylesheet" th:href="@{/css/thema/custom.css}" href="../../css/thema/custom.css">
 
-    <!-- Page level plugin CSS-->
-    <link rel="stylesheet" th:href="@{/css/dataTables.bootstrap4.css}" href="../../css/dataTables.bootstrap4.css">
 </head>
-<body>
+<body class="bg-ch">
 <div class="container">
-    <div class="navbar">
-        <div class="navbar-inner">
-            <a class="brand" href="http://www.healingchurch.net"> 치유하는 교회 </a>
-            <ul class="nav">
-                <li><a th:href="@{/}" href="home.html"> Home </a></li>
-            </ul>
+    <div class="card card-login mx-auto mt-5">
+        <div class="card-header"><span th:text="${status}"></span> 에러</div>
+        <div class="card-body">
+            <div id="created"  style="margin: 10px;text-align: center;font-size: 9pt;padding-top: 30px;" th:text="${#dates.format(timestamp)}"></div>
+            <div style="margin: 10px;text-align: center;font-weight: bold;padding-bottom: 30px;">
+                관리자에게 문의하거나 다시 시도해주세요.
+            </div>
+            <div class="text-center">
+                <a class="btn btn-primary btn-block bg-ch-blue txt-ch-white mt-3" href="/">메인 페이지로</a>
+            </div>
         </div>
     </div>
-    <h1 th:text="${title}">Title</h1>
-    <div id="created" th:text="${#dates.format(timestamp)}">July 11,
-        2012 2:17:16 PM CDT</div>
-    <div>
-        There was an unexpected error (type=<span th:text="${error}">Bad</span>, status=<span th:text="${status}">500</span>).
-    </div>
-    <div th:text="${message}">Fake content</div>
-    <div>
-        Please contact the operator with the above information.
-    </div>
 </div>
+
+<!-- 스크립트 로드 -->
+<script type="text/javascript" src="../../js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script type="text/javascript" src="../../js/jquery.easing.min.js"></script>
+
 </body>
 </html>
