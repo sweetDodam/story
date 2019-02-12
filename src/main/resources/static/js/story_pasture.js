@@ -14,6 +14,9 @@ var storyPasture = {
         _this.gridLoad();
         _this.gridSearch();
 
+        //그리드 상세 셋팅
+        _this.gridDtlLoad();
+
         //그룹 셀렉트박스 change 이벤트
         $('.group-selectBox select').on('change', function () {
             var level = Number($(this).attr("group-level"));
@@ -51,6 +54,11 @@ var storyPasture = {
             setTimeout(function() {
                 storyPastureForm.init();
             }, 300);
+        });
+
+        //기도제목 모달 열린 후 이벤트
+        $("#storyPrayModal").on('shown.bs.modal', function(e){
+            storyPasture.setGridDtlData();
         });
 
         //윈도우 resize 이벤트
@@ -180,6 +188,38 @@ var storyPasture = {
         //현재 날짜의 최근 주일을 가져온다
         var today = common.calculateSundayDate(new Date(), false);
         $("#inputDate").datepicker("setDate", today);
+    },
+    gridDtlLoad : function () {
+        $("#jqGridDtl").jqGrid({
+            styleUI : 'Bootstrap',
+            datatype: "local",
+            //     rowNum: -1,
+            rownumbers: false,
+            colModel: jqGridDtlForm.colModel,
+            viewrecords: true,
+            height: 100,
+            width: 100,
+            shrinkToFit: true,
+            sortable: false,
+            loadComplete : function(data){
+
+            }
+        });
+    },
+    setGridDtlData : function () {
+        //그리드 크기 변경
+        $("#jqGridDtl").setGridWidth( $(".modal-body").width() - 5, true);
+
+        //그리드 크기 변경
+        $("#jqGridDtl").setGridHeight( $(".modal-body").height() * 0.9);
+
+        //해당 그리드 데이터 가져오기
+        var data = new Array();
+        data.push($("#jqGrid").getRowData());
+
+        $("#jqGridDtl").jqGrid('clearGridData');
+        $("#jqGridDtl").jqGrid('setGridParam', { data: $("#jqGrid").getRowData() });
+        $("#jqGridDtl").trigger("reloadGrid");
     }
 };
 
@@ -221,7 +261,7 @@ var jqGridForm = {
         { label: '관리자여부',   	name: 'isAdmin',            align: 'center', width: 100, 	hidden: true },
         { label: '주소',        	name: 'address',            align: 'center', width: 165, 	hidden: true },
         { label: '스토리날짜',  	name: 'inputDate',          align: 'center', width: 100, 	hidden: true },
-        { label: '상태',        	name: 'status',             align: 'center', width: 100, 	hidden: true },
+        { label: '기도제목',        name: 'prayers',            align: 'center', width: 100, 	hidden: true },
         { label: '등록일',       	name: 'createDate',         align: 'center', width: 100, 	hidden: true },
         { label: '수정일',       	name: 'updateDate',         align: 'center', width: 100, 	hidden: true }]
     ,setParam : function(){
@@ -245,6 +285,12 @@ var jqGridForm = {
 
         return data;
     }
+};
+
+var jqGridDtlForm = {
+    colModel : [
+        { label: '이름',      name: 'userName',      align: 'center',    width: 150 },
+        { label: '기도제목',  name: 'prayers',        align: 'left',     width: 600 }]
 };
 
 storyPasture.init();

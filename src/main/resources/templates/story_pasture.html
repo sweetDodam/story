@@ -2,6 +2,7 @@
     <div class="card mb-5">
         <div class="card-header">
             <i class="fas fa-table mr-1"></i>목장 스토리 등록
+            <button type="button" class="btn btn-primary btn-right btn-custom" data-toggle="modal" data-target="#storyPrayModal" onclick="storyPasture.setGridDtlData();">기도 목록</button>
         </div>
         <div class="card-body" >
             <form id="GridForm">
@@ -41,6 +42,25 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <!-- 모달 데이터 영역 -->
+        </div>
+    </div>
+</div>
+
+<!-- 기도제목 모아보기 모달 영역 -->
+<div class="modal fade" id="storyPrayModal" tabindex="-1" role="dialog" aria-labelledby="storyPrayModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="storyPrayModalLabel">기도 목록</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive" >
+                    <table id="jqGridDtl" class="table table-bordered"></table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

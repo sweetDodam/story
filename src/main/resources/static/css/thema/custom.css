@@ -41,7 +41,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .btn-custom {
-    padding: 1px 5px 1px 5px;
+    padding: 1px 3px 1px 3px;
     font-size: 0.9em !important;
 }
 
@@ -377,4 +377,8 @@ label.required-icon{
 .pwdChgBtn{
     left: 5px;
     position: absolute;
+}
+
+.ui-jqgrid .ui-jqgrid-btable tbody tr.jqgrow td {
+    white-space: normal !important;
 }
