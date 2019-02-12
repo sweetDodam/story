@@ -6,6 +6,8 @@ var storyPastorList = {
 
         //권한 셀렉트 박스 그리기
         common.comCodeSelectLoad(".comCode");
+        //관리자, 목회자 제외
+        $('[parentCodeId=USER_ROLE]').children("[value=1], [value=2]").remove();
 
         //그룹 셀렉트 박스 그리기
         _this.groupSelectLoad();
@@ -69,6 +71,9 @@ var storyPastorList = {
 
         //그룹 셀렉트박스 최상위 그룹을 가져와 그리기
         common.childSelectGroupLoad(-1, 1);
+
+        //관리자, 목회자 제외
+        $('.group-selectBox [group-level=1]').children("[value=1], [value=2]").remove();
     },
     gridLoad : function () {
         $("#jqGrid").jqGrid({
