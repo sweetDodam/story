@@ -50,12 +50,12 @@ public class PastorStoryController {
     public int updateStory(
             @RequestParam(value = "storyId", required = true, defaultValue = "0") int storyId,
             @RequestParam(value = "pastorId", required = true, defaultValue = "") String pastorId,
-            @RequestParam(value = "fromDate", defaultValue = "") String visitUserId,
-            @RequestParam(value = "toDate", defaultValue = "") String visitDate,
+            @RequestParam(value = "visitUserId", defaultValue = "") String visitUserId,
+            @RequestParam(value = "visitDate", defaultValue = "") String visitDate,
             @RequestParam(value = "visitPlace", defaultValue = "") String visitPlace,
-            @RequestParam(value = "toDate", defaultValue = "") String summary,
-            @RequestParam(value = "toDate", defaultValue = "") String prayers,
-            @RequestParam(value = "toDate", defaultValue = "") String etc
+            @RequestParam(value = "summary", defaultValue = "") String summary,
+            @RequestParam(value = "prayers", defaultValue = "") String prayers,
+            @RequestParam(value = "etc", defaultValue = "") String etc
     ) throws Exception {
         return pastorStoryService.updateStory(storyId, pastorId, visitUserId, visitDate, visitPlace, summary, prayers, etc);
     }
