@@ -41,9 +41,8 @@ public class UserGroupServiceImpl implements UserGroupService {
     }
 
     @Override
-    public int createUserGroup(int groupId, int parentGroupId, String groupName, int groupLevel) {
+    public int createUserGroup(int parentGroupId, String groupName, int groupLevel) {
         UserGroup userGroup = new UserGroup();
-        userGroup.setGroupId(groupId);
         userGroup.setParentGroupId(parentGroupId);
         userGroup.setGroupName(groupName);
         userGroup.setGroupLevel(groupLevel);

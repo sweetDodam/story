@@ -12,7 +12,7 @@ public interface UserGroupService {
 
     UserGroup getUserGroup(int groupId);
 
-    int createUserGroup(int groupId, int parentGroupId, String groupName, int groupLevel);
+    int createUserGroup(int parentGroupId, String groupName, int groupLevel);
 
     int updateUserGroup(int groupId, int parentGroupId, String groupName, int groupLevel);
 

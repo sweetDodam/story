@@ -408,3 +408,10 @@ tr[aria-selected=true]{
     padding: 5px;
     border: 1px solid #dee2e6;
 }
+
+.disObj{
+    pointer-events: none;
+    background-color: #E9ECEF !important;
+    border-color: #E9ECEF !important;
+    color: #ABABAC !important;
+}

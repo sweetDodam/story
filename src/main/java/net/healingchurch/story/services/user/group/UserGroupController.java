@@ -37,11 +37,10 @@ public class UserGroupController {
 
     @PostMapping("create")
     public int createUserGroup(
-                            @RequestParam(value = "groupId", defaultValue = "0") int groupId,
                             @RequestParam(value = "parentGroupId", defaultValue = "0") int parentGroupId,
                             @RequestParam(value = "groupName", defaultValue = "") String groupName,
                             @RequestParam(value = "groupLevel", defaultValue = "0") int groupLevel){
-        return userGroupService.createUserGroup(groupId, parentGroupId, groupName, groupLevel);
+        return userGroupService.createUserGroup(parentGroupId, groupName, groupLevel);
     }
 
     @PostMapping("update")

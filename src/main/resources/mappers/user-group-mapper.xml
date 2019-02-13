@@ -29,9 +29,8 @@
     <insert id="createUserGroup" parameterType="net.healingchurch.story.domain.UserGroup"
             useGeneratedKeys="true" keyProperty="userSeq">
         /*  UserGroupMapper.createUserGroup  */
-        INSERT INTO ch_user_group(group_id, parent_group_id, group_name, group_level)
+        INSERT INTO ch_user_group(parent_group_id, group_name, group_level)
         VALUES (
-            #{groupId},
             #{parentGroupId},
             #{groupName},
             #{groupLevel}
