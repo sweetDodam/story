@@ -356,33 +356,6 @@ public class WebAppContoller {
         return "user_group";
     }
 
-    @GetMapping("/user/group/add")
-    public String addUserGroup(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
-        //로그인한 유저의 정보
-        User user = userService.getUser(userDetails.getUsername());
-        model.put("userInfo", user);
-
-        return "user_group_add";
-    }
-
-    @GetMapping("/town")
-    public String town(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
-        //로그인한 유저의 정보
-        User user = userService.getUser(userDetails.getUsername());
-        model.put("userInfo", user);
-
-        return "town";
-    }
-
-    @GetMapping("/town/add")
-    public String addTown(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
-        //로그인한 유저의 정보
-        User user = userService.getUser(userDetails.getUsername());
-        model.put("userInfo", user);
-
-        return "town_add";
-    }
-
     @GetMapping("/permission")
     public String permission(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
         //로그인한 유저의 정보
@@ -407,16 +380,7 @@ public class WebAppContoller {
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
 
-        return "menu";
-    }
-
-    @GetMapping("/menu/add")
-    public String addMenu(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
-        //로그인한 유저의 정보
-        User user = userService.getUser(userDetails.getUsername());
-        model.put("userInfo", user);
-
-        return "menu_add";
+        return "menuMgm";
     }
 
     @GetMapping("/common/code")

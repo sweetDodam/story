@@ -2,6 +2,8 @@ package net.healingchurch.story.services.story.pastor;
 
 import net.healingchurch.story.domain.PastorStory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -44,6 +46,7 @@ public class PastorStoryServiceImpl implements PastorStoryService {
     //@PreAuthorize("hasRole('ROLE_PASTER')")
     public int createStory(String pastorId, String visitUserId, String visitDate, String visitPlace, String summary, String prayers, String etc) {
         PastorStory pastorStory = new PastorStory();
+
         pastorStory.setPastorId(pastorId);
         pastorStory.setVisitUserId(visitUserId);
         pastorStory.setVisitDate(visitDate);
@@ -51,6 +54,11 @@ public class PastorStoryServiceImpl implements PastorStoryService {
         pastorStory.setSummary(summary);
         pastorStory.setPrayers(prayers);
         pastorStory.setEtc(etc);
+
+        //로그인한 유저 아이디
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        pastorStory.setLoginUserId(principal.getUsername());
+
         return pastorStoryMapper.createStory(pastorStory);
     }
 
@@ -62,6 +70,7 @@ public class PastorStoryServiceImpl implements PastorStoryService {
     @Override
     public int updateStory(int storyId, String pastorId, String visitUserId, String visitDate, String visitPlace, String summary, String prayers, String etc) {
         PastorStory pastorStory = new PastorStory();
+
         pastorStory.setStoryId(storyId);
         pastorStory.setPastorId(pastorId);
         pastorStory.setVisitUserId(visitUserId);
@@ -70,6 +79,11 @@ public class PastorStoryServiceImpl implements PastorStoryService {
         pastorStory.setSummary(summary);
         pastorStory.setPrayers(prayers);
         pastorStory.setEtc(etc);
+
+        //로그인한 유저 아이디
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        pastorStory.setLoginUserId(principal.getUsername());
+
         return pastorStoryMapper.updateStory(pastorStory);
     }
 

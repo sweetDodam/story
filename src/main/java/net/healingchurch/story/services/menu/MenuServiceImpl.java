@@ -2,6 +2,8 @@ package net.healingchurch.story.services.menu;
 
 import net.healingchurch.story.domain.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,23 +29,37 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public int createMenu(int parentMenuId, String menuName, int menuLevel, int sortIdx) {
+    public int createMenu(int parentMenuId, String menuName, int menuLevel, int sortIdx, String menuUrl) {
         Menu menu = new Menu();
+
         menu.setParentMenuId(parentMenuId);
         menu.setMenuName(menuName);
         menu.setMenuLevel(menuLevel);
         menu.setSortIdx(sortIdx);
+        menu.setMenuUrl(menuUrl);
+
+        //로그인한 유저 아이디
+        UserDetails principal = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        menu.setLoginUserId(principal.getUsername());
+
         return menuMapper.createMenu(menu);
     }
 
     @Override
-    public int updateMenu(int menuId, int parentMenuId, String menuName, int menuLevel, int sortIdx) {
+    public int updateMenu(int menuId, int parentMenuId, String menuName, int menuLevel, int sortIdx, String menuUrl) {
         Menu menu = new Menu();
+
         menu.setMenuId(menuId);
         menu.setParentMenuId(parentMenuId);
         menu.setMenuName(menuName);
         menu.setMenuLevel(menuLevel);
         menu.setSortIdx(sortIdx);
+        menu.setMenuUrl(menuUrl);
+
+        //로그인한 유저 아이디
+        UserDetails principal = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        menu.setLoginUserId(principal.getUsername());
+
         return menuMapper.updateMenu(menu);
     }
 

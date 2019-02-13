@@ -12,6 +12,8 @@ public class Code {
     private int offset;
     private int limit;
 
+    private String loginUserId;
+
     public Code() {
     }
 
@@ -71,6 +73,14 @@ public class Code {
         this.limit = limit;
     }
 
+    public String getLoginUserId() {
+        return loginUserId;
+    }
+
+    public void setLoginUserId(String loginUserId) {
+        this.loginUserId = loginUserId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -94,6 +104,7 @@ public class Code {
                 ", page=" + page +
                 ", offset=" + offset +
                 ", limit=" + limit +
+                ", loginUserId=" + loginUserId +
                 '}';
     }
 }

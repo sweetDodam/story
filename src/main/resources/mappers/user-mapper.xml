@@ -142,7 +142,8 @@
         <if test="pastureJoinDate!='' and regDate!=null">pasture_join_date,</if>
         is_permission,
         status,
-        create_date)
+        create_date,
+        create_user)
         VALUES (
             CONCAT('ch_', (select * from (select MAX(user_seq)+1 from ch_user) tmp)),
             #{password},
@@ -158,7 +159,8 @@
         <if test="pastureJoinDate!='' and pastureJoinDate!=null">#{pastureJoinDate},</if>
             #{isPermission},
             #{status},
-            now()
+            now(),
+            #{loginUserId}
             )
     </insert>
 
@@ -171,11 +173,13 @@
               <when test="password!='' and password!=null">
                    password = #{password}
                   ,update_date = now()
+                  ,update_user = #{loginUserId}
               </when>
               <otherwise>
                    is_admin = #{isAdmin}
                   ,is_permission = #{isPermission}
                   ,update_date = now()
+                  ,update_user = #{loginUserId}
                   <if test="userName!='' and userName!=null">,user_name = #{userName}</if>
                   <if test="roleId!='' and roleId!=null">,role_id = #{roleId}</if>
                   <if test="groupId!='' and groupId!=null">,group_id = #{groupId}</if>

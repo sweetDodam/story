@@ -4,6 +4,8 @@ import net.healingchurch.story.domain.Event;
 import net.healingchurch.story.domain.PastureStory;
 import net.healingchurch.story.domain.TownStory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -109,6 +111,10 @@ public class TownStoryServiceImpl implements TownStoryService {
         townStory.setLeaderCareStory(leaderCareStory);
         townStory.setPastureCareStory(pastureCareStory);
 
+        //로그인한 유저 아이디
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        townStory.setLoginUserId(principal.getUsername());
+
         townStoryMapper.createStory(townStory);
 
         return townStory.getTownStoryId();
@@ -122,6 +128,10 @@ public class TownStoryServiceImpl implements TownStoryService {
         townStory.setStoryId(storyId);
         townStory.setLeaderCareStory(leaderCareStory);
         townStory.setPastureCareStory(pastureCareStory);
+
+        //로그인한 유저 아이디
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        townStory.setLoginUserId(principal.getUsername());
 
         return townStoryMapper.updateStory(townStory);
     }

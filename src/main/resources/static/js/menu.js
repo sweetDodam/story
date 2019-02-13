@@ -3,8 +3,6 @@ var menu = {
         var _this = this;
 
         console.log("menu init");
-        //메뉴 리스트
-        //_this.load();
 
         //메뉴 첫번쨰 클릭
         $("#com-menu li.nav-item").first().children("a").trigger("click");
@@ -29,21 +27,6 @@ var menu = {
         $('#com-menu .dropdown-menu .dropdown-item').on('click', function () {
             $('#com-menu .dropdown-menu .dropdown-item').removeClass("active");
             $(this).addClass("active");
-        });
-    },
-    load : function () {
-        var data = {};
-
-        $.ajax({
-            type: 'GET',
-            url: '/services/menu/list',
-            contentType: 'application/json',
-            data: data
-        }).done(function(rs) {
-
-        }).fail(function (error) {
-            console.debug(error);
-            alert("관리자에게 문의하거나 다시 시도해주세요.");
         });
     }
 };

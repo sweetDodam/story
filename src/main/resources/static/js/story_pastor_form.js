@@ -15,6 +15,7 @@ var storyPastorForm = {
 
         var url = "/services/story/pastor/create";
         var txt = "등록";
+        var txt2 = "";
 
         if(common.dataChk($("#storyId").val())){
             url = "/services/story/pastor/update";
@@ -22,10 +23,10 @@ var storyPastorForm = {
         }
 
         if($("#myUserId").val() != $("#pastorId").val()){
-            txt = "다른 목회자의 스토리입니다. " + txt;
+            txt2 = "다른 목회자의 스토리입니다. ";
         }
 
-        if(!confirm(txt + "하시겠습니까?")){
+        if(!confirm(txt2 + txt + "하시겠습니까?")){
             return;
         }
         $.ajax({
@@ -55,12 +56,13 @@ var storyPastorForm = {
 
         var url = "/services/story/pastor/remove";
         var txt = "삭제";
+        var txt2 = "";
 
         if($("#myUserId").val() != $("#pastorId").val()){
-            txt = "다른 목회자의 스토리입니다. " + txt;
+            txt2 = "다른 목회자의 스토리입니다. ";
         }
 
-        if(!confirm(txt + "하시겠습니까?")){
+        if(!confirm(txt2 + txt + "하시겠습니까?")){
             return;
         }
 

@@ -6,6 +6,7 @@ import net.healingchurch.story.domain.UserGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -43,19 +44,31 @@ public class UserGroupServiceImpl implements UserGroupService {
     @Override
     public int createUserGroup(int parentGroupId, String groupName, int groupLevel) {
         UserGroup userGroup = new UserGroup();
+
         userGroup.setParentGroupId(parentGroupId);
         userGroup.setGroupName(groupName);
         userGroup.setGroupLevel(groupLevel);
+
+        //로그인한 유저 아이디
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        userGroup.setLoginUserId(principal.getUsername());
+
         return userGroupMapper.createUserGroup(userGroup);
     }
 
     @Override
     public int updateUserGroup(int groupId, int parentGroupId, String groupName, int groupLevel) {
         UserGroup userGroup = new UserGroup();
+
         userGroup.setGroupId(groupId);
         userGroup.setParentGroupId(parentGroupId);
         userGroup.setGroupName(groupName);
         userGroup.setGroupLevel(groupLevel);
+
+        //로그인한 유저 아이디
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        userGroup.setLoginUserId(principal.getUsername());
+
         return userGroupMapper.updateUserGroup(userGroup);
     }
 

@@ -5,6 +5,7 @@ import net.healingchurch.story.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -68,6 +69,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public int createUser(String userId, String password, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String regDate, String alphaDate, String pastureJoinDate, boolean isPermission, String status) {
         User user = new User();
+
         user.setUserId(userId);
         user.setPassword(passwordEncoder.encode(password));
         user.setRoleId(roleId);
@@ -82,6 +84,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setPastureJoinDate(pastureJoinDate);
         user.setIsPermission(isPermission);
         user.setStatus(status);
+
+        //로그인한 유저 아이디
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        user.setLoginUserId(principal.getUsername());
+
         return userMapper.createUser(user);
     }
 
@@ -108,6 +115,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setIsPermission(isPermission);
         user.setStatus(status);
 
+        //로그인한 유저 아이디
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        user.setLoginUserId(principal.getUsername());
+
         return userMapper.updateUser(user);
     }
 
@@ -122,6 +133,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
             user.setUserId(userId);
             user.setPassword(passwordEncoder.encode(password));
+
+            //로그인한 유저 아이디
+            UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            user.setLoginUserId(principal.getUsername());
 
             userMapper.updateUser(user);
         }else{

@@ -14,6 +14,8 @@ public class UserGroup {
     private int offset;
     private int limit;
 
+    private String loginUserId;
+
     public UserGroup(){}
 
     public UserGroup(int groupId) {
@@ -100,6 +102,14 @@ public class UserGroup {
         this.limit = limit;
     }
 
+    public String getLoginUserId() {
+        return loginUserId;
+    }
+
+    public void setLoginUserId(String loginUserId) {
+        this.loginUserId = loginUserId;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(groupId);
@@ -117,6 +127,7 @@ public class UserGroup {
                 ", page=" + page +
                 ", offset=" + offset +
                 ", limit=" + limit +
+                ", loginUserId=" + loginUserId +
                 '}';
     }
 }

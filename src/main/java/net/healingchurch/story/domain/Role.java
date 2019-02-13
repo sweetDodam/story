@@ -11,6 +11,8 @@ public class Role implements Serializable {
     private String createDate;
     private String updateDate;
 
+    private String loginUserId;
+
     public Role() {
     }
 
@@ -54,6 +56,14 @@ public class Role implements Serializable {
         this.updateDate = updateDate;
     }
 
+    public String getLoginUserId() {
+        return loginUserId;
+    }
+
+    public void setLoginUserId(String loginUserId) {
+        this.loginUserId = loginUserId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,6 +85,7 @@ public class Role implements Serializable {
                 ", description='" + description + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", updateDate='" + updateDate + '\'' +
+                ", loginUserId=" + loginUserId +
                 '}';
     }
 }

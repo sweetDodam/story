@@ -159,12 +159,13 @@
             useGeneratedKeys="true" keyProperty="townStoryId">
         /*  TownStoryMapper.createStory  */
         insert into ch_story_town
-        (master_id, leader_care_story, pasture_care_story)
+        (master_id, leader_care_story, pasture_care_story, create_user)
         VALUES
         (
             #{storyId},
             #{leaderCareStory},
-            #{pastureCareStory}
+            #{pastureCareStory},
+            #{loginUserId}
         );
     </insert>
 
@@ -207,7 +208,8 @@
         set
 
         leader_care_story = #{leaderCareStory},
-        pasture_care_story = #{pastureCareStory}
+        pasture_care_story = #{pastureCareStory},
+        update_user = #{loginUserId}
 
         where master_id = #{storyId};
     </update>

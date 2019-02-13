@@ -17,6 +17,8 @@ public class Event {
     private int offset;
     private int limit;
 
+    private String loginUserId;
+
     public Event() {
     }
 
@@ -116,6 +118,14 @@ public class Event {
         this.limit = limit;
     }
 
+    public String getLoginUserId() {
+        return loginUserId;
+    }
+
+    public void setLoginUserId(String loginUserId) {
+        this.loginUserId = loginUserId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -139,6 +149,7 @@ public class Event {
                 ", writer='" + writer + '\'' +
                 ", eventDate='" + eventDate + '\'' +
                 ", groupId='" + groupId +
+                ", loginUserId=" + loginUserId +
                 '}';
     }
 }

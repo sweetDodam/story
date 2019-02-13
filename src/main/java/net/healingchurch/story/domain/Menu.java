@@ -8,8 +8,11 @@ public class Menu {
     String menuName;
     int menuLevel;
     int sortIdx;
+    String menuUrl;
     String createDate;
     String updateDate;
+
+    private String loginUserId;
 
     public Menu() {
     }
@@ -54,6 +57,14 @@ public class Menu {
         this.sortIdx = sortIdx;
     }
 
+    public String getMenuUrl() {
+        return menuUrl;
+    }
+
+    public void setMenuUrl(String menuUrl) {
+        this.menuUrl = menuUrl;
+    }
+
     public String getCreateDate() {
         return createDate;
     }
@@ -68,6 +79,14 @@ public class Menu {
 
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public String getLoginUserId() {
+        return loginUserId;
+    }
+
+    public void setLoginUserId(String loginUserId) {
+        this.loginUserId = loginUserId;
     }
 
     @Override
@@ -93,6 +112,7 @@ public class Menu {
                 ", sortIdx=" + sortIdx +
                 ", createDate='" + createDate + '\'' +
                 ", updateDate='" + updateDate + '\'' +
+                ", loginUserId=" + loginUserId +
                 '}';
     }
 }

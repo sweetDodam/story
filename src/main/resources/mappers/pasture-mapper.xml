@@ -94,13 +94,14 @@
         );
 
         insert into ch_story_pasture
-        (master_id, prayers, worship_reason, leader_reason)
+        (master_id, prayers, worship_reason, leader_reason, create_user)
         VALUES
         (
             (select MAX(story_id) from ch_story_master),
             #{prayers},
             #{worshipReason},
-            #{leaderReason}
+            #{leaderReason},
+            #{loginUserId}
         );
     </insert>
 
@@ -119,6 +120,7 @@
         , dawn_pray_count = #{dawnPrayCount}
         , etc = #{etc}
 
+
         where story_id = #{storyId};
 
         update ch_story_pasture
@@ -126,6 +128,7 @@
             prayers = #{prayers}
           , worship_reason = #{worshipReason}
           , leader_reason = #{leaderReason}
+          , update_user = #{loginUserId}
         where master_id = #{storyId};
     </update>
 

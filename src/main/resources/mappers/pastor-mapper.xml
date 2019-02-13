@@ -72,7 +72,7 @@
     <insert id="createStory" parameterType="net.healingchurch.story.domain.PastorStory"
             useGeneratedKeys="true" keyProperty="storyId">
         /*  PastorStoryMapper.createStory  */
-        insert into ch_story_pastor (pastor_id, visit_user_id, visit_date, visit_place, summary, prayers, etc, create_date)
+        insert into ch_story_pastor (pastor_id, visit_user_id, visit_date, visit_place, summary, prayers, etc, create_date, create_user)
         VALUES
         (
             #{pastorId},
@@ -82,7 +82,8 @@
             #{summary},
             #{prayers},
             #{etc},
-            now()
+            now(),
+            #{loginUserId}
         )
     </insert>
 
@@ -96,6 +97,7 @@
             ,prayers = #{prayers}
             ,etc = #{etc}
             ,update_date = now()
+            ,update_user = #{loginUserId}
         where story_id = #{storyId}
     </update>
 

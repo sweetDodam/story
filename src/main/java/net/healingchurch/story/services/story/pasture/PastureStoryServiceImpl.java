@@ -4,6 +4,8 @@ import net.healingchurch.story.domain.PastureStory;
 import net.healingchurch.story.domain.TownStory;
 import net.healingchurch.story.services.story.town.TownStoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -47,25 +49,29 @@ public class PastureStoryServiceImpl implements PastureStoryService {
     @Override
     //@PreAuthorize("hasAnyRole('ROLE_PASTURE_MANAGER')")
     public int createStory(int worshipYn, int pastureMeetYn, int bibleCount, int qtCount, int fridayWorshipYn, int dawnPrayCount, String etc, String userId, int groupId, int parentGroupId, String prayers, int leaderYn, String inputDate, String worshipReason, String leaderReason) {
-        PastureStory pastorStory = new PastureStory();
+        PastureStory pastureStory = new PastureStory();
 
-        pastorStory.setWorshipYn(worshipYn);
-        pastorStory.setPastureMeetYn(pastureMeetYn);
-        pastorStory.setBibleCount(bibleCount);
-        pastorStory.setQtCount(qtCount);
-        pastorStory.setFridayWorshipYn(fridayWorshipYn);
-        pastorStory.setDawnPrayCount(dawnPrayCount);
-        pastorStory.setEtc(etc);
-        pastorStory.setUserId(userId);
-        pastorStory.setGroupId(groupId);
-        pastorStory.setInputDate(inputDate);
-        pastorStory.setPrayers(prayers);
-        pastorStory.setLeaderYn(leaderYn);
-        pastorStory.setWorshipReason(worshipReason);
-        pastorStory.setLeaderReason(leaderReason);
+        pastureStory.setWorshipYn(worshipYn);
+        pastureStory.setPastureMeetYn(pastureMeetYn);
+        pastureStory.setBibleCount(bibleCount);
+        pastureStory.setQtCount(qtCount);
+        pastureStory.setFridayWorshipYn(fridayWorshipYn);
+        pastureStory.setDawnPrayCount(dawnPrayCount);
+        pastureStory.setEtc(etc);
+        pastureStory.setUserId(userId);
+        pastureStory.setGroupId(groupId);
+        pastureStory.setInputDate(inputDate);
+        pastureStory.setPrayers(prayers);
+        pastureStory.setLeaderYn(leaderYn);
+        pastureStory.setWorshipReason(worshipReason);
+        pastureStory.setLeaderReason(leaderReason);
+
+        //로그인한 유저 아이디
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        pastureStory.setLoginUserId(principal.getUsername());
 
         //목장 스토리 입력
-        int rs = pastureStoryMapper.createStory(pastorStory);
+        int rs = pastureStoryMapper.createStory(pastureStory);
 
         //마을 스토리 합계 등록/수정
         String groupIdStr = String.valueOf(groupId);
@@ -82,25 +88,29 @@ public class PastureStoryServiceImpl implements PastureStoryService {
     @Override
     //@PreAuthorize("hasAnyRole('ROLE_PASTURE_MANAGER')")
     public int updateStory(int storyId, int worshipYn, int pastureMeetYn, int bibleCount, int qtCount, int fridayWorshipYn, int dawnPrayCount, String etc, String userId, int groupId, int parentGroupId, String prayers, int leaderYn, String inputDate, String worshipReason, String leaderReason) {
-        PastureStory pastorStory = new PastureStory();
+        PastureStory pastureStory = new PastureStory();
 
-        pastorStory.setStoryId(storyId);
-        pastorStory.setWorshipYn(worshipYn);
-        pastorStory.setPastureMeetYn(pastureMeetYn);
-        pastorStory.setBibleCount(bibleCount);
-        pastorStory.setQtCount(qtCount);
-        pastorStory.setFridayWorshipYn(fridayWorshipYn);
-        pastorStory.setDawnPrayCount(dawnPrayCount);
-        pastorStory.setEtc(etc);
-        pastorStory.setUserId(userId);
-        pastorStory.setGroupId(groupId);
-        pastorStory.setPrayers(prayers);
-        pastorStory.setLeaderYn(leaderYn);
-        pastorStory.setWorshipReason(worshipReason);
-        pastorStory.setLeaderReason(leaderReason);
+        pastureStory.setStoryId(storyId);
+        pastureStory.setWorshipYn(worshipYn);
+        pastureStory.setPastureMeetYn(pastureMeetYn);
+        pastureStory.setBibleCount(bibleCount);
+        pastureStory.setQtCount(qtCount);
+        pastureStory.setFridayWorshipYn(fridayWorshipYn);
+        pastureStory.setDawnPrayCount(dawnPrayCount);
+        pastureStory.setEtc(etc);
+        pastureStory.setUserId(userId);
+        pastureStory.setGroupId(groupId);
+        pastureStory.setPrayers(prayers);
+        pastureStory.setLeaderYn(leaderYn);
+        pastureStory.setWorshipReason(worshipReason);
+        pastureStory.setLeaderReason(leaderReason);
+
+        //로그인한 유저 아이디
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        pastureStory.setLoginUserId(principal.getUsername());
 
         //목장 스토리 수정
-        int rs = pastureStoryMapper.updateStory(pastorStory);
+        int rs = pastureStoryMapper.updateStory(pastureStory);
 
         //마을 스토리 합계 등록/수정
         String groupIdStr = String.valueOf(groupId);

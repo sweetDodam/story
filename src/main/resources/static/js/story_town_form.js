@@ -261,7 +261,7 @@ var popFormatter = {
 
 var jqGridPopForm = {
     colModel : [
-        { label: '목자이름',    		    name: 'userName',           align: 'center', width: 120     },
+        { label: '목장',    		        name: 'userName',           align: 'center', width: 120     },
         { label: '재적',    		        name: 'userCnt',            align: 'center', width: 100,    index:'userCnt',       summaryType:'sum'},
         { label: '예배참석',	            name: 'worshipYn',       	align: 'center', width: 100, 	formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'worshipYn',        summaryType:'sum'},
         { label: '리더모임참석',	        name: 'leaderYn',          	align: 'center', width: 100, 	formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'leaderYn',         summaryType:'sum'},

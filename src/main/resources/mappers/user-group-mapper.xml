@@ -29,12 +29,13 @@
     <insert id="createUserGroup" parameterType="net.healingchurch.story.domain.UserGroup"
             useGeneratedKeys="true" keyProperty="userSeq">
         /*  UserGroupMapper.createUserGroup  */
-        INSERT INTO ch_user_group(parent_group_id, group_name, group_level, create_date)
+        INSERT INTO ch_user_group(parent_group_id, group_name, group_level, create_date, create_user)
         VALUES (
             #{parentGroupId},
             #{groupName},
             #{groupLevel},
-            now()
+            now(),
+            #{loginUserId}
             )
     </insert>
 
@@ -43,7 +44,8 @@
         /*  UserGroupMapper.updateUserGroup  */
         update ch_user_group
         set
-        update_date = now()
+         update_date = now()
+        ,update_user = #{loginUserId}
         <if test="groupName!='' and groupName!=null">, group_name = #{groupName} </if>
         <if test="parentGroupId!='' and parentGroupId!=null">, parent_group_id = #{parentGroupId} </if>
         <if test="groupLevel!='' and groupLevel!=null">, group_level = #{groupLevel} </if>

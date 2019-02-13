@@ -6,12 +6,12 @@
 <div class="col-md-12" style="min-width: 1280px;">
     <div class="card mb-5">
         <div class="card-header">
-            <i class="fas fa-table mr-1"></i>사용자 그룹 관리
+            <i class="fas fa-table mr-1"></i>메뉴 관리
         </div>
         <div class="card-body">
-            <form id="StoryForm" th:action="@{/services/user/group/update}" method="POST">
-                <input type="hidden" id="groupId" name="groupId" value="-1">
-                <input type="hidden" id="parentGroupId" name="parentGroupId" value="-1">
+            <form id="StoryForm" th:action="@{/services/user/menu/update}" method="POST">
+                <input type="hidden" id="menuId" name="menuId" value="-1">
+                <input type="hidden" id="parentMenuId" name="parentMenuId" value="-1">
 
                 <div class="table-responsive ch-txt-align-c" >
                     <div class="div-3">
@@ -26,45 +26,45 @@
                     <div class="div-3">
                         <table class="careTable">
                             <tr class="careTitle">
-                                <td colspan="2">그룹 수정</td>
+                                <td colspan="2">메뉴 수정</td>
                             </tr>
                             <tr>
-                                <td class="careTitle">그룹 ID</td>
+                                <td class="careTitle">메뉴 ID</td>
                                 <td class="ch-txt-align-l">
-                                    <span class="saveObj" id="selGroupId" name="selGroupId"></span>
+                                    <span class="saveObj" id="selMenuId" name="selMenuId"></span>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="careTitle">그룹 레벨</td>
+                                <td class="careTitle">메뉴 레벨</td>
                                 <td class="ch-txt-align-l">
-                                    <span class="saveObj" id="groupLevel" name="groupLevel"></span>
+                                    <span class="saveObj" id="menuLevel" name="menuLevel"></span>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="careTitle">그룹 이름</td>
+                                <td class="careTitle">메뉴 이름</td>
                                 <td>
-                                    <input class="form-control saveObj" id="groupName" name="groupName">
+                                    <input class="form-control saveObj" id="menuName" name="menuName">
                                 </td>
                             </tr>
                             <tr class="ch-txt-align-r">
                                 <td colspan="2">
-                                    <a id="updateBtn" class="btn btn-primary bg-ch-blue txt-ch-white disObj" onclick="userGroup.save();">수정</a>
-                                    <a id="deleteBtn" class="btn btn-primary bg-ch-blue txt-ch-white disObj" onclick="userGroup.delete();">삭제</a>
+                                    <a id="updateBtn" class="btn btn-primary bg-ch-blue txt-ch-white disObj" onclick="menuMgm.save();">수정</a>
+                                    <a id="deleteBtn" class="btn btn-primary bg-ch-blue txt-ch-white disObj" onclick="menuMgm.delete();">삭제</a>
                                 </td>
                             </tr>
                             <tr class="careTitle">
-                                <td colspan="2">그룹 추가</td>
+                                <td colspan="2">메뉴 추가</td>
                             </tr>
                             <tr>
-                                <td class="careTitle">그룹 이름</td>
+                                <td class="careTitle">메뉴 이름</td>
                                 <td>
-                                    <input class="form-control addObj disObj" id="newGroupName" name="newGroupName">
+                                    <input class="form-control addObj disObj" id="newMenuName" name="newMenuName">
                                 </td>
                             </tr>
                             <tr class="ch-txt-align-r">
                                 <td colspan="2">
-                                    <a id="addBtn" class="btn btn-primary bg-ch-blue txt-ch-white ch-txt-align-l disObj" onclick="userGroup.add(false);">현재 그룹에 추가</a>
-                                    <a id="addLowBtn" class="btn btn-primary bg-ch-blue txt-ch-white ch-txt-align-l disObj" onclick="userGroup.add(true);">하위 그룹으로 추가</a>
+                                    <a id="addBtn" class="btn btn-primary bg-ch-blue txt-ch-white ch-txt-align-l disObj" onclick="menuMgm.add(false);">현재 메뉴에 추가</a>
+                                    <a id="addLowBtn" class="btn btn-primary bg-ch-blue txt-ch-white ch-txt-align-l disObj" onclick="menuMgm.add(true);">하위 메뉴로 추가</a>
                                 </td>
                             </tr>
                         </table>
@@ -82,4 +82,4 @@
 <script src="../../js/grid.locale-kr.js"></script>
 <script src="../../js/jquery.jqGrid.js"></script>
 
-<script src="../../js/user_group.js"></script>
+<script src="../../js/menuMgm.js"></script>

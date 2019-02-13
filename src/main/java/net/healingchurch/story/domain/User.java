@@ -32,6 +32,8 @@ public class User {
     private int offset;
     private int limit;
 
+    private String loginUserId;
+
     public User(){}
 
     public int getUserSeq() {
@@ -234,6 +236,14 @@ public class User {
         this.limit = limit;
     }
 
+    public String getLoginUserId() {
+        return loginUserId;
+    }
+
+    public void setLoginUserId(String loginUserId) {
+        this.loginUserId = loginUserId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -273,6 +283,7 @@ public class User {
                 ", page=" + page +
                 ", offset=" + offset +
                 ", limit=" + limit +
+                ", loginUserId=" + loginUserId +
                 '}';
     }
 }
