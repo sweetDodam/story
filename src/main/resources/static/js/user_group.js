@@ -88,7 +88,6 @@ var userGroup = {
         $("#jqGrid" + level).trigger("reloadGrid");
     },
     save : function () {
-        var _this = this;
         var url = "/services/user/group/update";
         var txt = "수정";
 
@@ -127,7 +126,6 @@ var userGroup = {
         });
     },
     delete : function () {
-        var _this = this;
         var url = "/services/user/group/remove";
         var txt = "삭제";
         var form = $("#StoryForm")[0];
@@ -168,9 +166,8 @@ var userGroup = {
         });
     },
     add : function (lowFlag) {
-        var _this = this;
         var url = "/services/user/group/create";
-        var txt = "저장";
+        var txt = "현재 그룹에 추가";
 
         //필수체크 검사
         if(!common.dataChk($("#newGroupName").val())){
@@ -188,6 +185,7 @@ var userGroup = {
 
         //하위 그룹으로 추가했다면
         if(lowFlag){
+            txt = "하위 그룹으로 추가";
             groupLevel += 1;
 
             if(groupLevel > 3){
