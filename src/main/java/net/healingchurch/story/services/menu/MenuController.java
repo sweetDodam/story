@@ -36,9 +36,12 @@ public class MenuController {
             @RequestParam(value = "menuName", defaultValue = "") String menuName,
             @RequestParam(value = "menuLevel", defaultValue = "0") int menuLevel,
             @RequestParam(value = "sortIdx", defaultValue = "0") int sortIdx,
-            @RequestParam(value = "menuUrl", defaultValue = "") String menuUrl
+            @RequestParam(value = "menuUrl", defaultValue = "") String menuUrl,
+            @RequestParam(value = "isAdmin", defaultValue = "false") boolean isAdmin,
+            @RequestParam(value = "roleId", defaultValue = "0") int roleId
+
     ) throws Exception {
-        return menuService.createMenu(parentMenuId, menuName, menuLevel, sortIdx, menuUrl);
+        return menuService.createMenu(parentMenuId, menuName, menuLevel, sortIdx, menuUrl, isAdmin, roleId);
     }
 
     @PostMapping("update")
@@ -48,9 +51,11 @@ public class MenuController {
             @RequestParam(value = "menuName", defaultValue = "") String menuName,
             @RequestParam(value = "menuLevel", defaultValue = "0") int menuLevel,
             @RequestParam(value = "sortIdx", defaultValue = "0") int sortIdx,
-            @RequestParam(value = "menuUrl", defaultValue = "") String menuUrl
+            @RequestParam(value = "menuUrl", defaultValue = "") String menuUrl,
+            @RequestParam(value = "isAdmin", defaultValue = "false") boolean isAdmin,
+            @RequestParam(value = "roleId", defaultValue = "0") int roleId
     ) throws Exception {
-        return menuService.updateMenu(menuId, parentMenuId, menuName, menuLevel, sortIdx, menuUrl);
+        return menuService.updateMenu(menuId, parentMenuId, menuName, menuLevel, sortIdx, menuUrl, isAdmin, roleId);
     }
 
     @PostMapping("remove")

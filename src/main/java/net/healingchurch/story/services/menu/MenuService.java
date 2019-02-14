@@ -10,9 +10,9 @@ public interface MenuService {
 
     Menu getMenu(int menuId);
 
-    int createMenu(int parentMenuId, String menuName, int menuLevel, int sortIdx, String menuUrl);
+    int createMenu(int parentMenuId, String menuName, int menuLevel, int sortIdx, String menuUrl, boolean isAdmin, int roleId);
 
-    int updateMenu(int menuId, int parentMenuId, String menuName, int menuLevel, int sortIdx, String menuUrl);
+    int updateMenu(int menuId, int parentMenuId, String menuName, int menuLevel, int sortIdx, String menuUrl, boolean isAdmin, int roleId);
 
     void removeMenu(int menuId);
 }

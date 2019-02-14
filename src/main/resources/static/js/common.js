@@ -297,18 +297,22 @@ var common = {
 
         return rs;
     },
-    comCodeSelectLoad: function(selector){
+    comCodeSelectLoad: function(selector, firstOption){
         //불참 사유 셀렉트박스 옵션 그리기
         $(selector).each(function(){
+            var optionFlag = common.dataChk(firstOption) ? firstOption : "Y";
+
             //가져올 코드
             var parentCodeId = $(this).attr("parentCodeId");
 
             //공통코드 조회
             var comCode = common.comCodeData(parentCodeId);
 
-            //디폴트 값 추가
-            var option = "<option value=''>선택</option>";
-            $(this).append(option);
+            if(optionFlag == "Y"){
+                //디폴트 값 추가
+                var option = "<option value=''>선택</option>";
+                $(this).append(option);
+            }
 
             //선택된 값
             var selVal = $(this).attr("selVal");

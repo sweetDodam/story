@@ -6,8 +6,12 @@
         font-size: 9pt;
     }
 
-    .careTitle{
-        height: 30px !important;
+    .careTitle, #StoryForm input[type=text], #StoryForm input[type=number]{
+        height: 35px !important;
+    }
+
+    #StoryForm label{
+        margin-bottom : 0px;
     }
 
     .card-body{
@@ -25,11 +29,17 @@
 
                 <div class="table-responsive ch-txt-align-c" >
                     <div class="div-2" style="width:850px;float: left;">
-                        <table id="jqGrid1" class="table table-bordered selectGrid dtlView"></table>
-                        <table id="jqGrid2" class="table table-bordered selectGrid dtlView"></table>
-                        <table id="jqGrid3" class="table table-bordered selectGrid dtlView"></table>
+                        <div class="ch-group-pad-btm">
+                         <table id="jqGrid1" class="table table-bordered selectGrid dtlView"></table>
+                        </div>
+                        <div class="ch-group-pad-btm">
+                            <table id="jqGrid2" class="table table-bordered selectGrid dtlView"></table>
+                        </div>
+                        <div class="ch-group-pad-btm">
+                            <table id="jqGrid3" class="table table-bordered selectGrid dtlView"></table>
+                        </div>
                     </div>
-                    <div class="div-3" style="width:300px;">
+                    <div class="div-3" style="width:320px;">
                         <table class="careTable">
                             <tr class="careTitle">
                                 <td colspan="2">메뉴 수정</td>
@@ -55,19 +65,32 @@
                             <tr>
                                 <td class="careTitle">메뉴 이름</td>
                                 <td>
-                                    <input class="form-control saveObj" id="menuName" name="menuName">
+                                    <input type="text" class="form-control saveObj" id="menuName" name="menuName">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="careTitle">메뉴 Url</td>
                                 <td>
-                                    <input class="form-control saveObj" id="menuUrl" name="menuUrl">
+                                    <input type="text" class="form-control saveObj" id="menuUrl" name="menuUrl">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="careTitle">정렬</td>
                                 <td>
-                                    <input class="form-control saveObj" id="sortIdx" name="sortIdx">
+                                    <input type="number" class="form-control saveObj" id="sortIdx" name="sortIdx">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="careTitle">시스템 관리 전용</td>
+                                <td>
+                                    <label class="mr-4"><input type="radio" name="isAdmin" class="saveObj" value="1">예</label>
+                                    <label><input type="radio" name="isAdmin" class="saveObj" value="0" checked>아니오</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="careTitle">권한 허용 범위</td>
+                                <td>
+                                    <select class="form-control comCode saveObj" id="roleId" name="roleId" parentCodeId="USER_ROLE"></select>
                                 </td>
                             </tr>
                             <tr class="ch-txt-align-r">
@@ -82,19 +105,32 @@
                             <tr>
                                 <td class="careTitle">메뉴 이름</td>
                                 <td>
-                                    <input class="form-control addObj disObj" id="newMenuName" name="newMenuName">
+                                    <input type="text" class="form-control addObj" id="newMenuName" name="newMenuName">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="careTitle">메뉴 Url</td>
                                 <td>
-                                    <input class="form-control addObj disObj" id="newMenuUrl" name="newMenuUrl">
+                                    <input type="text" class="form-control addObj" id="newMenuUrl" name="newMenuUrl">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="careTitle">정렬</td>
                                 <td>
-                                    <input class="form-control addObj disObj" id="newSortIdx" name="newSortIdx">
+                                    <input type="number" class="form-control addObj" id="newSortIdx" name="newSortIdx">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="careTitle">시스템 관리 전용</td>
+                                <td>
+                                    <label class="mr-4"><input type="radio" name="newIsAdmin" class="addObj" value="1">예</label>
+                                    <label><input type="radio" name="newIsAdmin" class="addObj" value="0" checked>아니오</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="careTitle">권한 허용 범위</td>
+                                <td>
+                                    <select class="form-control comCode addObj" id="newRoleId" name="newRoleId" parentCodeId="USER_ROLE"></select>
                                 </td>
                             </tr>
                             <tr class="ch-txt-align-r">

@@ -29,7 +29,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public int createMenu(int parentMenuId, String menuName, int menuLevel, int sortIdx, String menuUrl) {
+    public int createMenu(int parentMenuId, String menuName, int menuLevel, int sortIdx, String menuUrl, boolean isAdmin, int roleId) {
         Menu menu = new Menu();
 
         menu.setParentMenuId(parentMenuId);
@@ -37,6 +37,8 @@ public class MenuServiceImpl implements MenuService {
         menu.setMenuLevel(menuLevel);
         menu.setSortIdx(sortIdx);
         menu.setMenuUrl(menuUrl);
+        menu.setIsAdmin(isAdmin);
+        menu.setRoleId(roleId);
 
         //로그인한 유저 아이디
         UserDetails principal = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -46,7 +48,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public int updateMenu(int menuId, int parentMenuId, String menuName, int menuLevel, int sortIdx, String menuUrl) {
+    public int updateMenu(int menuId, int parentMenuId, String menuName, int menuLevel, int sortIdx, String menuUrl, boolean isAdmin, int roleId)  {
         Menu menu = new Menu();
 
         menu.setMenuId(menuId);
@@ -55,6 +57,8 @@ public class MenuServiceImpl implements MenuService {
         menu.setMenuLevel(menuLevel);
         menu.setSortIdx(sortIdx);
         menu.setMenuUrl(menuUrl);
+        menu.setIsAdmin(isAdmin);
+        menu.setRoleId(roleId);
 
         //로그인한 유저 아이디
         UserDetails principal = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();

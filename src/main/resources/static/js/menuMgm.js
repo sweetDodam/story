@@ -4,10 +4,12 @@ var menuMgm = {
 
         console.log("menuMgm init");
 
+        //권한 셀렉트 박스 그리기
+        common.comCodeSelectLoad(".comCode", "N");
+
         //그리드 셋팅
         _this.gridLoad();
         _this.gridSearch(1);
-
     },
     gridLoad : function () {
         $("#jqGrid1").jqGrid({
@@ -17,7 +19,7 @@ var menuMgm = {
             datatype: "local",
             colModel: jqGridForm.colModel,
             viewrecords: true,
-            height: 150,
+            height: 200,
             width: 800,
             shrinkToFit: true,
             sortable: false,
@@ -44,7 +46,7 @@ var menuMgm = {
             datatype: "local",
             colModel: jqGridForm.colModel,
             viewrecords: true,
-            height: 150,
+            height: 200,
             width: 800,
             shrinkToFit: true,
             sortable: false,
@@ -67,7 +69,7 @@ var menuMgm = {
             datatype: "local",
             colModel: jqGridForm.colModel,
             viewrecords: true,
-            height: 150,
+            height: 200,
             width: 800,
             shrinkToFit: true,
             sortable: false,
@@ -211,6 +213,8 @@ var menuMgm = {
         formData.set("menuName", $("#newMenuName").val());
         formData.set("menuUrl", $("#newMenuUrl").val());
         formData.set("sortIdx", $("#newSortIdx").val());
+        formData.set("isAdmin", $("[name=newIsAdmin]").val());
+        formData.set("roleId", $("[name=newRoleId]").val());
 
         //하위 메뉴로 추가했다면
         if(lowFlag){
@@ -269,11 +273,15 @@ var menuMgm = {
         }
 
         if(add){
-            $(".addObj").val("");
+            $(".addObj").not("[type=radio], select").val("");
+            $("[name=newIsAdmin][value=0]").prop("checked", true);
+            $("[name=newRoleId] option[value=1]").prop("selected", true);
         }
         if(save) {
-            $(".saveObj").val("");
-            $(".saveObj").text("");
+            $(".saveObj").not("[type=radio], select").val("");
+            $(".saveObj").not("[type=radio], select").text("");
+            $("[name=isAdmin][value=0]").prop("checked", true);
+            $("[name=roleId] option[value=1]").prop("selected", true);
         }
     },refreshGrid : function (level) {
         if(level < 1){
@@ -281,7 +289,6 @@ var menuMgm = {
             $("#parentMenuId").val("-1");
 
             $("#StoryForm .btn").addClass("disObj");
-            $(".addObj").addClass("disObj");
 
             $("#jqGrid2").jqGrid('clearGridData');
             $("#jqGrid3").jqGrid('clearGridData');
@@ -302,17 +309,52 @@ var menuMgm = {
         $("#menuName").val(data.menuName);
         $("#menuUrl").val(data.menuUrl);
         $("#sortIdx").val(data.sortIdx);
+        $("[name=isAdmin][value=" + data.isAdmin + "]").prop("checked", true);
+        $("[name=roleId] option[value=" + data.roleId + "]").prop("selected", true);
 
         menuMgm.inputClear("add");
     }
 };
 
+var formatter = {
+    adminDesc : function(cellValue,rowObject,options){
+        if(options.isAdmin){
+            return "예";
+        }
+        return "아니오";
+    },
+    adminNum : function(cellValue,rowObject,options){
+        if(options.isAdmin){
+            return "1";
+        }
+        return "0";
+    },roleDesc : function(cellValue,rowObject,options){
+        if(options.roleId == "1"){
+            return "관리자 이상";
+        }else if(options.roleId == "2"){
+            return "목회자 이상";
+        }else if(options.roleId == "3"){
+            return "마을 관리자 이상";
+        }else if(options.roleId == "4"){
+            return "목장 관리자 이상";
+        }else if(options.roleId == "5"){
+            return "일반 목원 이상";
+        }
+
+        return options.roleId;
+    }
+};
+
 var jqGridForm = {
     colModel : [
-        { label: 'ID',			            name: 'menuId',            align: 'center', width: 40},
+        { label: 'ID',			            name: 'menuId',            align: 'center', width: 30},
         { label: '메뉴 이름',               name: 'menuName',          align: 'left', width: 100 },
-        { label: '메뉴 Url',                name: 'menuUrl',           align: 'left', width: 120 },
-        { label: '정렬',                    name: 'sortIdx',           align: 'center', width: 40 },
+        { label: '메뉴 Url',                name: 'menuUrl',           align: 'left', width: 100 },
+        { label: '정렬',                    name: 'sortIdx',           align: 'center', width: 30 },
+        { label: '시스템 관리 전용',        name: 'isAdminDesc',       align: 'center', width: 50 ,formatter: formatter.adminDesc},
+        { label: '권한 허용 범위',          name: 'roleId',            align: 'center', width: 60 ,formatter: formatter.roleDesc},
+        { label: '시스템 관리자',           name: 'isAdmin',           hidden: true, formatter: formatter.adminNum},
+        { label: '권한',                    name: 'roleId',            hidden: true   },
         { label: '메뉴레벨',                name: 'menuLevel',         hidden: true   },
         { label: '부모메뉴ID',				name: 'parentMenuId',      hidden: true   },
         { label: '등록일',				    name: 'createDate',         hidden: true   },

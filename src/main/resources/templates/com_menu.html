@@ -1,42 +1,26 @@
-<li class="nav-item dropdown" th:if="${userInfo.getRoleId() <= 4}">
-    <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>chyou 웹스토리</span>
-    </a>
-    <div class="dropdown-menu" aria-labelledby="pagesDropdown" th:with="role=${userInfo.getRoleId()}, isAdmin=${userInfo.getIsAdmin()}">
-        <h6 class="dropdown-header" th:if="${role <= 4 && role != 0}"><i class="fas fa-fw fa-tachometer-alt"></i><span>목장 스토리</span></h6>
-        <a class="dropdown-item importPage" th:if="${role <= 4 && role != 0}" importUrl="/story/pasture" href="javascript:void(0);"><i class="fas fa-fw fa-table"></i><span>목장 스토리 관리</span></a>
-        <a class="dropdown-item importPage" th:if="${role <= 4 && role != 0}" importUrl="/story/pasture/list" href="javascript:void(0);"><i class="fas fa-fw fa-table"></i><span>목장 스토리 조회</span></a>
-
-        <div class="dropdown-divider" th:if="${role <= 3 && role != 0}"></div>
-        <h6 class="dropdown-header" th:if="${role <= 3 && role != 0}"><i class="fas fa-fw fa-tachometer-alt"></i><span>마을 스토리</span></h6>
-        <a class="dropdown-item importPage" th:if="${role <= 3 && role != 0}" importUrl="/story/town" href="javascript:void(0);"><i class="fas fa-fw fa-table"></i><span>마을 스토리 관리</span></a>
-        <a class="dropdown-item importPage" th:if="${role <= 3 && role != 0}" importUrl="/story/town/list" href="javascript:void(0);"><i class="fas fa-fw fa-table"></i><span>마을 스토리 조회</span></a>
-
-        <div class="dropdown-divider" th:if="${role <= 2 && role != 0}"></div>
-        <h6 class="dropdown-header" th:if="${role <= 2 && role != 0}"><i class="fas fa-fw fa-tachometer-alt"></i><span>사역자 스토리</span></h6>
-        <a class="dropdown-item importPage" th:if="${role <= 2 && role != 0}" importUrl="/story/pastor" href="javascript:void(0);"><i class="fas fa-fw fa-table"></i><span>사역자 스토리 관리</span></a>
-        <a class="dropdown-item importPage" th:if="${role <= 2 && role != 0}" importUrl="/story/pastor/list" href="javascript:void(0);"><i class="fas fa-fw fa-table"></i><span>사역자 스토리 조회</span></a>
-    </div>
-</li>
-<li class="nav-item dropdown" th:if="${userInfo.getIsAdmin().toString() == 'true'}">
-    <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>관리</span>
-    </a>
-    <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-        <a class="dropdown-item importPage" importUrl="/user" href="javascript:void(0);"><i class="fas fa-fw fa-chart-area"></i><span>사용자 관리</span></a>
-        <a class="dropdown-item importPage" importUrl="/user/group" href="javascript:void(0);"><i class="fas fa-fw fa-chart-area"></i><span>사용자 그룹 관리</span></a>
-        <a class="dropdown-item importPage prepare" importUrl="/permission" href="javascript:void(0);"><i class="fas fa-fw fa-chart-area"></i><span>권한 관리</span></a>
-        <a class="dropdown-item importPage" importUrl="/menu" href="javascript:void(0);"><i class="fas fa-fw fa-chart-area"></i><span>메뉴 관리</span></a>
-        <a class="dropdown-item importPage prepare" importUrl="/common/code" href="javascript:void(0);le != 0}"><i class="fas fa-fw fa-chart-area"></i><span>공통 코드 관리</span></a>
-    </div>
-</li>
-<li class="nav-item">
-    <a class="nav-link" href="http://ch-you.com/" target="_blank">
+<li class="nav-item" th:each="list, i : ${menuList}"
+                     th:with="childFlag=${(list.childData != null && list.childData.size() > 0) ? true : false}, objId=|pagesDropdown${i.index}|"
+                     th:classappend="${childFlag} ? 'dropdown' : ''"
+                     th:if="${(list.isAdmin ? userInfo.getIsAdmin() : true) && (list.roleId >= userInfo.getRoleId())}">
+    <a class="nav-link" th:if="${!childFlag}" th:attr="target=${list.sortIdx > 900} ? '_blank' : ''" th:href="${#strings.isEmpty(list.menuUrl)}? 'javascript:void(0);' : ${list.menuUrl}">
         <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span class="txt-ch-size-small">치유하는 교회 청년교구</span>
+        <span class="txt-ch-size-small" th:text="${list.menuName}">1레벨 메뉴명</span>
     </a>
-</li>
 
+    <a class="nav-link dropdown-toggle" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:id="${objId}" th:if="${childFlag}">
+        <i class="fas fa-fw fa-folder"></i>
+        <span th:text="${list.menuName}">1레벨 메뉴명</span>
+    </a>
+    <div class="dropdown-menu" th:if="${childFlag}" th:attr="aria-labelledby=${objId}" >
+        <div th:each="list2, j : ${list.childData}" th:with="subChildFlag=${(list2.childData != null && list2.childData.size() > 0) ? true : false}" th:if="${(list2.isAdmin ? userInfo.getIsAdmin() : true) && (list2.roleId >= userInfo.getRoleId())}">
+            <div class="dropdown-divider" th:if="${subChildFlag && j.index > 0}"></div>
+            <h6 class="dropdown-header" th:if="${subChildFlag}"><i class="fas fa-fw fa-tachometer-alt"></i><span th:text="${list2.menuName}">2레벨 메뉴명</span></h6>
+            <a class="dropdown-item importPage" href="javascript:void(0);" th:attr="importUrl=${list2.menuUrl}" th:if="!${subChildFlag}"><i class="fas fa-fw fa-table"></i><span th:text="${list2.menuName}">2레벨 메뉴명</span></a>
+
+            <div th:each="list3, k : ${list2.childData}" th:if="${(list3.isAdmin ? userInfo.getIsAdmin() : true) && (list3.roleId >= userInfo.getRoleId())}">
+                <a class="dropdown-item importPage" href="javascript:void(0);" th:attr="importUrl=${list3.menuUrl}"><i class="fas fa-fw fa-table"></i><span th:text="${list3.menuName}">3레벨 메뉴명</span></a>
+            </div>
+        </div>
+    </div>
+</li>
 <script src="../../js/menu.js"></script>

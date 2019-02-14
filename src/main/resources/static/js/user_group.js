@@ -281,7 +281,6 @@ var userGroup = {
             $("#parentGroupId").val("-1");
 
             $("#StoryForm .btn").addClass("disObj");
-            $(".addObj").addClass("disObj");
 
             $("#jqGrid2").jqGrid('clearGridData');
             $("#jqGrid3").jqGrid('clearGridData');

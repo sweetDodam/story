@@ -3,6 +3,7 @@ package net.healingchurch.story.services.index;
 import net.healingchurch.story.domain.*;
 
 import net.healingchurch.story.services.event.EventService;
+import net.healingchurch.story.services.menu.MenuService;
 import net.healingchurch.story.services.user.UserService;
 import net.healingchurch.story.services.user.group.UserGroupService;
 import net.healingchurch.story.services.story.pastor.PastorStoryService;
@@ -10,6 +11,7 @@ import net.healingchurch.story.services.story.town.TownStoryService;
 import net.healingchurch.story.services.story.pasture.PastureStoryService;
 
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,9 +22,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Field;
+import java.util.*;
 
 @Controller
 public class WebAppContoller {
@@ -36,7 +37,7 @@ public class WebAppContoller {
     private PastorStoryService pastorStoryService;
 
     @Autowired
-    private TownStoryService townStoryService;
+    private MenuService menuService;
 
     @Autowired
     private PastureStoryService pastureStoryService;
@@ -313,6 +314,44 @@ public class WebAppContoller {
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
 
+        List<Map> menuList = new ArrayList<Map>();
+
+        //최상위 메뉴 리스트 조회
+        List<Menu> list = menuService.findMenuChildList(-1);
+        for(int i = 0;i < list.size();i++){
+            Menu menu = list.get(i);
+
+            Map data = new HashMap<>();
+            data.putAll(ConverObjectToMap(menu));
+
+            List<Map> menuList2 = new ArrayList<Map>();
+            List<Menu> list2 = menuService.findMenuChildList(menu.getMenuId());
+            for(int j = 0;j < list2.size();j++){
+                Menu menu2 = list2.get(j);
+
+                Map data2 = new HashMap<>();
+                data2.putAll(ConverObjectToMap(menu2));
+
+                List<Map> menuList3 = new ArrayList<Map>();
+                List<Menu> list3 = menuService.findMenuChildList(menu2.getMenuId());
+                for(int k = 0;k < list3.size();k++){
+                    Menu menu3 = list3.get(k);
+
+                    Map data3 = new HashMap<>();
+                    data3.putAll(ConverObjectToMap(menu3));
+
+                    menuList3.add(data3);
+                }
+                data2.put("childData", list3);
+
+                menuList2.add(data2);
+            }
+            data.put("childData", menuList2);
+
+            menuList.add(data);
+        }
+        model.put("menuList", menuList);
+
         return "com_menu";
     }
 
@@ -399,5 +438,21 @@ public class WebAppContoller {
         model.put("userInfo", user);
 
         return "common_code_add";
+    }
+
+    public static Map ConverObjectToMap(Object obj){
+        try {
+            Field[] fields = obj.getClass().getDeclaredFields();
+            Map resultMap = new HashMap();
+
+            for(int i=0; i<=fields.length-1;i++){
+                fields[i].setAccessible(true);
+                resultMap.put(fields[i].getName(), fields[i].get(obj));
+            }
+            return resultMap;
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace(); } return null;
     }
 }
