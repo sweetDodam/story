@@ -184,7 +184,7 @@ var jqGridForm = {
         { label: '주소',				    name: 'address',            align: 'center', width: 200 },
         { label: '청년부 등록일',		    name: 'regDate',            align: 'center', width: 110 },
         { label: '알파날짜',			    name: 'alphaDate',          align: 'center', width: 110 },
-        { label: '상담날짜',			    name: 'pastureJoinDate',    align: 'center', width: 110 },
+        { label: '등반날짜',			    name: 'pastureJoinDate',    align: 'center', width: 110 },
         { label: 'userSeq',			        name: 'userSeq',            align: 'center', width: 100, hidden: true},
         { label: '권한ID',			        name: 'roleId',             align: 'center', width: 100, hidden: true },
         { label: '소속ID',			        name: 'groupId',            align: 'center', width: 100, hidden: true },

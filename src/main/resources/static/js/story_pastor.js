@@ -217,7 +217,7 @@ var jqGridForm = {
         { label: '이메일',      	name: 'email',              align: 'center', width: 120 	},
         { label: '청년부 등록일',	name: 'regDate',            align: 'center', width: 130 	},
         { label: '알파날짜',    	name: 'alphaDate',          align: 'center', width: 100 	},
-        { label: '상담날짜',    	name: 'pastorJoinDate',    align: 'center', width: 100 	},
+        { label: '등반날짜',    	name: 'pastorJoinDate',    align: 'center', width: 100 	},
         { label: 'userSeq',		    name: 'userSeq',            hidden: true},
         { label: '스토리아이디', 	name: 'storyId',			hidden: true },
         { label: '사역자ID',  	    name: 'pastorId',           hidden: true },
