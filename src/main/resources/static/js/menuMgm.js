@@ -213,7 +213,7 @@ var menuMgm = {
         formData.set("menuName", $("#newMenuName").val());
         formData.set("menuUrl", $("#newMenuUrl").val());
         formData.set("sortIdx", $("#newSortIdx").val());
-        formData.set("isAdmin", $("[name=newIsAdmin]").val());
+        formData.set("isAdmin", $("[name=newIsAdmin]:checked").val());
         formData.set("roleId", $("[name=newRoleId]").val());
 
         //하위 메뉴로 추가했다면
