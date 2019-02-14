@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public int createUser(String userId, String password, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String regDate, String alphaDate, String pastureJoinDate, boolean isPermission, String status) {
+    public int createUser(String userId, String password, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String birthDate, String regDate, String alphaDate, String pastureJoinDate, boolean isPermission, String status) {
         User user = new User();
 
         user.setUserId(userId);
@@ -79,6 +79,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setAddress(address);
         user.setMobile(mobile);
         user.setEmail(email);
+        user.setBirthDate(birthDate);
         user.setRegDate(regDate);
         user.setAlphaDate(alphaDate);
         user.setPastureJoinDate(pastureJoinDate);
@@ -98,7 +99,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public int updateUser(String userId, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String regDate, String alphaDate, String pastureJoinDate, boolean isPermission, String status) {
+    public int updateUser(String userId, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String birthDate, String regDate, String alphaDate, String pastureJoinDate, boolean isPermission, String status) {
         User user = new User();
 
         user.setUserId(userId);
@@ -109,6 +110,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setAddress(address);
         user.setMobile(mobile);
         user.setEmail(email);
+        user.setBirthDate(birthDate);
         user.setRegDate(regDate);
         user.setAlphaDate(alphaDate);
         user.setPastureJoinDate(pastureJoinDate);

@@ -14,6 +14,7 @@ public class User {
     private String address;
     private String mobile;
     private String email;
+    private String birthDate;
     private String regDate;
     private String alphaDate;
     private String pastureJoinDate;
@@ -122,6 +123,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getRegDate() {
@@ -274,6 +283,7 @@ public class User {
                 ", alphaDate='" + alphaDate + '\'' +
                 ", pastureJoinDate='" + pastureJoinDate + '\'' +
                 ", status='" + status + '\'' +
+                ", birthDate='" + birthDate + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", updateDate='" + updateDate + '\'' +
                 ", groupDesc='" + groupDesc + '\'' +

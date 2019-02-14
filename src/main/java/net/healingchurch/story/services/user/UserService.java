@@ -10,11 +10,11 @@ public interface UserService {
 
     List<User> findUserSimpleList(String userId, int roleId, int groupId, String userName);
 
-    int createUser(String userId, String password, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String regDate, String alphaDate, String pastureJoinDate, boolean isPermission, String status);
+    int createUser(String userId, String password, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String birthDate, String regDate, String alphaDate, String pastureJoinDate, boolean isPermission, String status);
 
     User getUser(String userId);
 
-    int updateUser(String userId, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String regDate, String alphaDate, String pastureJoinDate, boolean isPermission, String status);
+    int updateUser(String userId, int roleId, int groupId, String userName, boolean isAdmin, String address, String mobile, String email, String birthDate, String regDate, String alphaDate, String pastureJoinDate, boolean isPermission, String status);
 
     Map<Object, Object> updateUserPassword(String userId, String password, boolean validation);
 
