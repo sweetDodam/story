@@ -116,6 +116,7 @@ select.ui-pg-selbox.form-control{
     vertical-align: middle;
     padding: 2px;
     height: 38px;
+    padding-left: 5px;
 }
 
 .ui-jqgrid table.dtlView tr.jqgrow td {

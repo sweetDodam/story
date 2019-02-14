@@ -10,6 +10,8 @@
         /*  MenuMapper.findMenuChildList  */
         select * from ch_menu
         where parent_menu_id = #{value}
+
+        order by sort_idx
     </select>
 
     <select id="getMenu" resultType="net.healingchurch.story.domain.Menu" parameterType="int">
@@ -41,11 +43,11 @@
         set
          update_date = now()
         ,update_user = #{loginUserId}
+        ,menu_url = #{menuUrl}
+        ,sort_idx = #{sortIdx}
         <if test="menuName!='' and menuName!=null">,menu_name = #{menuName}</if>
-        <if test="menuUrl!='' and menuUrl!=null">,menu_url = #{menuUrl}</if>
         <if test="parentMenuId!='' and parentMenuId!=null">, parent_menu_id = #{parentMenuId}</if>
         <if test="menuLevel!='' and menuLevel!=null">, menu_level = #{menuLevel} </if>
-        <if test="sortIdx!='' and sortIdx!=null">, sort_idx = #{sortIdx} </if>
         where menu_id = #{menuId}
     </update>
 

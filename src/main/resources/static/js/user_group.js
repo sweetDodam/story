@@ -99,6 +99,35 @@ var userGroup = {
             return;
         }
 
+        var groupLevel = Number($("#groupLevel").text());
+        var parentGroupId = $("#parentGroupId").val();
+        var groupChk = true;
+
+        //최상위 그룹의 부모 변경시
+        if(groupLevel == 1){
+            if(parentGroupId != -1){
+                groupChk = false;
+            }
+        }else{
+            groupChk = false;
+
+            var rowData = $("#jqGrid" + (groupLevel - 1)).getRowData();
+
+            for(var i in rowData){
+                if(rowData[i].groupId == parentGroupId){
+                    groupChk = true;
+                    break;
+                }
+            }
+        }
+        
+        if(!groupChk){
+            alert("상위 그룹 변경은 상위 그룹과 같은 레벨의 그룹으로만 변경 가능합니다.\n\n ex) 상위레벨2->상위레벨2 변경O\n\n상위레벨2->상위레벨3 변경X\n\n상위레벨2-> 상위레벨1 변경X");
+            $("#parentGroupId").focus();
+
+            return;
+        }
+
         var form = $("#StoryForm")[0];
         var formData = new FormData(form);
 
@@ -254,6 +283,9 @@ var userGroup = {
             $("#StoryForm .btn").addClass("disObj");
             $(".addObj").addClass("disObj");
 
+            $("#jqGrid2").jqGrid('clearGridData');
+            $("#jqGrid3").jqGrid('clearGridData');
+
             userGroup.inputClear();
             userGroup.gridSearch(1);
         }else{
@@ -276,7 +308,7 @@ var userGroup = {
 var jqGridForm = {
     colModel : [
         { label: '그룹 ID',			        name: 'groupId',            align: 'center', width: 80, sorttype:'number'},
-        { label: '그룹 이름',               name: 'groupName',          align: 'center', width: 200 },
+        { label: '그룹 이름',               name: 'groupName',          align: 'left',  width: 200 },
         { label: '그룹레벨',                name: 'groupLevel',         hidden: true   },
         { label: '부모그룹ID',				name: 'parentGroupId',      hidden: true   },
         { label: '등록일',				    name: 'createDate',         hidden: true   },

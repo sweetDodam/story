@@ -21,6 +21,7 @@
                 and DATE_FORMAT(event_date, '%Y%m%d')<![CDATA[ <= ]]>  #{toDate}
             </if>
         </where>
+            order by event_date desc
         <if test="page!=null and page!=''">LIMIT #{offset}, #{limit}</if>
     </select>
 

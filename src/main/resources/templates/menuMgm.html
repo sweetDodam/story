@@ -2,6 +2,17 @@
     #import-page-area{
         overflow-x: auto;
     }
+    .careTable, .careTable a.btn, .ui-jqgrid-hdiv{
+        font-size: 9pt;
+    }
+
+    .careTitle{
+        height: 30px !important;
+    }
+
+    .card-body{
+        padding-bottom: 0px !important;
+    }
 </style>
 <div class="col-md-12" style="min-width: 1280px;">
     <div class="card mb-5">
@@ -11,19 +22,14 @@
         <div class="card-body">
             <form id="StoryForm" th:action="@{/services/user/menu/update}" method="POST">
                 <input type="hidden" id="menuId" name="menuId" value="-1">
-                <input type="hidden" id="parentMenuId" name="parentMenuId" value="-1">
 
                 <div class="table-responsive ch-txt-align-c" >
-                    <div class="div-3">
-                        <table id="jqGrid1" class="table table-bordered selectGrid"></table>
+                    <div class="div-2" style="width:850px;float: left;">
+                        <table id="jqGrid1" class="table table-bordered selectGrid dtlView"></table>
+                        <table id="jqGrid2" class="table table-bordered selectGrid dtlView"></table>
+                        <table id="jqGrid3" class="table table-bordered selectGrid dtlView"></table>
                     </div>
-                    <div class="div-3">
-                        <table id="jqGrid2" class="table table-bordered selectGrid"></table>
-                    </div>
-                    <div class="div-3">
-                        <table id="jqGrid3" class="table table-bordered selectGrid"></table>
-                    </div>
-                    <div class="div-3">
+                    <div class="div-3" style="width:300px;">
                         <table class="careTable">
                             <tr class="careTitle">
                                 <td colspan="2">메뉴 수정</td>
@@ -41,9 +47,27 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td class="careTitle">상위 메뉴 ID</td>
+                                <td>
+                                    <input type="number" class="form-control saveObj" id="parentMenuId" name="parentMenuId">
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="careTitle">메뉴 이름</td>
                                 <td>
                                     <input class="form-control saveObj" id="menuName" name="menuName">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="careTitle">메뉴 Url</td>
+                                <td>
+                                    <input class="form-control saveObj" id="menuUrl" name="menuUrl">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="careTitle">정렬</td>
+                                <td>
+                                    <input class="form-control saveObj" id="sortIdx" name="sortIdx">
                                 </td>
                             </tr>
                             <tr class="ch-txt-align-r">
@@ -59,6 +83,18 @@
                                 <td class="careTitle">메뉴 이름</td>
                                 <td>
                                     <input class="form-control addObj disObj" id="newMenuName" name="newMenuName">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="careTitle">메뉴 Url</td>
+                                <td>
+                                    <input class="form-control addObj disObj" id="newMenuUrl" name="newMenuUrl">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="careTitle">정렬</td>
+                                <td>
+                                    <input class="form-control addObj disObj" id="newSortIdx" name="newSortIdx">
                                 </td>
                             </tr>
                             <tr class="ch-txt-align-r">

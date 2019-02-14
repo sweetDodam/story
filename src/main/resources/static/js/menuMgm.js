@@ -17,11 +17,10 @@ var menuMgm = {
             datatype: "local",
             colModel: jqGridForm.colModel,
             viewrecords: true,
-            height: 500,
-            autoWidth: true,
+            height: 150,
+            width: 800,
             shrinkToFit: true,
             sortable: false,
-            sortname: 'menuId',
             loadComplete : function(data){
 
             },onSelectRow : function (rowid, status, e) {
@@ -45,11 +44,10 @@ var menuMgm = {
             datatype: "local",
             colModel: jqGridForm.colModel,
             viewrecords: true,
-            height: 500,
-            autoWidth: true,
+            height: 150,
+            width: 800,
             shrinkToFit: true,
             sortable: false,
-            sortname: 'menuId',
             loadComplete : function(data){
 
             },onSelectRow : function (rowid, status, e) {
@@ -69,11 +67,10 @@ var menuMgm = {
             datatype: "local",
             colModel: jqGridForm.colModel,
             viewrecords: true,
-            height: 500,
-            autoWidth: true,
+            height: 150,
+            width: 800,
             shrinkToFit: true,
             sortable: false,
-            sortname: 'menuId',
             loadComplete : function(data){
 
             },onSelectRow : function (rowid, status, e) {
@@ -95,6 +92,35 @@ var menuMgm = {
         if(!common.dataChk($("#menuName").val())){
             alert("필수 입력 사항입니다.");
             $("#menuName").focus();
+
+            return;
+        }
+
+        var menuLevel = Number($("#menuLevel").text());
+        var parentMenuId = $("#parentMenuId").val();
+        var menuChk = true;
+
+        //최상위 메뉴의 부모 변경시
+        if(menuLevel == 1){
+            if(parentMenuId != -1){
+                menuChk = false;
+            }
+        }else{
+            menuChk = false;
+
+            var rowData = $("#jqGrid" + (menuLevel - 1)).getRowData();
+
+            for(var i in rowData){
+                if(rowData[i].menuId == parentMenuId){
+                    menuChk = true;
+                    break;
+                }
+            }
+        }
+
+        if(!menuChk){
+            alert("상위 메뉴 변경은 상위 메뉴와 같은 레벨의 메뉴로만 변경 가능합니다.\n\r ex) 상위레벨2->상위레벨2 변경O\n\n상위레벨2->상위레벨3 변경X\n\n상위레벨2-> 상위레벨1 변경X");
+            $("#parentMenuId").focus();
 
             return;
         }
@@ -181,7 +207,10 @@ var menuMgm = {
         var formData = new FormData(form);
 
         var menuLevel = Number($("#menuLevel").text());
+
         formData.set("menuName", $("#newMenuName").val());
+        formData.set("menuUrl", $("#newMenuUrl").val());
+        formData.set("sortIdx", $("#newSortIdx").val());
 
         //하위 메뉴로 추가했다면
         if(lowFlag){
@@ -254,6 +283,9 @@ var menuMgm = {
             $("#StoryForm .btn").addClass("disObj");
             $(".addObj").addClass("disObj");
 
+            $("#jqGrid2").jqGrid('clearGridData');
+            $("#jqGrid3").jqGrid('clearGridData');
+
             menuMgm.inputClear();
             menuMgm.gridSearch(1);
         }else{
@@ -268,6 +300,8 @@ var menuMgm = {
         $("#selMenuId").text(data.menuId);
         $("#menuLevel").text(data.menuLevel);
         $("#menuName").val(data.menuName);
+        $("#menuUrl").val(data.menuUrl);
+        $("#sortIdx").val(data.sortIdx);
 
         menuMgm.inputClear("add");
     }
@@ -275,8 +309,10 @@ var menuMgm = {
 
 var jqGridForm = {
     colModel : [
-        { label: '메뉴 ID',			        name: 'menuId',            align: 'center', width: 80, sorttype:'number'},
-        { label: '메뉴 이름',               name: 'menuName',          align: 'center', width: 200 },
+        { label: 'ID',			            name: 'menuId',            align: 'center', width: 40},
+        { label: '메뉴 이름',               name: 'menuName',          align: 'left', width: 100 },
+        { label: '메뉴 Url',                name: 'menuUrl',           align: 'left', width: 120 },
+        { label: '정렬',                    name: 'sortIdx',           align: 'center', width: 40 },
         { label: '메뉴레벨',                name: 'menuLevel',         hidden: true   },
         { label: '부모메뉴ID',				name: 'parentMenuId',      hidden: true   },
         { label: '등록일',				    name: 'createDate',         hidden: true   },

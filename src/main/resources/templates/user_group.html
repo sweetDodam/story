@@ -11,7 +11,6 @@
         <div class="card-body">
             <form id="StoryForm" th:action="@{/services/user/group/update}" method="POST">
                 <input type="hidden" id="groupId" name="groupId" value="-1">
-                <input type="hidden" id="parentGroupId" name="parentGroupId" value="-1">
 
                 <div class="table-responsive ch-txt-align-c" >
                     <div class="div-3">
@@ -38,6 +37,12 @@
                                 <td class="careTitle">그룹 레벨</td>
                                 <td class="ch-txt-align-l">
                                     <span class="saveObj" id="groupLevel" name="groupLevel"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="careTitle">상위 그룹 ID</td>
+                                <td>
+                                    <input type="number" class="form-control saveObj" id="parentGroupId" name="parentGroupId">
                                 </td>
                             </tr>
                             <tr>
