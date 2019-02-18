@@ -27,6 +27,7 @@
         ,B.parent_group_id
         ,FN_GROUP_DESC(A.group_id) as group_desc
         ,C.description as role_desc
+        ,C.role_order
         from ch_user A
         <choose>
             <when test="groupId!='' and groupId!=null">
@@ -118,6 +119,7 @@
             ,B.parent_group_id
             ,B.group_name as group_desc
             ,C.description as role_desc
+            ,C.role_order
         from ch_user A
         left join ch_user_group B on B.group_id = A.group_id
         left join ch_user_role C on C.role_id = A.role_id
@@ -131,8 +133,9 @@
              A.role_id
             ,A.role_name
             ,A.description
-            ,A.create_date
-            ,A.update_date
+            ,A.role_order
+            ,FN_DATE_FORMAT(A.create_date) as create_date
+            ,FN_DATE_FORMAT(A.update_date) as update_date
         from ch_user_role A
         left join ch_user B on A.role_id = B.role_id
 

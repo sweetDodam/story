@@ -23,12 +23,16 @@ var common = {
             }, 400);
         });
         $(document).ready(function(){
-           $('#loadingArea').hide(); //첫 시작시 로딩바를 숨겨준다.
+            $('#loadingArea').hide(); //첫 시작시 로딩바를 숨겨준다.
         });
     },
     //공통 화면 로드
     load : function () {
         $("#com-menu").load("/com/menu");  //공통 메뉴 불러오기
+
+        //메인 이미지 경로 가져오기
+        var imgData = common.comCodeData("MAIN_IMG");
+        $("#mainImage").attr("src", imgData[0].codeName);
     },
     //데이터 체크(문자열리턴)
     dataChkStr : function (data) {
@@ -261,7 +265,7 @@ var common = {
         });
 
         return rs;
-     },
+    },
     numberTypeChk: function (item) {
         var max = Number($(item).attr("max"));
         var min = Number($(item).attr("min"));

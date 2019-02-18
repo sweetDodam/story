@@ -389,7 +389,7 @@ label.required-icon{
 }
 
 .ui-jqgrid .ui-jqgrid-btable tbody tr.jqgrow td {
-    white-space: normal !important;
+   white-space: pre-wrap !important;
 }
 
 .div-3{

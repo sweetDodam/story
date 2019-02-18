@@ -69,7 +69,7 @@ public class WebAppContoller {
     /*****스토리 페이지*****/
 
     //목장 스토리 관리
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER', 'ROLE_PASTURE_MANAGER')")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER', 'ROLE_PASTURE_MANAGER')")
     @GetMapping("/story/pasture")
     public String storyPasture(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
         //로그인한 유저의 정보
@@ -84,7 +84,7 @@ public class WebAppContoller {
     }
 
     //목장 스토리 등록/수정
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER', 'ROLE_PASTURE_MANAGER')")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER', 'ROLE_PASTURE_MANAGER')")
     @GetMapping("/story/pasture/form")
     public String storyPastureForm(Map<String, Object> model,
                                    @RequestParam(value = "userId", defaultValue = "") String userId,
@@ -111,7 +111,7 @@ public class WebAppContoller {
     }
 
     //목장 스토리 조회
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER', 'ROLE_PASTURE_MANAGER')")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER', 'ROLE_PASTURE_MANAGER')")
     @GetMapping("/story/pasture/list")
     public String storyPastureList(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
         //로그인한 유저의 정보
@@ -126,7 +126,7 @@ public class WebAppContoller {
     }
 
     //목장 스토리 상세
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER', 'ROLE_PASTURE_MANAGER')")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER', 'ROLE_PASTURE_MANAGER')")
     @GetMapping("/story/pasture/detail")
     public String storyPastureDetail(Map<String, Object> model,
                                    @RequestParam(value = "userId", defaultValue = "") String userId,
@@ -144,7 +144,7 @@ public class WebAppContoller {
     }
 
     //마을 스토리 관리
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER')")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER')")
     @GetMapping("/story/town")
     public String storyTown(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
         //로그인한 유저의 정보
@@ -159,7 +159,7 @@ public class WebAppContoller {
     }
 
     //마을 스토리 등록/수정
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER')")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER')")
     @GetMapping("/story/town/form")
     public String storyTownForm(Map<String, Object> model,
                                 @RequestParam(value = "userId", defaultValue = "") String userId,
@@ -190,7 +190,7 @@ public class WebAppContoller {
     }
 
     //마을 스토리 조회
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER')")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER')")
     @GetMapping("/story/town/list")
     public String storyTownList(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
         //로그인한 유저의 정보
@@ -205,7 +205,7 @@ public class WebAppContoller {
     }
 
     //마을 스토리 상세
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER')")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER')")
     @GetMapping("/story/town/detail")
     public String storyTownDetail(Map<String, Object> model,
                                      @RequestParam(value = "userId", defaultValue = "") String userId,
@@ -222,7 +222,7 @@ public class WebAppContoller {
     }
 
     //사역자 스토리 관리
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR')")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR')")
     @GetMapping("/story/pastor")
     public String storyPastor(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
         //로그인한 유저의 정보
@@ -241,7 +241,7 @@ public class WebAppContoller {
     }
 
     //사역자 스토리 등록/수정
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR')")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR')")
     @GetMapping("/story/pastor/form")
     public String storyPastorForm(Map<String, Object> model,
                                   @RequestParam(value = "userId", defaultValue = "") String userId,
@@ -272,7 +272,7 @@ public class WebAppContoller {
     }
 
     //사역자 스토리 조회
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR')")
+   // @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR')")
     @GetMapping("/story/pastor/list")
     public String storyPastorList(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
         //로그인한 유저의 정보
@@ -287,7 +287,7 @@ public class WebAppContoller {
     }
 
     //사역자 스토리 상세
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR')")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR')")
     @GetMapping("/story/pastor/detail")
     public String storyPastorDetail(Map<String, Object> model,
                                      @RequestParam(value = "userId", defaultValue = "") String userId,
@@ -395,22 +395,13 @@ public class WebAppContoller {
         return "user_group";
     }
 
-    @GetMapping("/permission")
+    @GetMapping("/user/role")
     public String permission(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
 
-        return "permission";
-    }
-
-    @GetMapping("/permission/add")
-    public String addPermission(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
-        //로그인한 유저의 정보
-        User user = userService.getUser(userDetails.getUsername());
-        model.put("userInfo", user);
-
-        return "permission_add";
+        return "user_role";
     }
 
     @GetMapping("/menu")
@@ -429,15 +420,6 @@ public class WebAppContoller {
         model.put("userInfo", user);
 
         return "common_code";
-    }
-
-    @GetMapping("/common/code/add")
-    public String addCommonCode(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
-        //로그인한 유저의 정보
-        User user = userService.getUser(userDetails.getUsername());
-        model.put("userInfo", user);
-
-        return "common_code_add";
     }
 
     public static Map ConverObjectToMap(Object obj){

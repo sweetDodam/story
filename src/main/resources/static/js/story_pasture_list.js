@@ -194,7 +194,7 @@ var jqGridForm = {
     colModel : [
         { label: '아이디',      	name: 'userId',             align: 'center', width: 150		},
         { label: '이름',        	name: 'userName',           align: 'center', width: 150, 	formatter: formatter.dtlModal},
-        { label: '소속',    	    name: 'groupDesc',          align: 'center', width: 250     },
+        { label: '소속',    	    name: 'groupDesc',          align: 'left', width: 250     },
         { label: '전화번호',    	name: 'mobile',             align: 'center', width: 180 	},
         { label: '이메일',      	name: 'email',              align: 'center', width: 200 	},
         { label: '청년부 등록일',	name: 'regDate',            align: 'center', width: 180 	},

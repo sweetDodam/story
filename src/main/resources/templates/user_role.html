@@ -1,0 +1,95 @@
+<style type="text/css">
+    #import-page-area{
+        overflow-x: auto;
+    }
+</style>
+<div class="col-md-12" style="min-width: 1280px;">
+    <div class="card mb-5">
+        <div class="card-header">
+            <i class="fas fa-table mr-1"></i>권한 관리
+        </div>
+        <div class="card-body">
+            <form id="StoryForm" th:action="@{/services/user/role/update}" method="POST">
+                <input type="hidden" id="roleId" name="roleId" value="">
+
+                <div class="table-responsive ch-txt-align-c" >
+                    <div class="div-3" style="width: 550px;">
+                        <table id="jqGrid" class="table table-bordered selectGrid"></table>
+                    </div>
+                    <div class="div-3">
+                        <table class="careTable">
+                            <tr class="careTitle">
+                                <td colspan="2">권한 수정</td>
+                            </tr>
+                            <tr>
+                                <td class="careTitle">권한 ID</td>
+                                <td class="ch-txt-align-l">
+                                    <span class="saveObj" id="selRoleId" name="selRoleId"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="careTitle">권한</td>
+                                <td>
+                                    <input class="form-control saveObj" id="roleName" name="roleName">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="careTitle">권한 설명</td>
+                                <td>
+                                    <input class="form-control saveObj" id="description" name="description">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="careTitle">권한 순위</td>
+                                <td>
+                                    <input class="form-control saveObj" id="roleOrder" name="roleOrder">
+                                </td>
+                            </tr>
+                            <tr class="ch-txt-align-r">
+                                <td colspan="2">
+                                    <a id="updateBtn" class="btn btn-primary bg-ch-blue txt-ch-white disObj" onclick="userRole.save();">수정</a>
+                                    <a id="deleteBtn" class="btn btn-primary bg-ch-blue txt-ch-white disObj" onclick="userRole.delete();">삭제</a>
+                                </td>
+                            </tr>
+                            <tr class="careTitle">
+                                <td colspan="2">권한 추가</td>
+                            </tr>
+                            <tr>
+                                <td class="careTitle">권한</td>
+                                <td>
+                                    <input class="form-control addObj" id="newRoleName" name="newRoleName">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="careTitle">권한 설명</td>
+                                <td>
+                                    <input class="form-control addObj" id="newDescription" name="newDescription">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="careTitle">권한 순위</td>
+                                <td>
+                                    <input type="number" class="form-control addObj" id="newRoleOrder" name="newRoleOrder">
+                                </td>
+                            </tr>
+                            <tr class="ch-txt-align-r">
+                                <td colspan="2">
+                                    <a id="addBtn" class="btn btn-primary bg-ch-blue txt-ch-white ch-txt-align-l" onclick="userRole.add(false);">추가</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- jqGid CSS -->
+<link rel="stylesheet" th:href="@{/css/ui.jqgrid-bootstrap.css}" href="../../css/ui.jqgrid-bootstrap.css">
+
+<!-- jqGid Script -->
+<script src="../../js/grid.locale-kr.js"></script>
+<script src="../../js/jquery.jqGrid.js"></script>
+
+<script src="../../js/user_role.js"></script>

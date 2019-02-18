@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.healingchurch.story.services.user.role.UserRoleMapper">
+
+    <select id="findUserRoleList" parameterType="net.healingchurch.story.domain.Role"
+            resultType="net.healingchurch.story.domain.Role">
+        /*  UserRoleMapper.findUserRoleList  */
+        select * from ch_user_role
+        order by role_order, role_id
+    </select>
+
+    <select id="getUserRole" parameterType="int"
+            resultType="net.healingchurch.story.domain.Role">
+        /*  UserRoleMapper.getUserRole  */
+        select * from ch_user_role
+        where role_id = #{value}
+    </select>
+
+    <insert id="createUserRole" parameterType="net.healingchurch.story.domain.Role"
+            useGeneratedKeys="true" keyProperty="userSeq">
+        /*  UserRoleMapper.createUserRole  */
+        INSERT INTO ch_user_role(description, role_name, role_order, create_date, create_user)
+        VALUES (
+            #{description},
+            #{roleName},
+            #{roleOrder},
+            now(),
+            #{loginUserId}
+            )
+    </insert>
+
+    <update id="updateUserRole" parameterType="net.healingchurch.story.domain.Role"
+            useGeneratedKeys="true" keyProperty="roleId">
+        /*  UserRoleMapper.updateUserRole  */
+        update ch_user_role
+        set
+        update_date = now()
+        ,update_user = #{loginUserId}
+        <if test="roleName!='' and roleName!=null">, role_name = #{roleName} </if>
+        <if test="description!='' and description!=null">, description = #{description} </if>
+        <if test="roleOrder!='' and roleOrder!=null">, role_order = #{roleOrder} </if>
+        where role_id = #{roleId}
+    </update>
+
+    <delete id="removeUserRole" parameterType="int">
+        /*  UserRoleMapper.removeUserRole  */
+        delete from ch_user_role
+        where role_id = #{value}
+    </delete>
+
+</mapper>

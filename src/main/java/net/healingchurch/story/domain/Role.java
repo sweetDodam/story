@@ -8,6 +8,7 @@ public class Role implements Serializable {
     private int roleId;
     private String roleName;
     private String description;
+    private int roleOrder;
     private String createDate;
     private String updateDate;
 
@@ -38,6 +39,14 @@ public class Role implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getRoleOrder() {
+        return roleOrder;
+    }
+
+    public void setRoleOrder(int roleOrder) {
+        this.roleOrder = roleOrder;
     }
 
     public String getCreateDate() {
@@ -83,6 +92,7 @@ public class Role implements Serializable {
                 "roleId=" + roleId +
                 ", roleName='" + roleName + '\'' +
                 ", description='" + description + '\'' +
+                ", roleOrder='" + roleOrder + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", updateDate='" + updateDate + '\'' +
                 ", loginUserId=" + loginUserId +

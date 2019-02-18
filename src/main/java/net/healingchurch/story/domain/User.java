@@ -28,6 +28,7 @@ public class User {
 
     private String groupDesc;
     private String roleDesc;
+    private int roleOrder;
 
     private int page;
     private int offset;
@@ -205,6 +206,13 @@ public class User {
         this.roleDesc = roleDesc;
     }
 
+    public int getRoleOrder() {
+        return roleOrder;
+    }
+
+    public void setRoleOrder(int roleOrder) {
+        this.roleOrder = roleOrder;
+    }
     public String getFromDate() {
         return fromDate;
     }
@@ -288,6 +296,7 @@ public class User {
                 ", updateDate='" + updateDate + '\'' +
                 ", groupDesc='" + groupDesc + '\'' +
                 ", roleDesc='" + roleDesc + '\'' +
+                ", roleOrder='" + roleOrder + '\'' +
                 ", fromDate='" + fromDate + '\'' +
                 ", toDate='" + toDate + '\'' +
                 ", page=" + page +

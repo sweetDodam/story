@@ -21,9 +21,9 @@
         ,B.master_id
         ,B.prayers
         ,B.worship_reason
-        ,FN_CODE_DESC('WORSHIP_REASON', B.worship_reason as worship_desc
+        ,FN_CODE_DESC('WORSHIP_REASON', B.worship_reason) as worship_desc
         ,B.leader_reason
-        ,FN_CODE_DESC('LEADER_REASON', B.leader_reason as leader_desc
+        ,FN_CODE_DESC('LEADER_REASON', B.leader_reason) as leader_desc
         from ch_story_master A
         inner join ch_story_pasture B on A.story_id = B.master_id
 
@@ -147,20 +147,21 @@
         ,A.group_id
         ,A.user_name
         ,A.is_admin
-        ,A.birth_date
+        ,FN_DATE_FORMAT(A.birth_date) as birth_date
         ,A.address
         ,A.mobile
         ,A.email
-        ,A.reg_date
-        ,A.alpha_date
-        ,A.pasture_join_date
+        ,FN_DATE_FORMAT(A.reg_date) as reg_date
+        ,FN_DATE_FORMAT(A.alpha_date) as alpha_date
+        ,FN_DATE_FORMAT(A.pasture_join_date) as pasture_join_date
         ,A.status
         ,A.is_permission
         ,FN_GROUP_DESC(A.group_id) as group_desc
         ,C.description as role_desc
+        ,C.role_order
         <if test="inputDate!='' and inputDate!=null">
             ,D.story_id
-            ,D.input_date
+            ,FN_DATE_FORMAT(D.input_date) as input_date
             ,D.worship_yn
             ,D.leader_yn
             ,D.pasture_meet_yn

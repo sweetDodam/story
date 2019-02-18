@@ -183,7 +183,8 @@ var formatter = {
 var jqGridForm = {
     colModel : [
         { label: '아이디',      	name: 'userId',             align: 'center', width: 150		},
-        { label: '이름',        	name: 'userName',           align: 'center', width: 200, 	formatter: formatter.dtlModal},
+        { label: '이름',        	name: 'userName',           align: 'center', width: 150, 	formatter: formatter.dtlModal},
+        { label: '소속',        	name: 'groupDesc',        	align: 'left', width: 250},
         { label: '전화번호',    	name: 'mobile',             align: 'center', width: 250 	},
         { label: '이메일',      	name: 'email',              align: 'center', width: 250 	},
         { label: '청년부 등록일',	name: 'regDate',            align: 'center', width: 200 	},
@@ -193,7 +194,6 @@ var jqGridForm = {
         { label: '스토리아이디',	name: 'storyId',         	align: 'center', width: 90, 	hidden: true },
         { label: '권한',        	name: 'roleDesc',           align: 'center', width: 100, 	hidden: true },
         { label: '권한ID',      	name: 'roleId',             align: 'center', width: 100, 	hidden: true },
-        { label: '소속',        	name: 'groupDesc',        	align: 'center', width: 100, 	hidden: true },
         { label: '소속ID',      	name: 'groupId',            align: 'center', width: 100, 	hidden: true },
         { label: '관리자여부',   	name: 'isAdmin',            align: 'center', width: 100, 	hidden: true },
         { label: '주소',        	name: 'address',            align: 'center', width: 165, 	hidden: true },
