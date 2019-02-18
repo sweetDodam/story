@@ -48,14 +48,14 @@ var storyPastureList = {
             //그리드 크기 변경
             //common.resizeGridWidth('#jqGrid', '.card-body', 10);
         });
-        
+
         //모달 열린 후 이벤트
         $("#detailStoryModal").on('shown.bs.modal', function(e){
             setTimeout(function() {
                 storyPastureDetail.init();
             }, 300);
         });
-        
+
         //윈도우 resize 이벤트
         $(window).bind('resize', function() {
             //그리드 크기 변경
@@ -134,7 +134,7 @@ var storyPastureList = {
                         gridPage = page;
                     }
                 } else if (pgButton == "first") {    // 첫 페이지
-                        gridPage = 1;
+                    gridPage = 1;
                 } else if (pgButton == "last") {    // 마지막 페이지
                     gridPage = totalPage;
                 } else if (pgButton == "user") {                // 사용자 입력 페이징 처리
@@ -173,7 +173,7 @@ var storyPastureList = {
 
         //검색 조건 초기화
         $(".ch-search-area").find("input, select").not(".notClear").val("");
-        
+
         //그룹 셀렉트 박스 초기화
         $('.group-selectBox select').children().remove();
 
@@ -185,25 +185,25 @@ var storyPastureList = {
 var page = 1;
 var formatter = {
     dtlModal : function(cellValue,rowObject,options){
-            return "<a href='javascript:void(0);' " +
-                "onclick='storyPastureList.detailModalLoad(\""+ common.dataChkStr(options.userId) +"\");$(this).parents(\"tr\").trigger(\"click\");'>"+cellValue +"</a>";
+        return "<a href='javascript:void(0);' " +
+            "onclick='storyPastureList.detailModalLoad(\""+ common.dataChkStr(options.userId) +"\");$(this).parents(\"tr\").trigger(\"click\");'>"+cellValue +"</a>";
     }
 };
 
 var jqGridForm = {
     colModel : [
         { label: '아이디',      	name: 'userId',             align: 'center', width: 150		},
-        { label: '이름',        	name: 'userName',           align: 'center', width: 200, 	formatter: formatter.dtlModal},
-        { label: '전화번호',    	name: 'mobile',             align: 'center', width: 250 	},
-        { label: '이메일',      	name: 'email',              align: 'center', width: 250 	},
-        { label: '청년부 등록일',	name: 'regDate',            align: 'center', width: 200 	},
-        { label: '알파날짜',    	name: 'alphaDate',          align: 'center', width: 200 	},
-        { label: '등반날짜',    	name: 'pastureJoinDate',    align: 'center', width: 200 	},
+        { label: '이름',        	name: 'userName',           align: 'center', width: 150, 	formatter: formatter.dtlModal},
+        { label: '소속',    	    name: 'groupDesc',          align: 'center', width: 250     },
+        { label: '전화번호',    	name: 'mobile',             align: 'center', width: 180 	},
+        { label: '이메일',      	name: 'email',              align: 'center', width: 200 	},
+        { label: '청년부 등록일',	name: 'regDate',            align: 'center', width: 180 	},
+        { label: '알파날짜',    	name: 'alphaDate',          align: 'center', width: 180 	},
+        { label: '등반날짜',    	name: 'pastureJoinDate',    align: 'center', width: 180 	},
         { label: 'userSeq',		    name: 'userSeq',            align: 'center', width: 100,	hidden: true },
         { label: '스토리아이디',	name: 'storyId',         	align: 'center', width: 90, 	hidden: true },
         { label: '권한',        	name: 'roleDesc',           align: 'center', width: 100, 	hidden: true },
         { label: '권한ID',      	name: 'roleId',             align: 'center', width: 100, 	hidden: true },
-        { label: '소속',        	name: 'groupDesc',        	align: 'center', width: 100, 	hidden: true },
         { label: '소속ID',      	name: 'groupId',            align: 'center', width: 100, 	hidden: true },
         { label: '관리자여부',   	name: 'isAdmin',            align: 'center', width: 100, 	hidden: true },
         { label: '주소',        	name: 'address',            align: 'center', width: 165, 	hidden: true },

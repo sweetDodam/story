@@ -4,23 +4,23 @@
     <select id="findStoryList" parameterType="net.healingchurch.story.domain.PastorStory" resultType="net.healingchurch.story.domain.PastorStory">
         /*  PastorStoryMapper.findStoryList  */
         select
-             A.story_id
-            ,A.pastor_id
-            ,A.visit_user_id
-            ,FN_DATE_FORMAT(A.visit_date) as visit_date
-            ,A.visit_place
-            ,A.summary
-            ,A.prayers
-            ,A.etc
-            ,FN_DATE_FORMAT(A.create_date) as visit_date
-            ,FN_DATE_FORMAT(A.update_date) as visit_date
-            ,B.user_name
+        A.story_id
+        ,A.pastor_id
+        ,A.visit_user_id
+        ,FN_DATE_FORMAT(A.visit_date) as visit_date
+        ,A.visit_place
+        ,A.summary
+        ,A.prayers
+        ,A.etc
+        ,FN_DATE_FORMAT(A.create_date) as visit_date
+        ,FN_DATE_FORMAT(A.update_date) as visit_date
+        ,B.user_name
         from ch_story_pastor A
         left join ch_user B on A.pastor_id = B.user_id
 
         where 1=1
 
-            and A.visit_user_id = #{visitUserId}
+        and A.visit_user_id = #{visitUserId}
         <if test="pastorId!=null and pastorId!=''">
             and A.pastor_id = #{pastorId}
         </if>
@@ -40,7 +40,7 @@
     <select id="findStoryListCnt" parameterType="net.healingchurch.story.domain.PastorStory" resultType="int">
         /*  PastorStoryMapper.findStoryListCnt  */
         select
-          count(A.story_id) AS cnt
+        count(A.story_id) AS cnt
         from ch_story_pastor A
         left join ch_user B on A.pastor_id = B.user_id
 
@@ -111,7 +111,7 @@
             resultType="net.healingchurch.story.domain.PastorStory">
         /*  PastorStoryMapper.findUserStoryList  */
         select
-         A.user_seq
+        A.user_seq
         ,A.user_id
         ,A.role_id
         ,A.group_id
@@ -126,7 +126,7 @@
         ,A.pasture_join_date
         ,A.status
         ,A.is_permission
-        ,B.group_name as group_desc
+        ,FN_GROUP_DESC(A.group_id) as group_desc
         ,C.description as role_desc
         <if test="visitDate!='' and visitDate!=null">
             ,D.story_id

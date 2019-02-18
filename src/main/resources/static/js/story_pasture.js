@@ -138,7 +138,7 @@ var storyPasture = {
                         gridPage = page;
                     }
                 } else if (pgButton == "first") {    // 첫 페이지
-                        gridPage = 1;
+                    gridPage = 1;
                 } else if (pgButton == "last") {    // 마지막 페이지
                     gridPage = totalPage;
                 } else if (pgButton == "user") {                // 사용자 입력 페이징 처리
@@ -226,11 +226,11 @@ var storyPasture = {
 var page = 1;
 var formatter = {
     updModal : function(cellValue,rowObject,options){
-            return "<a href='javascript:void(0);' " +
-                "onclick='storyPasture.updatModalLoad(\""+ common.dataChkStr(options.userId) +"\""+
-                                                     ", \""+ common.dataChkStr(options.storyId) +"\""+
-                                                     ", \""+ $("#inputDate").val().replace(/[^0-9]/g, "") +"\"); $(this).parents(\"tr\").trigger(\"click\");'>"+
-                cellValue +"</a>";
+        return "<a href='javascript:void(0);' " +
+            "onclick='storyPasture.updatModalLoad(\""+ common.dataChkStr(options.userId) +"\""+
+            ", \""+ common.dataChkStr(options.storyId) +"\""+
+            ", \""+ $("#inputDate").val().replace(/[^0-9]/g, "") +"\"); $(this).parents(\"tr\").trigger(\"click\");'>"+
+            cellValue +"</a>";
     },
     registFlag : function(cellValue,rowObject,options){
         if(common.dataChk(rowObject)){
@@ -239,31 +239,49 @@ var formatter = {
             }
             return "미등록";
         }
+    },
+    YnDesc : function(cellValue,rowObject,options){
+        var val = String(cellValue);
+
+        //합계 포맷터일 경우
+        if(common.dataChk(options.storyId)){
+            var str = "참석";
+
+            if(val == '0'){
+                str = "불참석";
+            }
+            return str;
+        }else{
+            return '-';
+        }
     }
 };
 
 var jqGridForm = {
     colModel : [
-        { label: '아이디',			name: 'userId',             align: 'center', width: 45},
-        { label: '이름',        	name: 'userName',           align: 'center', width: 70,	formatter: formatter.updModal},
-        { label: '등록여부',    	name: 'registFlag',			align: 'center', width: 55, 	formatter: formatter.registFlag},
-        { label: '전화번호',    	name: 'mobile',             align: 'center', width: 100 	},
-        { label: '이메일',      	name: 'email',              align: 'center', width: 120 	},
-        { label: '청년부 등록일',	name: 'regDate',            align: 'center', width: 130 	},
-        { label: '알파날짜',    	name: 'alphaDate',          align: 'center', width: 100 	},
-        { label: '등반날짜',    	name: 'pastureJoinDate',    align: 'center', width: 100 	},
-        { label: 'userSeq',		    name: 'userSeq',            align: 'center', width: 100, 	hidden: true},
-        { label: '스토리아이디', 	name: 'storyId',			align: 'center', width: 90, 	hidden: true },
-        { label: '권한',        	name: 'roleDesc',           align: 'center', width: 100, 	hidden: true },
-        { label: '권한ID',      	name: 'roleId',             align: 'center', width: 100, 	hidden: true },
-        { label: '소속',        	name: 'groupDesc',			align: 'center', width: 100, 	hidden: true },
-        { label: '소속ID',      	name: 'groupId',            align: 'center', width: 100, 	hidden: true },
-        { label: '관리자여부',   	name: 'isAdmin',            align: 'center', width: 100, 	hidden: true },
-        { label: '주소',        	name: 'address',            align: 'center', width: 165, 	hidden: true },
-        { label: '스토리날짜',  	name: 'inputDate',          align: 'center', width: 100, 	hidden: true },
-        { label: '기도제목',        name: 'prayers',            align: 'center', width: 100, 	hidden: true },
-        { label: '등록일',       	name: 'createDate',         align: 'center', width: 100, 	hidden: true },
-        { label: '수정일',       	name: 'updateDate',         align: 'center', width: 100, 	hidden: true }]
+        { label: '아이디',			        name: 'userId',             align: 'center', width: 45},
+        { label: '이름',        	        name: 'userName',           align: 'center', width: 70,	formatter: formatter.updModal},
+        { label: '등록여부',    	        name: 'registFlag',			align: 'center', width: 55, formatter: formatter.registFlag},
+        { label: '소속',    	            name: 'groupDesc',          align: 'center', width: 115 },
+        { label: '예배',      	            name: 'worshipYn',          align: 'center', width: 50, formatter: formatter.YnDesc 	},
+        { label: '예배</br>불참사유',	    name: 'worshipDesc',        align: 'center', width: 50 	},
+        { label: '목장모임',    	        name: 'pastureMeetYn',      align: 'center', width: 50, formatter: formatter.YnDesc 	},
+        { label: '리더모임',    	        name: 'leaderYn',           align: 'center', width: 50, formatter: formatter.YnDesc 	},
+        { label: '리더모임</br>불참사유',   name: 'leaderDesc',         align: 'center', width: 50 	},
+        { label: '금요예배',    	        name: 'fridayWorshipYn',    align: 'center', width: 50, formatter: formatter.YnDesc 	},
+        { label: '성경',    	            name: 'bibleCount',         align: 'center', width: 40 	},
+        { label: '큐티',    	            name: 'qtCount',            align: 'center', width: 40 	},
+        { label: '새벽기도',    	        name: 'dawnPrayCount',      align: 'center', width: 50 	},
+        { label: 'userSeq',		            name: 'userSeq',            align: 'center', width: 100, 	hidden: true},
+        { label: '스토리아이디', 	        name: 'storyId',			align: 'center', width: 90, 	hidden: true },
+        { label: '권한',        	        name: 'roleDesc',           align: 'center', width: 100, 	hidden: true },
+        { label: '권한ID',      	        name: 'roleId',             align: 'center', width: 100, 	hidden: true },
+        { label: '소속ID',      	        name: 'groupId',            align: 'center', width: 100, 	hidden: true },
+        { label: '관리자여부',   	        name: 'isAdmin',            align: 'center', width: 100, 	hidden: true },
+        { label: '스토리날짜',  	        name: 'inputDate',          align: 'center', width: 100, 	hidden: true },
+        { label: '기도제목',                name: 'prayers',            align: 'center', width: 100, 	hidden: true },
+        { label: '등록일',       	        name: 'createDate',         align: 'center', width: 100, 	hidden: true },
+        { label: '수정일',       	        name: 'updateDate',         align: 'center', width: 100, 	hidden: true }]
     ,setParam : function(){
         var data = common.serializeObject($("#GridForm"));
 

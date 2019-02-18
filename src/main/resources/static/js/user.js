@@ -53,7 +53,7 @@ var user = {
         //윈도우 resize 이벤트
         $(window).bind('resize', function() {
             //그리드 크기 변경
-       //     common.resizeGridWidth('#jqGrid', '.card-body', 5);
+            //     common.resizeGridWidth('#jqGrid', '.card-body', 5);
         }).trigger('resize');
     },
     updatModalLoad : function (userId) {
@@ -82,7 +82,7 @@ var user = {
             colModel: jqGridForm.colModel,
             viewrecords: true,
             height: $("#content-wrapper").height() * 0.5,
-           // autowidth:true,
+            // autowidth:true,
             width: 1500,
             pager: "#pager",
             pgbuttons: true,
@@ -108,7 +108,7 @@ var user = {
                         gridPage = page;
                     }
                 } else if (pgButton == "first") {    // 첫 페이지
-                        gridPage = 1;
+                    gridPage = 1;
                 } else if (pgButton == "last") {    // 마지막 페이지
                     gridPage = totalPage;
                 } else if (pgButton == "user") {                // 사용자 입력 페이징 처리
@@ -173,10 +173,10 @@ var formatter = {
 var jqGridForm = {
     colModel : [
 
-        { label: '아이디',				    name: 'userId',             align: 'center', width: 100 	},
-        { label: '이름',				    name: 'userName',           align: 'center', width: 110, formatter: formatter.updModal},
-        { label: '권한',				    name: 'roleDesc',           align: 'center', width: 120 },
-        { label: '소속',				    name: 'groupDesc',			align: 'center', width: 120 },
+        { label: '아이디',				    name: 'userId',             align: 'center', width: 95 	},
+        { label: '이름',				    name: 'userName',           align: 'center', width: 95, formatter: formatter.updModal},
+        { label: '권한',				    name: 'roleDesc',           align: 'center', width: 100 },
+        { label: '소속',				    name: 'groupDesc',			align: 'center', width: 150 },
         { label: '시스템 관리자',           name: 'isAdmin',            align: 'center', width: 100, formatter: formatter.isFormatter},
         { label: '전화번호',			    name: 'mobile',             align: 'center', width: 130 },
         { label: '개인정보<br>동의 여부',   name: 'isPermission',		align: 'center', width: 90, formatter: formatter.isFormatter},
@@ -202,7 +202,7 @@ var jqGridForm = {
 
         //그룹ID 초기화
         data["groupId"] = "";
-        
+
         //최하위부터 선택괸 그룹 값 검색
         for(var i = selectCnt;i >= 1;i--){
             var selVal = $('#GridForm .group-selectBox [group-level=' + i + ']').val();

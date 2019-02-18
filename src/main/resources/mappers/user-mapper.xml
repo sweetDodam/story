@@ -5,27 +5,28 @@
             resultType="net.healingchurch.story.domain.User">
         /*  UserMapper.findUserList  */
         select
-             A.user_seq
-            ,A.user_id
-            ,A.password
-            ,A.role_id
-            ,A.group_id
-            ,A.user_name
-            ,A.is_admin
-            ,A.address
-            ,A.mobile
-            ,A.email
-            ,FN_DATE_FORMAT(A.birth_date) as birth_date
-            ,FN_DATE_FORMAT(A.reg_date) as reg_date
-            ,FN_DATE_FORMAT(A.alpha_date) as alpha_date
-            ,FN_DATE_FORMAT(A.pasture_join_date) as pasture_join_date
-            ,A.status
-            ,A.is_permission
-            ,FN_DATE_FORMAT(A.create_date) as create_date
-            ,FN_DATE_FORMAT(A.update_date) as update_date
-            ,B.parent_group_id
-            ,B.group_name as group_desc
-            ,C.description as role_desc
+        A.user_seq
+        ,A.user_id
+        ,A.password
+        ,A.role_id
+        ,A.group_id
+        ,A.user_name
+        ,A.is_admin
+
+        ,A.address
+        ,A.mobile
+        ,A.email
+        ,FN_DATE_FORMAT(A.birth_date) as birth_date
+        ,FN_DATE_FORMAT(A.reg_date) as reg_date
+        ,FN_DATE_FORMAT(A.alpha_date) as alpha_date
+        ,FN_DATE_FORMAT(A.pasture_join_date) as pasture_join_date
+        ,A.status
+        ,A.is_permission
+        ,FN_DATE_FORMAT(A.create_date) as create_date
+        ,FN_DATE_FORMAT(A.update_date) as update_date
+        ,B.parent_group_id
+        ,FN_GROUP_DESC(A.group_id) as group_desc
+        ,C.description as role_desc
         from ch_user A
         <choose>
             <when test="groupId!='' and groupId!=null">
@@ -62,7 +63,7 @@
             resultType="int">
         /*  UserMapper.findUserListCnt  */
         select
-          count(A.user_id) AS cnt
+        count(A.user_id) AS cnt
         from ch_user A
         <choose>
             <when test="groupId!='' and groupId!=null">
@@ -102,6 +103,7 @@
             ,A.group_id
             ,A.user_name
             ,A.is_admin
+
             ,A.address
             ,A.mobile
             ,A.email
@@ -150,24 +152,24 @@
         create_date,
         create_user)
         VALUES (
-            CONCAT('ch_', (select * from (select MAX(user_seq)+1 from ch_user) tmp)),
-            #{password},
-            #{roleId},
-            #{groupId},
-            #{userName},
-            #{isAdmin},
-            #{address},
-            #{mobile},
-            #{email},
+        CONCAT('ch_', (select * from (select MAX(user_seq)+1 from ch_user) tmp)),
+        #{password},
+        #{roleId},
+        #{groupId},
+        #{userName},
+        #{isAdmin},
+        #{address},
+        #{mobile},
+        #{email},
         <if test="birthDate!='' and birthDate!=null">STR_TO_DATE(#{birthDate}, '%Y%m%d'),</if>
         <if test="regDate!='' and regDate!=null">STR_TO_DATE(#{regDate}, '%Y%m%d'),</if>
         <if test="alphaDate!='' and alphaDate!=null">STR_TO_DATE(#{alphaDate}, '%Y%m%d'),</if>
         <if test="pastureJoinDate!='' and pastureJoinDate!=null">STR_TO_DATE(#{pastureJoinDate}, '%Y%m%d'),</if>
-            #{isPermission},
-            #{status},
-            now(),
-            #{loginUserId}
-            )
+        #{isPermission},
+        #{status},
+        now(),
+        #{loginUserId}
+        )
     </insert>
 
     <update id="updateUser" parameterType="net.healingchurch.story.domain.User"
@@ -175,30 +177,30 @@
         /*  UserMapper.updateUser  */
         update ch_user
         set
-          <choose>
-              <when test="password!='' and password!=null">
-                   password = #{password}
-                  ,update_date = now()
-                  ,update_user = #{loginUserId}
-              </when>
-              <otherwise>
-                   is_admin = #{isAdmin}
-                  ,is_permission = #{isPermission}
-                  ,update_date = now()
-                  ,update_user = #{loginUserId}
-                  <if test="userName!='' and userName!=null">,user_name = #{userName}</if>
-                  <if test="roleId!='' and roleId!=null">,role_id = #{roleId}</if>
-                  <if test="groupId!='' and groupId!=null">,group_id = #{groupId}</if>
-                  <if test="address!='' and address!=null">,address = #{address}</if>
-                  <if test="mobile!='' and mobile!=null">,mobile = #{mobile}</if>
-                  <if test="email!='' and email!=null">,email = #{email}</if>
-                  <if test="birthDate!='' and birthDate!=null">,birth_date = STR_TO_DATE(#{birthDate}, '%Y%m%d')</if>
-                  <if test="regDate!='' and regDate!=null">,reg_date = STR_TO_DATE(#{regDate}, '%Y%m%d')</if>
-                  <if test="alphaDate!='' and alphaDate!=null">,alpha_date = STR_TO_DATE(#{alphaDate}, '%Y%m%d')</if>
-                  <if test="pastureJoinDate!='' and pastureJoinDate!=null">,pasture_join_date = STR_TO_DATE(#{pastureJoinDate}, '%Y%m%d')</if>
-                  <if test="status!='' and status!=null">,status = #{status}</if>
-              </otherwise>
-          </choose>
+        <choose>
+            <when test="password!='' and password!=null">
+                password = #{password}
+                ,update_date = now()
+                ,update_user = #{loginUserId}
+            </when>
+            <otherwise>
+                is_admin = #{isAdmin}
+                ,is_permission = #{isPermission}
+                ,update_date = now()
+                ,update_user = #{loginUserId}
+                <if test="userName!='' and userName!=null">,user_name = #{userName}</if>
+                <if test="roleId!='' and roleId!=null">,role_id = #{roleId}</if>
+                <if test="groupId!='' and groupId!=null">,group_id = #{groupId}</if>
+                <if test="address!='' and address!=null">,address = #{address}</if>
+                <if test="mobile!='' and mobile!=null">,mobile = #{mobile}</if>
+                <if test="email!='' and email!=null">,email = #{email}</if>
+                <if test="birthDate!='' and birthDate!=null">,birth_date = STR_TO_DATE(#{birthDate}, '%Y%m%d')</if>
+                <if test="regDate!='' and regDate!=null">,reg_date = STR_TO_DATE(#{regDate}, '%Y%m%d')</if>
+                <if test="alphaDate!='' and alphaDate!=null">,alpha_date = STR_TO_DATE(#{alphaDate}, '%Y%m%d')</if>
+                <if test="pastureJoinDate!='' and pastureJoinDate!=null">,pasture_join_date = STR_TO_DATE(#{pastureJoinDate}, '%Y%m%d')</if>
+                <if test="status!='' and status!=null">,status = #{status}</if>
+            </otherwise>
+        </choose>
         where user_id = #{userId}
     </update>
 

@@ -4,25 +4,25 @@
     <select id="findStoryList" parameterType="net.healingchurch.story.domain.TownStory" resultType="net.healingchurch.story.domain.TownStory">
         /*  TownStoryMapper.findStoryList  */
         select
-             A.user_name
-            ,A.group_id
-            ,B.parent_group_id
-            ,C.story_id
-            ,C.user_id
-            ,C.group_id
-            ,FN_DATE_FORMAT(C.input_date) as input_date
-            ,C.worship_yn
-            ,C.leader_yn
-            ,C.pasture_meet_yn
-            ,C.bible_count
-            ,C.qt_count
-            ,C.friday_worship_yn
-            ,C.dawn_pray_count
-            ,C.etc
-            ,FN_DATE_FORMAT(C.create_date) as create_date
-            ,FN_DATE_FORMAT(C.update_date) as update_date
-            ,D.*
-            ,count(E.user_id) as user_cnt
+        A.user_name
+        ,A.group_id
+        ,B.parent_group_id
+        ,C.story_id
+        ,C.user_id
+        ,C.group_id
+        ,FN_DATE_FORMAT(C.input_date) as input_date
+        ,C.worship_yn
+        ,C.leader_yn
+        ,C.pasture_meet_yn
+        ,C.bible_count
+        ,C.qt_count
+        ,C.friday_worship_yn
+        ,C.dawn_pray_count
+        ,C.etc
+        ,FN_DATE_FORMAT(C.create_date) as create_date
+        ,FN_DATE_FORMAT(C.update_date) as update_date
+        ,D.*
+        ,count(E.user_id) as user_cnt
 
         from ch_user A
         left join ch_user_group B on B.group_id = A.group_id
@@ -239,7 +239,7 @@
         ,A.pasture_join_date
         ,A.status
         ,A.is_permission
-        ,B.group_name as group_desc
+        ,FN_GROUP_DESC(A.group_id) as group_desc
         ,C.description as role_desc
         <if test="inputDate!='' and inputDate!=null">
             ,D.event_id
@@ -258,12 +258,12 @@
         <if test="inputDate!='' and inputDate!=null">
             left join ch_event D on D.group_id = B.parent_group_id and DATE_FORMAT(D.event_date, '%Y%m%d')  = #{inputDate}
             left join (select
-                             X.group_id
-                            ,Y.town_story_id
-                        from ch_story_master X
-                        inner join ch_story_town Y on X.story_id = Y.master_id
-                        where DATE_FORMAT(X.input_date, '%Y%m%d') = #{inputDate}
-                        GROUP BY X.group_id) E on E.group_id = B.parent_group_id
+            X.group_id
+            ,Y.town_story_id
+            from ch_story_master X
+            inner join ch_story_town Y on X.story_id = Y.master_id
+            where DATE_FORMAT(X.input_date, '%Y%m%d') = #{inputDate}
+            GROUP BY X.group_id) E on E.group_id = B.parent_group_id
         </if>
         where 1=1
 
@@ -295,12 +295,12 @@
         <if test="inputDate!='' and inputDate!=null">
             left join ch_event D on D.group_id = B.parent_group_id and DATE_FORMAT(D.event_date, '%Y%m%d')  = #{inputDate}
             left join (select
-                             X.group_id
-                            ,Y.town_story_id
-                        from ch_story_master X
-                        inner join ch_story_town Y on X.story_id = Y.master_id
-                        where DATE_FORMAT(X.input_date, '%Y%m%d') = #{inputDate}
-                        GROUP BY X.group_id) E on E.group_id = B.parent_group_id
+            X.group_id
+            ,Y.town_story_id
+            from ch_story_master X
+            inner join ch_story_town Y on X.story_id = Y.master_id
+            where DATE_FORMAT(X.input_date, '%Y%m%d') = #{inputDate}
+            GROUP BY X.group_id) E on E.group_id = B.parent_group_id
         </if>
         where 1=1
 
