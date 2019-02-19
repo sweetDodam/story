@@ -7,11 +7,8 @@ import net.healingchurch.story.services.menu.MenuService;
 import net.healingchurch.story.services.user.UserService;
 import net.healingchurch.story.services.user.group.UserGroupService;
 import net.healingchurch.story.services.story.pastor.PastorStoryService;
-import net.healingchurch.story.services.story.town.TownStoryService;
 import net.healingchurch.story.services.story.pasture.PastureStoryService;
 
-
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -67,11 +64,14 @@ public class WebAppContoller {
     }
 
     /*****스토리 페이지*****/
-
     //목장 스토리 관리
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER', 'ROLE_PASTURE_MANAGER')")
+    @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/story/pasture")
-    public String storyPasture(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
+    public String storyPasture(Map<String, Object> model, @RequestParam(value = "menuId", defaultValue = "") int menuId, @AuthenticationPrincipal UserDetails userDetails) {
+        //메뉴 정보
+        Menu menu = menuService.getMenu(menuId);
+        model.put("menuInfo", menu);
+
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
@@ -84,13 +84,17 @@ public class WebAppContoller {
     }
 
     //목장 스토리 등록/수정
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER', 'ROLE_PASTURE_MANAGER')")
+    @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/story/pasture/form")
     public String storyPastureForm(Map<String, Object> model,
                                    @RequestParam(value = "userId", defaultValue = "") String userId,
                                    @RequestParam(value = "storyId", defaultValue = "0") int storyId,
                                    @RequestParam(value = "inputDate", defaultValue = "") String inputDate,
+                                   @RequestParam(value = "menuId", defaultValue = "") int menuId,
                                    @AuthenticationPrincipal UserDetails userDetails) {
+        //메뉴 정보
+        Menu menu = menuService.getMenu(menuId);
+        model.put("menuInfo", menu);
 
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
@@ -111,9 +115,13 @@ public class WebAppContoller {
     }
 
     //목장 스토리 조회
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER', 'ROLE_PASTURE_MANAGER')")
+    @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/story/pasture/list")
-    public String storyPastureList(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
+    public String storyPastureList(Map<String, Object> model, @RequestParam(value = "menuId", defaultValue = "") int menuId, @AuthenticationPrincipal UserDetails userDetails) {
+        //메뉴 정보
+        Menu menu = menuService.getMenu(menuId);
+        model.put("menuInfo", menu);
+
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
@@ -126,11 +134,15 @@ public class WebAppContoller {
     }
 
     //목장 스토리 상세
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER', 'ROLE_PASTURE_MANAGER')")
+    @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/story/pasture/detail")
     public String storyPastureDetail(Map<String, Object> model,
                                    @RequestParam(value = "userId", defaultValue = "") String userId,
+                                   @RequestParam(value = "menuId", defaultValue = "") int menuId,
                                    @AuthenticationPrincipal UserDetails userDetails) {
+        //메뉴 정보
+        Menu menu = menuService.getMenu(menuId);
+        model.put("menuInfo", menu);
 
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
@@ -144,9 +156,13 @@ public class WebAppContoller {
     }
 
     //마을 스토리 관리
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER')")
+    @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/story/town")
-    public String storyTown(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
+    public String storyTown(Map<String, Object> model, @RequestParam(value = "menuId", defaultValue = "") int menuId, @AuthenticationPrincipal UserDetails userDetails) {
+        //메뉴 정보
+        Menu menu = menuService.getMenu(menuId);
+        model.put("menuInfo", menu);
+
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
@@ -159,14 +175,18 @@ public class WebAppContoller {
     }
 
     //마을 스토리 등록/수정
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER')")
+    @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/story/town/form")
     public String storyTownForm(Map<String, Object> model,
                                 @RequestParam(value = "userId", defaultValue = "") String userId,
                                 @RequestParam(value = "groupId", defaultValue = "0") int groupId,
                                 @RequestParam(value = "eventId", defaultValue = "0") int eventId,
                                 @RequestParam(value = "inputDate", defaultValue = "") String inputDate,
+                                @RequestParam(value = "menuId", defaultValue = "") int menuId,
                                 @AuthenticationPrincipal UserDetails userDetails) {
+        //메뉴 정보
+        Menu menu = menuService.getMenu(menuId);
+        model.put("menuInfo", menu);
 
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
@@ -190,9 +210,13 @@ public class WebAppContoller {
     }
 
     //마을 스토리 조회
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER')")
+    @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/story/town/list")
-    public String storyTownList(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
+    public String storyTownList(Map<String, Object> model, @RequestParam(value = "menuId", defaultValue = "") int menuId, @AuthenticationPrincipal UserDetails userDetails) {
+        //메뉴 정보
+        Menu menu = menuService.getMenu(menuId);
+        model.put("menuInfo", menu);
+
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
@@ -205,11 +229,16 @@ public class WebAppContoller {
     }
 
     //마을 스토리 상세
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR', 'ROLE_TOWN_MANAGER')")
+    @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/story/town/detail")
     public String storyTownDetail(Map<String, Object> model,
                                      @RequestParam(value = "userId", defaultValue = "") String userId,
+                                  @RequestParam(value = "menuId", defaultValue = "") int menuId,
                                      @AuthenticationPrincipal UserDetails userDetails) {
+        //메뉴 정보
+        Menu menu = menuService.getMenu(menuId);
+        model.put("menuInfo", menu);
+
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
@@ -222,9 +251,13 @@ public class WebAppContoller {
     }
 
     //사역자 스토리 관리
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR')")
+    @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/story/pastor")
-    public String storyPastor(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
+    public String storyPastor(Map<String, Object> model, @RequestParam(value = "menuId", defaultValue = "") int menuId, @AuthenticationPrincipal UserDetails userDetails) {
+        //메뉴 정보
+        Menu menu = menuService.getMenu(menuId);
+        model.put("menuInfo", menu);
+
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
@@ -241,14 +274,18 @@ public class WebAppContoller {
     }
 
     //사역자 스토리 등록/수정
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR')")
+    @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/story/pastor/form")
     public String storyPastorForm(Map<String, Object> model,
                                   @RequestParam(value = "userId", defaultValue = "") String userId,
                                   @RequestParam(value = "pastorId", defaultValue = "") String pastorId,
                                   @RequestParam(value = "storyId", defaultValue = "0") int storyId,
                                   @RequestParam(value = "visitDate", defaultValue = "") String visitDate,
+                                  @RequestParam(value = "menuId", defaultValue = "") int menuId,
                                   @AuthenticationPrincipal UserDetails userDetails) {
+        //메뉴 정보
+        Menu menu = menuService.getMenu(menuId);
+        model.put("menuInfo", menu);
 
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
@@ -272,9 +309,13 @@ public class WebAppContoller {
     }
 
     //사역자 스토리 조회
-   // @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR')")
+    @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/story/pastor/list")
-    public String storyPastorList(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
+    public String storyPastorList(Map<String, Object> model, @RequestParam(value = "menuId", defaultValue = "") int menuId, @AuthenticationPrincipal UserDetails userDetails) {
+        //메뉴 정보
+        Menu menu = menuService.getMenu(menuId);
+        model.put("menuInfo", menu);
+
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
@@ -287,11 +328,16 @@ public class WebAppContoller {
     }
 
     //사역자 스토리 상세
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PASTOR')")
+    @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/story/pastor/detail")
     public String storyPastorDetail(Map<String, Object> model,
                                      @RequestParam(value = "userId", defaultValue = "") String userId,
+                                     @RequestParam(value = "menuId", defaultValue = "") int menuId,
                                      @AuthenticationPrincipal UserDetails userDetails) {
+        //메뉴 정보
+        Menu menu = menuService.getMenu(menuId);
+        model.put("menuInfo", menu);
+
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
@@ -357,8 +403,14 @@ public class WebAppContoller {
 
 
     /*****관리 페이지*****/
+    //사용자 관리
+    @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/user")
-    public String user(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
+    public String user(Map<String, Object> model, @RequestParam(value = "menuId", defaultValue = "") int menuId, @AuthenticationPrincipal UserDetails userDetails) {
+        //메뉴 정보
+        Menu menu = menuService.getMenu(menuId);
+        model.put("menuInfo", menu);
+
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
@@ -366,6 +418,8 @@ public class WebAppContoller {
         return "user";
     }
 
+    //사용자 관리 > 등록수정
+    @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/user/form")
     public String userForm(Map<String, Object> model, @RequestParam(value = "userId", defaultValue = "") String userId, @AuthenticationPrincipal UserDetails userDetails) {
 
@@ -386,8 +440,14 @@ public class WebAppContoller {
         return "user_form";
     }
 
+    //사용자 그룹 관리
+    @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/user/group")
-    public String userGroup(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
+    public String userGroup(Map<String, Object> model, @RequestParam(value = "menuId", defaultValue = "") int menuId, @AuthenticationPrincipal UserDetails userDetails) {
+        //메뉴 정보
+        Menu menu = menuService.getMenu(menuId);
+        model.put("menuInfo", menu);
+
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
@@ -395,8 +455,14 @@ public class WebAppContoller {
         return "user_group";
     }
 
+    //사용자 권한 관리
+    @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/user/role")
-    public String permission(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
+    public String permission(Map<String, Object> model, @RequestParam(value = "menuId", defaultValue = "") int menuId, @AuthenticationPrincipal UserDetails userDetails) {
+        //메뉴 정보
+        Menu menu = menuService.getMenu(menuId);
+        model.put("menuInfo", menu);
+
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
@@ -404,8 +470,14 @@ public class WebAppContoller {
         return "user_role";
     }
 
+    //메뉴 관리
+    @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/menu")
-    public String menu(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
+    public String menu(Map<String, Object> model, @RequestParam(value = "menuId", defaultValue = "") int menuId, @AuthenticationPrincipal UserDetails userDetails) {
+        //메뉴 정보
+        Menu menu = menuService.getMenu(menuId);
+        model.put("menuInfo", menu);
+
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
@@ -413,8 +485,14 @@ public class WebAppContoller {
         return "menuMgm";
     }
 
+    //공통코드 관리
+    @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/common/code")
-    public String commonCode(Map<String, Object> model, @AuthenticationPrincipal UserDetails userDetails) {
+    public String commonCode(Map<String, Object> model, @RequestParam(value = "menuId", defaultValue = "") int menuId, @AuthenticationPrincipal UserDetails userDetails) {
+        //메뉴 정보
+        Menu menu = menuService.getMenu(menuId);
+        model.put("menuInfo", menu);
+
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
@@ -436,5 +514,9 @@ public class WebAppContoller {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace(); } return null;
+    }
+
+    public boolean accessCheck(String userId, int menuId){
+        return menuService.accessCheck(userId, menuId);
     }
 }

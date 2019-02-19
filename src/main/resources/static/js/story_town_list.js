@@ -59,7 +59,7 @@ var storyTownList = {
     },
     detailModalLoad : function (userId) {
         $("#detailStoryModal").modal();
-        $("#detailStoryModal .modal-content").load("/story/town/detail?","userId=" + userId);
+        $("#detailStoryModal .modal-content").load("/story/town/detail?","userId=" + userId + "&menuId=" + menuId);
     },
     groupSelectLoad : function () {
         var roleId = Number($("#formRoleId").val());

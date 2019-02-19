@@ -1,17 +1,24 @@
 package net.healingchurch.story.services.menu;
 
 import net.healingchurch.story.domain.Menu;
+import net.healingchurch.story.domain.User;
+import net.healingchurch.story.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Component("menuService")
 @Service
 public class MenuServiceImpl implements MenuService {
     @Autowired
     private MenuMapper menuMapper;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public List<Menu> findMenuList() {
@@ -70,5 +77,19 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public void removeMenu(int menuId) {
         menuMapper.removeMenu(menuId);
+    }
+
+    public boolean accessCheck(String userId, int menuId){
+        User user = userService.getUser(userId);
+        Menu menu = menuMapper.getMenu(menuId);
+
+        int userRoleOrder = user.getRoleOrder();
+        int menuRoleOrder = menu.getRoleOrder();
+
+        if(userRoleOrder <= menuRoleOrder){
+            return true;
+        }
+
+        return false;
     }
 }

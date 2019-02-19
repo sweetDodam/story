@@ -61,7 +61,7 @@ var storyTown = {
     },
     updatModalLoad : function (userId, groupId, eventId, inputDate) {
         $("#saveStoryModal").modal();
-        $("#saveStoryModal .modal-content").load("/story/town/form?", "userId=" + userId + "&groupId=" + groupId  + "&eventId=" + eventId + "&inputDate=" + inputDate);
+        $("#saveStoryModal .modal-content").load("/story/town/form?", "userId=" + userId + "&groupId=" + groupId  + "&eventId=" + eventId + "&inputDate=" + inputDate + "&menuId=" + menuId);
     },
     groupSelectLoad : function () {
         var roleId = Number($("#formRoleId").val());

@@ -64,7 +64,7 @@ var storyPastorList = {
     },
     detailModalLoad : function (userId) {
         $("#detailStoryModal").modal();
-        $("#detailStoryModal .modal-content").load("/story/pastor/detail?","userId=" + userId);
+        $("#detailStoryModal .modal-content").load("/story/pastor/detail?","userId=" + userId + "&menuId=" + menuId);
     },
     groupSelectLoad : function () {
         var roleId = Number($("#formRoleId").val());

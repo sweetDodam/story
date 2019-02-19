@@ -69,7 +69,7 @@ var storyPasture = {
     },
     updatModalLoad : function (userId, storyId, inputDate) {
         $("#saveStoryModal").modal();
-        $("#saveStoryModal .modal-content").load("/story/pasture/form?", "userId=" + userId + "&storyId=" + storyId + "&inputDate=" + inputDate);
+        $("#saveStoryModal .modal-content").load("/story/pasture/form?", "userId=" + userId + "&storyId=" + storyId + "&inputDate=" + inputDate + "&menuId=" + menuId);
     },
     groupSelectLoad : function () {
         var roleId = Number($("#formRoleId").val());

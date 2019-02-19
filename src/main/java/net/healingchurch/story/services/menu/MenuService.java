@@ -15,4 +15,6 @@ public interface MenuService {
     int updateMenu(int menuId, int parentMenuId, String menuName, int menuLevel, int sortIdx, String menuUrl, boolean isAdmin, int roleId);
 
     void removeMenu(int menuId);
+
+    boolean accessCheck(String userId, int menuId);
 }

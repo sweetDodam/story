@@ -17,10 +17,11 @@ var menu = {
             $('#loadingArea').show(); //로딩바를 보여준다.
 
             var url = $(this).attr("importUrl");
-            $("#import-page-area").load(url, function(){
+            var menuId = $(this).attr("menuId");
+
+            $("#import-page-area").load(url+"?", "menuId=" + menuId, function(){
                 $('#loadingArea').hide(); //로딩바를 보여준다.
             });  //선택된 화면 로드
-
         });
 
         //클릭 이벤트

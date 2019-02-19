@@ -67,7 +67,7 @@ var storyPastor = {
     },
     updatModalLoad : function (userId, pastorId, storyId, visitDate) {
         $("#saveStoryModal").modal();
-        $("#saveStoryModal .modal-content").load("/story/pastor/form?", "userId=" + userId + "&pastorId=" + pastorId + "&storyId=" + storyId + "&visitDate=" + visitDate);
+        $("#saveStoryModal .modal-content").load("/story/pastor/form?", "userId=" + userId + "&pastorId=" + pastorId + "&storyId=" + storyId + "&visitDate=" + visitDate + "&menuId=" + menuId);
     },
     groupSelectLoad : function () {
         var roleId = Number($("#formRoleId").val());
