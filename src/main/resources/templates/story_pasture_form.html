@@ -88,21 +88,21 @@
             <div class="form-row">
                 <div class="ch-input-row3">
                     <div class="form-label-group">
-                        <input type="number" class="form-control" id="bibleCount" name="bibleCount" th:value="${registFlag ? 0 : formStory.getBibleCount()}" >
+                        <input type="number" class="form-control" id="bibleCount" name="bibleCount" th:value="${registFlag ? 0 : formStory.getBibleCount()}" required="required">
                         <label class="unit">장</label>
                         <label for="bibleCount">성경</label>
                     </div>
                 </div>
                 <div class="ch-input-row3">
                     <div class="form-label-group">
-                        <input type="number" class="form-control" id="qtCount" name="qtCount" th:value="${registFlag ? 0 : formStory.getQtCount()}" max="7" min="0" onkeyup="common.numberTypeChk(this);">
+                        <input type="number" class="form-control" id="qtCount" name="qtCount" th:value="${registFlag ? 0 : formStory.getQtCount()}" max="7" min="0" onkeyup="common.numberTypeChk(this);" required="required">
                         <label class="unit">일</label>
                         <label for="qtCount">큐티</label>
                     </div>
                 </div>
                 <div class="ch-input-row3">
                     <div class="form-label-group">
-                        <input type="number" class="form-control" id="dawnPrayCount" name="dawnPrayCount" th:value="${registFlag ? 0 : formStory.getDawnPrayCount()}" max="7" min="0" onkeyup="common.numberTypeChk(this);">
+                        <input type="number" class="form-control" id="dawnPrayCount" name="dawnPrayCount" th:value="${registFlag ? 0 : formStory.getDawnPrayCount()}" max="7" min="0" onkeyup="common.numberTypeChk(this);" required="required">
                         <label class="unit">일</label>
                         <label for="dawnPrayCount">새벽 기도</label>
                     </div>
