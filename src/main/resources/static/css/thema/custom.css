@@ -418,3 +418,15 @@ tr[aria-selected=true]{
     border-color: #E9ECEF !important;
     color: #ABABAC !important;
 }
+
+.navtable {
+    border: 1pt solid #dee2e6;
+}
+
+.ui-pg-button[title=excel] span.ui-icon-excel {
+    width: 25px;
+    height: 25px;
+    border: none;
+    background: url('../../image/excel.png') no-repeat;
+    background-size: 25px 25px;
+}

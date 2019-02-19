@@ -132,6 +132,27 @@ var user = {
                 });
             }
         });
+
+        $('#jqGrid').navGrid('#pager', { edit: false, add: false, del: false, search: false, refresh: false, view: false, position: "left", cloneToTop: true });
+
+        $("#jqGrid").jqGrid('navButtonAdd'
+                            ,'#pager'
+                            ,{   caption: " "
+                                ,title: "excel"
+                                ,onClickButton : function(e) {
+                                    $("#gview_jqGrid").table2excel({
+                                        exclude : ".noExl",
+                                        name: "유저 리스트",
+                                        filename: "유저 리스트_" + new Date().toISOString().replace(/[\-\:\.]/g, ""),
+                                        fileext : ".xlsx",
+                                        exclude_img: true,
+                                        exclude_links: true,
+                                        exclude_inputs: true
+                                    });
+                                }
+                                ,buttonicon : 'ui-icon-excel'
+                            }
+        );
     },
     gridSearch : function(){
         page = 1;
@@ -185,12 +206,12 @@ var jqGridForm = {
         { label: '청년부 등록일',		    name: 'regDate',            align: 'center', width: 110 },
         { label: '알파날짜',			    name: 'alphaDate',          align: 'center', width: 110 },
         { label: '등반날짜',			    name: 'pastureJoinDate',    align: 'center', width: 110 },
-        { label: 'userSeq',			        name: 'userSeq',            align: 'center', width: 100, hidden: true},
-        { label: '권한ID',			        name: 'roleId',             align: 'center', width: 100, hidden: true },
-        { label: '소속ID',			        name: 'groupId',            align: 'center', width: 100, hidden: true },
-        { label: '상태',				    name: 'status',             align: 'center', width: 100, hidden: true },
-        { label: '등록일',				    name: 'createDate',         align: 'center', width: 100, hidden: true },
-        { label: '수정일',				    name: 'update_Date',        align: 'center', width: 100, hidden: true }]
+        { label: ' ',			        name: 'userSeq',            align: 'center', width: 100, hidden: true, classes: 'noExl', headercss: 'noExl'},
+        { label: ' ',			        name: 'roleId',             align: 'center', width: 100, hidden: true, classes: 'noExl', headercss: 'noExl'},
+        { label: ' ',			        name: 'groupId',            align: 'center', width: 100, hidden: true, classes: 'noExl', headercss: 'noExl'},
+        { label: ' ',				    name: 'status',             align: 'center', width: 100, hidden: true, classes: 'noExl', headercss: 'noExl'},
+        { label: ' ',				    name: 'createDate',         align: 'center', width: 100, hidden: true, classes: 'noExl', headercss: 'noExl'},
+        { label: ' ',				    name: 'update_Date',        align: 'center', width: 100, hidden: true, classes: 'noExl', headercss: 'noExl'}]
     ,setParam : function(){
         var data = common.serializeObject($("#GridForm"));
 
