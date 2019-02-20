@@ -77,7 +77,7 @@ var user = {
                 total : "total"
             },
             rowNum:10,
-            rowList:[10,20,30],
+            rowList:[10,20,30, 1000],
             rownumbers: true,
             colModel: jqGridForm.colModel,
             viewrecords: true,
@@ -140,15 +140,18 @@ var user = {
                             ,{   caption: " "
                                 ,title: "excel"
                                 ,onClickButton : function(e) {
-                                    $("#gview_jqGrid").table2excel({
-                                        exclude : ".noExl",
-                                        name: "유저 리스트",
-                                        filename: "유저 리스트_" + new Date().toISOString().replace(/[\-\:\.]/g, ""),
-                                        fileext : ".xlsx",
-                                        exclude_img: true,
-                                        exclude_links: true,
-                                        exclude_inputs: true
-                                    });
+                                    $('#gview_jqGrid table').tableExport({
+                                         fileName:"사용자 목록_" + new Date().toISOString().replace(/[\-\:\.]/g, "")
+                                        ,type:'excel'
+                                        ,excelstyles:['background-color', 'font-weight', 'text-align', 'width', 'font-size']
+                                        ,mso: {  styles:['background-color', 'font-weight', 'text-align', 'width', 'font-size']
+                                                ,worksheetName: "사용자 목록"
+                                                ,fileFormat: "xlsx"}
+                                        ,ignoreRow: null                    // (Number, Number[]), row indices to exclude from the exported file(s)
+                                        ,ignoreColumn: [13,14,15,16,17,18]  // (Number, Number[]), column indices to exclude from the exported file(s)
+                                        ,htmlContent: false
+                                        ,exportHiddenCells: true
+                                        });
                                 }
                                 ,buttonicon : 'ui-icon-excel'
                             }
@@ -206,12 +209,12 @@ var jqGridForm = {
         { label: '청년부 등록일',		    name: 'regDate',            align: 'center', width: 110 },
         { label: '알파날짜',			    name: 'alphaDate',          align: 'center', width: 110 },
         { label: '등반날짜',			    name: 'pastureJoinDate',    align: 'center', width: 110 },
-        { label: ' ',			        name: 'userSeq',            align: 'center', width: 100, hidden: true, classes: 'noExl', headercss: 'noExl'},
-        { label: ' ',			        name: 'roleId',             align: 'center', width: 100, hidden: true, classes: 'noExl', headercss: 'noExl'},
-        { label: ' ',			        name: 'groupId',            align: 'center', width: 100, hidden: true, classes: 'noExl', headercss: 'noExl'},
-        { label: ' ',				    name: 'status',             align: 'center', width: 100, hidden: true, classes: 'noExl', headercss: 'noExl'},
-        { label: ' ',				    name: 'createDate',         align: 'center', width: 100, hidden: true, classes: 'noExl', headercss: 'noExl'},
-        { label: ' ',				    name: 'update_Date',        align: 'center', width: 100, hidden: true, classes: 'noExl', headercss: 'noExl'}]
+        { label: '유저seq',			        name: 'userSeq',            align: 'center', width: 100, hidden: true, classes: 'noExl'},
+        { label: '권한ID',			        name: 'roleId',             align: 'center', width: 100, hidden: true, classes: 'noExl'},
+        { label: '그룹ID',			        name: 'groupId',            align: 'center', width: 100, hidden: true, classes: 'noExl'},
+        { label: '상태',				    name: 'status',             align: 'center', width: 100, hidden: true, classes: 'noExl'},
+        { label: '등록일',				    name: 'createDate',         align: 'center', width: 100, hidden: true, classes: 'noExl'},
+        { label: '수정일',				    name: 'update_Date',        align: 'center', width: 100, hidden: true, classes: 'noExl'}]
     ,setParam : function(){
         var data = common.serializeObject($("#GridForm"));
 
