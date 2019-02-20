@@ -7,6 +7,7 @@ public class Code {
     private String parentCodeId;
     private String codeName;
     private String description;
+    private int sortIdx;
 
     private int page;
     private int offset;
@@ -47,6 +48,14 @@ public class Code {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getSortIdx() {
+        return sortIdx;
+    }
+
+    public void setSortIdx(int sortIdx) {
+        this.sortIdx = sortIdx;
     }
 
     public int getPage() {
@@ -101,6 +110,7 @@ public class Code {
                 ", parentCodeId='" + parentCodeId + '\'' +
                 ", codeName='" + codeName + '\'' +
                 ", description='" + description + '\'' +
+                ", sortIdx='" + sortIdx + '\'' +
                 ", page=" + page +
                 ", offset=" + offset +
                 ", limit=" + limit +

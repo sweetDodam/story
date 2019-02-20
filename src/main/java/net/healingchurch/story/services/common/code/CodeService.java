@@ -11,9 +11,9 @@ public interface CodeService {
 
     Code getCode(String codeId);
 
-    int createCode(String codeId, String parentCodeId, String codeName, String description);
+    int createCode(String codeId, String parentCodeId, String codeName, String description, int sortIdx);
 
-    int updateCode(String codeId, String parentCodeId, String codeName, String description);
+    int updateCode(String codeId, String parentCodeId, String codeName, String description, int sortIdx);
 
     void removeCode(String codeId);
 }

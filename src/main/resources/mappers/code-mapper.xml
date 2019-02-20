@@ -4,6 +4,7 @@
     <select id="findCodeList" parameterType="net.healingchurch.story.domain.Code" resultType="net.healingchurch.story.domain.Code">
         /*  CodeMapper.findCodeList  */
         select * from ch_common_code
+        order by sort_idx, code_id
         <if test="page!=null and page!=''">LIMIT #{offset}, #{limit}</if>
     </select>
 
@@ -12,6 +13,7 @@
         /*  CodeMapper.findCodeChildList  */
         select * from ch_common_code
         where parent_code_id = #{parentCodeId}
+        order by sort_idx, code_id
     </select>
 
     <select id="getCode" resultType="net.healingchurch.story.domain.Code" parameterType="String">
@@ -23,13 +25,14 @@
     <insert id="createCode" parameterType="net.healingchurch.story.domain.Code"
             useGeneratedKeys="true" keyProperty="codeId">
         /*  CodeMapper.createCode  */
-        insert into ch_common_code (code_id, parent_code_id, code_name, description)
+        insert into ch_common_code (code_id, parent_code_id, code_name, description, sort_idx)
         VALUES
         (
             #{codeId},
             #{parentCodeId},
             #{codeName},
-            #{description}
+            #{description},
+            #{sortIdx}
         )
     </insert>
 
@@ -41,6 +44,7 @@
         <if test="codeName!='' and codeName!=null">code_name = #{codeName} </if>
         <if test="parentCodeId!='' and parentCodeId!=null">, parent_code_id = #{parentCodeId}</if>
         <if test="description!='' and description!=null">, description = #{description} </if>
+        <if test="sortIdx!='' and sortIdx!=null">, sort_idx = #{sortIdx} </if>
         where code_id = #{codeId}
     </update>
 

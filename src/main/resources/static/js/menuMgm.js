@@ -329,19 +329,7 @@ var formatter = {
         }
         return "0";
     },roleDesc : function(cellValue,rowObject,options){
-        if(options.roleId == "1"){
-            return "관리자 이상";
-        }else if(options.roleId == "2"){
-            return "목회자 이상";
-        }else if(options.roleId == "3"){
-            return "마을 관리자 이상";
-        }else if(options.roleId == "4"){
-            return "목장 관리자 이상";
-        }else if(options.roleId == "5"){
-            return "일반 목원 이상";
-        }
-
-        return options.roleId;
+        return cellValue + "이상";
     }
 };
 
@@ -352,7 +340,7 @@ var jqGridForm = {
         { label: '메뉴 Url',                name: 'menuUrl',           align: 'left', width: 100 },
         { label: '정렬',                    name: 'sortIdx',           align: 'center', width: 30 },
         { label: '시스템 관리 전용',        name: 'isAdminDesc',       align: 'center', width: 50 ,formatter: formatter.adminDesc},
-        { label: '권한 허용 범위',          name: 'roleId',            align: 'center', width: 60 ,formatter: formatter.roleDesc},
+        { label: '권한 허용 범위',          name: 'roleDesc',          align: 'center', width: 60 ,formatter: formatter.roleDesc},
         { label: '시스템 관리자',           name: 'isAdmin',           hidden: true, formatter: formatter.adminNum},
         { label: '권한',                    name: 'roleId',            hidden: true   },
         { label: '메뉴레벨',                name: 'menuLevel',         hidden: true   },

@@ -186,6 +186,14 @@ var commonCode = {
             return;
         }
 
+        //필수체크 검사
+        if(!common.dataChk($("#newSortIdx").val())){
+            alert("필수 입력 사항입니다.");
+            $("#newSortIdx").focus();
+
+            return;
+        }
+
         var form = $("#StoryForm")[0];
         var formData = new FormData(form);
 
@@ -194,6 +202,7 @@ var commonCode = {
         formData.set("codeName", $("#newCodeName").val());
         formData.set("description", $("#newDescription").val());
         formData.set("codeId", $("#newCodeId").val());
+        formData.set("sortIdx", $("#newSortIdx").val());
 
         //하위 코드으로 추가했다면
         if(lowFlag){
@@ -281,6 +290,7 @@ var commonCode = {
         $("#codeLevel").val(data.codeLevel);
         $("#codeName").val(data.codeName);
         $("#description").val(data.description);
+        $("#sortIdx").val(data.sortIdx);
 
         commonCode.inputClear("add");
     }
@@ -288,9 +298,10 @@ var commonCode = {
 
 var jqGridForm = {
     colModel : [
-        { label: '코드 ID',			 name: 'codeId',            align: 'left',      width: 140, sorttype:'number'},
-        { label: '코드',             name: 'codeName',          align: 'left',      width: 140 },
-        { label: '코드설명',         name: 'description',       align: 'left',      width: 140 },
+        { label: '코드 ID',			 name: 'codeId',            align: 'left',      width: 130, sorttype:'number'},
+        { label: '코드',             name: 'codeName',          align: 'left',      width: 130 },
+        { label: '코드설명',         name: 'description',       align: 'left',      width: 130 },
+        { label: '정렬',             name: 'sortIdx',           align: 'center',    width: 40 },
         { label: '부모코드ID',		 name: 'parentCodeId',      hidden: true   },
         { label: '등록일',			 name: 'createDate',        hidden: true   },
         { label: '수정일',			 name: 'update_Date',       hidden: true   }]

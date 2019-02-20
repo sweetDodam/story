@@ -16,6 +16,7 @@
         <input type="hidden" id="password" name="password" value="1111">
         <input type="hidden" id="validation" name="validation" value="0">
         <input type="hidden" id="formRoleId" name="formRoleId" th:value="${registFlag ? '' : formUser.getRoleId()}">
+        <input type="hidden" id="formRoleOrder" name="formRoleOrder" th:value="${registFlag ? '' : formUser.getRoleOrder()}">
 
         <div class="form-group ch-group-pad-btm">
             <div class="form-row">
@@ -127,7 +128,7 @@
             </div>
         </div>
     </form>
-    <div class="modal-footer" th:with="role=${userInfo.getRoleId()}, isAdmin=${userInfo.getIsAdmin()}">
+    <div class="modal-footer" th:with="roleOrder=${userInfo.getRoleOrder()}, role=${userInfo.getRoleId()}, isAdmin=${userInfo.getIsAdmin()}">
         <a class="btn btn-primary bg-ch-blue txt-ch-white pwdChgBtn" onclick="userForm.passwordReset();" th:if="${!registFlag}">비밀번호 초기화</a>
 
         <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="userForm.save();">저장</a>

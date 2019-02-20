@@ -122,9 +122,9 @@
             </div>
         </div>
     </form>
-    <div class="modal-footer" th:with="role=${userInfo.getRoleId()}, isAdmin=${userInfo.getIsAdmin()}">
+    <div class="modal-footer" th:with="roleOrder=${userInfo.getRoleOrder()}, role=${userInfo.getRoleId()}, isAdmin=${userInfo.getIsAdmin()}">
         <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="storyPastureForm.save();">저장</a>
-        <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="storyPastureForm.delete();" th:if="${role <= 3 && role != 0 && !registFlag}">삭제</a>
+        <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="storyPastureForm.delete();" th:if="${roleOrder <= 3 && !registFlag}">삭제</a>
     </div>
 </div>
 

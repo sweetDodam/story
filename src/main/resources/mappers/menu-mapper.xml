@@ -3,21 +3,69 @@
 <mapper namespace="net.healingchurch.story.services.menu.MenuMapper">
     <select id="findMenuList" resultType="net.healingchurch.story.domain.Menu">
         /*  MenuMapper.findMenuList  */
-        select * from ch_menu
+        select
+             A.menu_id
+            ,A.parent_menu_id
+            ,A.menu_name
+            ,A.menu_level
+            ,A.sort_idx
+            ,A.menu_url
+            ,A.is_admin
+            ,A.role_id
+            ,FN_DATE_FORMAT(A.create_date) as create_date
+            ,FN_DATE_FORMAT(A.update_date) as update_date
+            ,A.create_user
+            ,A.update_user
+            ,B.role_order
+            ,B.description as role_desc
+        from ch_menu A
+        left join ch_user_role B on B.role_id = A.role_id
     </select>
 
     <select id="findMenuChildList" resultType="net.healingchurch.story.domain.Menu" parameterType="int">
         /*  MenuMapper.findMenuChildList  */
-        select * from ch_menu
-        where parent_menu_id = #{value}
+        select
+             A.menu_id
+            ,A.parent_menu_id
+            ,A.menu_name
+            ,A.menu_level
+            ,A.sort_idx
+            ,A.menu_url
+            ,A.is_admin
+            ,A.role_id
+            ,FN_DATE_FORMAT(A.create_date) as create_date
+            ,FN_DATE_FORMAT(A.update_date) as update_date
+            ,A.create_user
+            ,A.update_user
+            ,B.role_order
+            ,B.description as role_desc
+        from ch_menu A
+        left join ch_user_role B on B.role_id = A.role_id
+        where A.parent_menu_id = #{value}
 
-        order by sort_idx
+        order by A.sort_idx
     </select>
 
     <select id="getMenu" resultType="net.healingchurch.story.domain.Menu" parameterType="int">
         /*  MenuMapper.getMenu  */
-        select * from ch_menu
-        where menu_id = #{value}
+        select
+             A.menu_id
+            ,A.parent_menu_id
+            ,A.menu_name
+            ,A.menu_level
+            ,A.sort_idx
+            ,A.menu_url
+            ,A.is_admin
+            ,A.role_id
+            ,FN_DATE_FORMAT(A.create_date) as create_date
+            ,FN_DATE_FORMAT(A.update_date) as update_date
+            ,A.create_user
+            ,A.update_user
+            ,B.role_order
+            ,B.description as role_desc
+        from ch_menu A
+        left join ch_user_role B on B.role_id = A.role_id
+        where A.menu_id = #{value}
     </select>
 
     <insert id="createMenu" parameterType="net.healingchurch.story.domain.Menu"

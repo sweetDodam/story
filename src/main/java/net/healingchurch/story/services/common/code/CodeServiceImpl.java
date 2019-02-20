@@ -31,22 +31,24 @@ public class CodeServiceImpl implements CodeService {
     }
 
     @Override
-    public int createCode(String codeId, String parentCodeId, String codeName, String description) {
+    public int createCode(String codeId, String parentCodeId, String codeName, String description, int sortIdx) {
         Code code = new Code();
         code.setCodeId(codeId);
         code.setParentCodeId(parentCodeId);
         code.setCodeName(codeName);
         code.setDescription(description);
+        code.setSortIdx(sortIdx);
         return codeMapper.createCode(code);
     }
 
     @Override
-    public int updateCode(String codeId, String parentCodeId, String codeName, String description) {
+    public int updateCode(String codeId, String parentCodeId, String codeName, String description, int sortIdx) {
         Code code = new Code();
         code.setCodeId(codeId);
         code.setParentCodeId(parentCodeId);
         code.setCodeName(codeName);
         code.setDescription(description);
+        code.setSortIdx(sortIdx);
         return codeMapper.updateCode(code);
     }
 

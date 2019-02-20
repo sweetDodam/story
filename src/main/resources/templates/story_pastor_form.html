@@ -52,7 +52,7 @@
             </div>
         </div>
     </form>
-    <div class="modal-footer" th:with="role=${userInfo.getRoleId()}, isAdmin=${userInfo.getIsAdmin()}">
+    <div class="modal-footer" th:with="roleOrder=${userInfo.getRoleOrder()}, role=${userInfo.getRoleId()}, isAdmin=${userInfo.getIsAdmin()}">
         <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="storyPastorForm.save();">저장</a>
         <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="storyPastorForm.delete();" th:if="${!registFlag}">삭제</a>
     </div>

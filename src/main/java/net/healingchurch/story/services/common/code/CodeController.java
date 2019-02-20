@@ -36,9 +36,10 @@ public class CodeController {
             @RequestParam(value = "codeId", defaultValue = "") String codeId,
             @RequestParam(value = "parentCodeId", defaultValue = "") String parentCodeId,
             @RequestParam(value = "codeName", defaultValue = "") String codeName,
-            @RequestParam(value = "description", defaultValue = "") String description
+            @RequestParam(value = "description", defaultValue = "") String description,
+            @RequestParam(value = "sortIdx", defaultValue = "0") int sortIdx
     ) throws Exception {
-        return codeService.createCode(codeId, parentCodeId, codeName, description);
+        return codeService.createCode(codeId, parentCodeId, codeName, description, sortIdx);
     }
 
     @PostMapping("update")
@@ -46,9 +47,10 @@ public class CodeController {
             @RequestParam(value = "codeId", defaultValue = "") String codeId,
             @RequestParam(value = "parentCodeId", defaultValue = "") String parentCodeId,
             @RequestParam(value = "codeName", defaultValue = "") String codeName,
-            @RequestParam(value = "description", defaultValue = "") String description
+            @RequestParam(value = "description", defaultValue = "") String description,
+            @RequestParam(value = "sortIdx", defaultValue = "0") int sortIdx
     ) throws Exception {
-        return codeService.updateCode(codeId, parentCodeId, codeName, description);
+        return codeService.updateCode(codeId, parentCodeId, codeName, description, sortIdx);
     }
 
     @PostMapping("remove")

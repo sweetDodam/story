@@ -9,12 +9,14 @@ public class Menu {
     int menuLevel;
     int sortIdx;
     String menuUrl;
-    private boolean isAdmin;
-    private int roleId;
+    boolean isAdmin;
+    int roleId;
+    int roleOrder;
     String createDate;
     String updateDate;
 
-    private String loginUserId;
+    String roleDesc;
+    String loginUserId;
 
     public Menu() {
     }
@@ -75,6 +77,14 @@ public class Menu {
         isAdmin = admin;
     }
 
+    public int getRoleOrder() {
+        return roleOrder;
+    }
+
+    public void setRoleOrder(int roleOrder) {
+        this.roleOrder = roleOrder;
+    }
+
     public int getRoleId() {
         return roleId;
     }
@@ -97,6 +107,14 @@ public class Menu {
 
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public String getRoleDesc() {
+        return roleDesc;
+    }
+
+    public void setRoleDesc(String roleDesc) {
+        this.roleDesc = roleDesc;
     }
 
     public String getLoginUserId() {
@@ -131,6 +149,7 @@ public class Menu {
                 ", menuUrl='" + menuUrl + '\'' +
                 ", isAdmin='" + isAdmin + '\'' +
                 ", roleId='" + roleId + '\'' +
+                ", roleOrder='" + roleOrder + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", updateDate='" + updateDate + '\'' +
                 ", loginUserId=" + loginUserId +
