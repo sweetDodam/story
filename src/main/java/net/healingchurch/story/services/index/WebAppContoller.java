@@ -421,7 +421,7 @@ public class WebAppContoller {
     //사용자 관리 > 등록수정
     @PreAuthorize("@menuService.accessCheck(#userDetails.getUsername(), #menuId)")
     @GetMapping("/user/form")
-    public String userForm(Map<String, Object> model, @RequestParam(value = "userId", defaultValue = "") String userId, @AuthenticationPrincipal UserDetails userDetails) {
+    public String userForm(Map<String, Object> model, @RequestParam(value = "userId", defaultValue = "") String userId, @RequestParam(value = "menuId", defaultValue = "") int menuId, @AuthenticationPrincipal UserDetails userDetails) {
 
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());

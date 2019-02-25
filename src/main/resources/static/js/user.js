@@ -34,7 +34,7 @@ var user = {
         //유저 정보 등록 팝업 클릭 이벤트
         $('.saveUserModalBtn').on('click', function () {
             var targetModal = $(this).attr("data-target");
-            $(targetModal + " .modal-content").load("/user/form");
+            $(targetModal + " .modal-content").load("/user/form?", "menuId=" + menuId);
         });
 
         //모달 닫기 이벤트 실행시
@@ -58,7 +58,7 @@ var user = {
     },
     updatModalLoad : function (userId) {
         $("#saveUserModal").modal();
-        $("#saveUserModal .modal-content").load("/user/form?", "userId=" + userId);
+        $("#saveUserModal .modal-content").load("/user/form?", "userId=" + userId + "&menuId=" + menuId);
     },
     groupSelectLoad : function () {
         //그룹 셀렉트박스 최상위 그룹을 가져와 그리기
