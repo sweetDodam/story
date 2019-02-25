@@ -20,6 +20,9 @@ public class PastorStory extends User{
     private int offset;
     private int limit;
 
+    private int reserveId;
+    private String inputDate;
+
     public PastorStory() {
     }
 
@@ -143,6 +146,22 @@ public class PastorStory extends User{
         this.limit = limit;
     }
 
+    public int getReserveId() {
+        return reserveId;
+    }
+
+    public void setReserveId(int reserveId) {
+        this.reserveId = reserveId;
+    }
+
+    public String getInputDate() {
+        return inputDate;
+    }
+
+    public void setInputDate(String inputDate) {
+        this.inputDate = inputDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -174,6 +193,8 @@ public class PastorStory extends User{
                 ", page=" + page +
                 ", offset=" + offset +
                 ", limit=" + limit +
+                ", reserveId='" + reserveId + '\'' +
+                ", inputDate='" + inputDate + '\'' +
                 '}';
     }
 }

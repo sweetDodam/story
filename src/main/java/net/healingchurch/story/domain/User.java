@@ -35,6 +35,7 @@ public class User {
     private int limit;
 
     private String loginUserId;
+    private int reserveId;
 
     public User(){}
 
@@ -261,6 +262,14 @@ public class User {
         this.loginUserId = loginUserId;
     }
 
+    public int getReserveId() {
+        return reserveId;
+    }
+
+    public void setReserveId(int reserveId) {
+        this.reserveId = reserveId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -302,7 +311,8 @@ public class User {
                 ", page=" + page +
                 ", offset=" + offset +
                 ", limit=" + limit +
-                ", loginUserId=" + loginUserId +
+                ", loginUserId='" + loginUserId + '\'' +
+                ", reserveId=" + reserveId +
                 '}';
     }
 }

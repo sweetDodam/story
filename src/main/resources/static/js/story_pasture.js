@@ -193,17 +193,26 @@ var storyPasture = {
         $("#inputDate").datepicker("setDate", today);
     },
     gridDtlLoad : function () {
+        var multiselect = false;
+        var colModel = jqGridDtlForm.colModel;
+
+        if(Number($("#formRoleOrder").val()) <= 2) {
+            multiselect = true;
+            colModel = jqGridDtlForm.colModel2;
+        }
+
         $("#jqGridDtl").jqGrid({
             styleUI : 'Bootstrap',
             datatype: "local",
             //     rowNum: -1,
             rownumbers: false,
-            colModel: jqGridDtlForm.colModel,
+            colModel: colModel,
             viewrecords: true,
             height: 100,
             width: 100,
             shrinkToFit: true,
             sortable: false,
+            multiselect: multiselect,
             loadComplete : function(data){
 
             }
@@ -213,13 +222,105 @@ var storyPasture = {
         //그리드 크기 변경
         $("#jqGridDtl").setGridWidth( $(".modal-body").width() - 5, true);
 
-        //그리드 크기 변경
-        $("#jqGridDtl").setGridHeight( $(".modal-body").height() * 0.9);
+        if(Number($("#formRoleOrder").val()) <= 2) {
+            //그리드 크기 변경
+            $("#jqGridDtl").setGridHeight( $(".modal-body").height() * 0.83);
+        }else{
+            //그리드 크기 변경
+            $("#jqGridDtl").setGridHeight( $(".modal-body").height() * 0.92);
+        }
+
 
         //해당 그리드 데이터 가져오기
         $("#jqGridDtl").jqGrid('clearGridData');
         $("#jqGridDtl").jqGrid('setGridParam', { data: $("#jqGrid").getRowData() });
         $("#jqGridDtl").trigger("reloadGrid");
+    },
+    reserveSave : function () {
+        var selRow = $("#jqGridDtl").jqGrid('getGridParam', 'selarrrow');
+
+        if(selRow.length <= 0){
+            alert("선택된 사용자가 없습니다.");
+            return;
+        }
+        var formData = new FormData($("#dtlForm")[0]);
+        var reserveList = new Array();
+
+        for(var i = 0;i < selRow.length;i++){
+            reserveList.push($("#jqGrid").getRowData(selRow[i]));
+        }
+        formData.append("reserveList", JSON.stringify(reserveList));
+        formData.append("inputDate", $("#inputDate").val().replace(/[^0-9]/g, ""));
+
+        var url = "/services/user/reserve/createUpdate";
+        var txt = "심방 예정자로 등록";
+
+        if(!confirm(txt + "하시겠습니까?")){
+            return;
+        }
+        $.ajax({
+            type: 'POST',
+            url: url,
+            processData: false,
+            contentType: false,
+            cache : false,
+            data : formData
+        }).done(function() {
+            alert(txt + '되었습니다.');
+
+            //그리드 재조회
+            storyPasture.gridSearch();
+
+            //팝업창 닫기
+            $("#storyPrayModal .close").trigger("click");
+
+        }).fail(function (error) {
+            console.debug(txt + "실패");
+            alert("관리자에게 문의하거나 다시 시도해주세요.");
+        });
+    },
+    reserveDelete : function () {
+        var selRow = $("#jqGridDtl").jqGrid('getGridParam', 'selarrrow');
+
+        if(selRow.length <= 0){
+            alert("선택된 사용자가 없습니다.");
+            return;
+        }
+        var formData = new FormData($("#dtlForm")[0]);
+        var reserveList = new Array();
+
+        for(var i = 0;i < selRow.length;i++){
+            reserveList.push($("#jqGrid").getRowData(selRow[i]));
+        }
+        formData.append("reserveList", JSON.stringify(reserveList));
+        formData.append("inputDate", $("#inputDate").val().replace(/[^0-9]/g, ""));
+
+        var url = "/services/user/reserve/remove";
+        var txt = "심방 예정자를 삭제";
+
+        if(!confirm(txt + "하시겠습니까?")){
+            return;
+        }
+        $.ajax({
+            type: 'POST',
+            url: url,
+            processData: false,
+            contentType: false,
+            cache : false,
+            data : formData
+        }).done(function() {
+            alert(txt + '했습니다.');
+
+            //그리드 재조회
+            storyPasture.gridSearch();
+
+            //팝업창 닫기
+            $("#storyPrayModal .close").trigger("click");
+
+        }).fail(function (error) {
+            console.debug(txt + "실패");
+            alert("관리자에게 문의하거나 다시 시도해주세요.");
+        });
     }
 };
 
@@ -254,6 +355,14 @@ var formatter = {
         }else{
             return '-';
         }
+    },
+    reserveFlag : function(cellValue,rowObject,options){
+        if(common.dataChk(rowObject)){
+            if(common.dataChkStr(Number(options.reserveId))){
+                return "심방예정";
+            }
+            return "";
+        }
     }
 };
 
@@ -281,7 +390,8 @@ var jqGridForm = {
         { label: '스토리날짜',  	        name: 'inputDate',          align: 'center', width: 100, 	hidden: true },
         { label: '기도제목',                name: 'prayers',            align: 'center', width: 100, 	hidden: true },
         { label: '등록일',       	        name: 'createDate',         align: 'center', width: 100, 	hidden: true },
-        { label: '수정일',       	        name: 'updateDate',         align: 'center', width: 100, 	hidden: true }]
+        { label: '수정일',       	        name: 'updateDate',         align: 'center', width: 100, 	hidden: true },
+        { label: '심방예정ID',                name: 'reserveId',            align: 'center', width: 100, 	hidden: true }]
     ,setParam : function(){
         var data = common.serializeObject($("#GridForm"));
 
@@ -307,8 +417,12 @@ var jqGridForm = {
 
 var jqGridDtlForm = {
     colModel : [
-        { label: '이름',      name: 'userName',      align: 'center',    width: 150 },
-        { label: '기도제목',  name: 'prayers',        align: 'left',     width: 600 }]
+        { label: '이름',      name: 'userName',      align: 'center',   width: 150 },
+        { label: '기도제목',  name: 'prayers',       align: 'left',     width: 600 }]
+    ,colModel2 : [
+        { label: '이름',      name: 'userName',      align: 'center',   width: 100 },
+        { label: '기도제목',  name: 'prayers',       align: 'left',     width: 500 },
+        { label: ' ',         name: 'reserveId',     align: 'center',   width: 110, formatter: formatter.reserveFlag 	 }]
 };
 
 storyPasture.init();

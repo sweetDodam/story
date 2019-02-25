@@ -284,11 +284,11 @@ body, .form-control{
 }
 
 #content-wrapper .modal-footer{
-    padding: 15px 0px 0px 0px !important;
+    padding: 10px 0px 0px 0px !important;
     width: 95%;
-    bottom: 15px;
+    bottom: 10px;
+    right: 10px;
     position: absolute;
-    right: 15px;
 }
 
 table.ui-pager-table td, table.ui-pg-table th{
@@ -429,4 +429,8 @@ tr[aria-selected=true]{
     border: none;
     background: url('../../image/excel.png') no-repeat;
     background-size: 25px 25px;
+}
+
+.modal-footer .btn{
+    padding: .25rem .45rem;
 }

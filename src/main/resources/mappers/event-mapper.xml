@@ -42,13 +42,14 @@
     <insert id="createEvent" parameterType="net.healingchurch.story.domain.Event"
             useGeneratedKeys="true" keyProperty="eventId">
         /*  EventMapper.createEvent  */
-        insert into ch_event (group_id, event_content, writer, event_date, create_user)
+        insert into ch_event (group_id, event_content, writer, event_date, create_date, create_user)
         VALUES
         (
             #{groupId},
             #{eventContent},
             #{writer},
             STR_TO_DATE(#{eventDate}, '%Y%m%d'),
+            now(),
             #{loginUserId}
         )
     </insert>
@@ -60,6 +61,7 @@
         set
           event_content = #{eventContent}
         , writer = #{writer}
+        , update_date = now()
         , update_user = #{loginUserId}
         where event_id = #{eventId}
     </update>

@@ -176,6 +176,7 @@
             ,E.leader_reason
             ,FN_CODE_DESC('WORSHIP_REASON', E.worship_reason) as worship_desc
             ,FN_CODE_DESC('LEADER_REASON', E.leader_reason) as leader_desc
+            ,F.reserve_id
         </if>
         from ch_user A
         inner join (select  	X.group_id,
@@ -190,6 +191,7 @@
         <if test="inputDate!='' and inputDate!=null">
             left join ch_story_master D on D.user_id = A.user_id and DATE_FORMAT(D.input_date, '%Y%m%d')  = #{inputDate}
             left join ch_story_pasture E on E.master_id = D.story_id
+            left join ch_user_reserve F on A.user_id = F.user_id
         </if>
         where 1=1
         and C.role_id not in (1, 2) /*   관리자, 목회자 제외  */
@@ -221,6 +223,7 @@
         <if test="inputDate!='' and inputDate!=null">
             left join ch_story_master D on D.user_id = A.user_id and DATE_FORMAT(D.input_date, '%Y%m%d')  = #{inputDate}
             left join ch_story_pasture E on E.master_id = D.story_id
+            left join ch_user_reserve F on A.user_id = F.user_id
         </if>
         where 1=1
         and C.role_id not in (1, 2) /*   관리자, 목회자 제외  */

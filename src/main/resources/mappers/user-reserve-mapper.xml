@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.healingchurch.story.services.user.reserve.UserReserveMapper">
+
+    <select id="findUserReserveList" parameterType="net.healingchurch.story.domain.UserReserve"
+            resultType="net.healingchurch.story.domain.UserReserve">
+        /*  UserReserveMapper.findUserReserveList  */
+        select * from ch_user_reserve
+        order by input_date, user_id
+
+        <if test="page!=null and page!=''">LIMIT #{offset}, #{limit}</if>
+    </select>
+
+    <select id="getUserReserve" parameterType="net.healingchurch.story.domain.UserReserve"
+            resultType="net.healingchurch.story.domain.UserReserve">
+        /*  UserReserveMapper.getUserReserve  */
+        select * from ch_user_reserve
+        where 1=1
+
+        <if test="reserveId!=null and reserveId!=''">
+            and reserve_id = #{reserveId}
+        </if>
+
+        <if test="userId!=null and userId!=''">
+            and user_id = #{userId}
+        </if>
+
+        <if test="inputDate!=null and inputDate!=''">
+            and DATE_FORMAT(input_date, '%Y%m%d') <![CDATA[ <= ]]> #{inputDate}
+        </if>
+    </select>
+
+    <insert id="createUserReserve" parameterType="net.healingchurch.story.domain.UserReserve"
+            useGeneratedKeys="true" keyProperty="reserveId">
+        /*  UserReserveMapper.createUserReserve  */
+        INSERT INTO ch_user_reserve(user_id, input_date, create_date, create_user)
+        VALUES (
+            #{userId},
+            STR_TO_DATE(#{inputDate}, '%Y%m%d'),
+            now(),
+            #{loginUserId}
+            )
+    </insert>
+
+    <update id="updateUserReserve" parameterType="net.healingchurch.story.domain.UserReserve"
+            useGeneratedKeys="true" keyProperty="reserveId">
+        /*  UserReserveMapper.updateUserReserve  */
+        update ch_user_reserve
+        set
+         update_date = now()
+        ,update_user = #{loginUserId}
+        <if test="inputDate!='' and inputDate!=null">, input_date = STR_TO_DATE(#{inputDate}, '%Y%m%d') </if>
+        where reserve_id = #{reserveId}
+    </update>
+
+    <delete id="removeUserReserve" parameterType="String">
+        /*  UserReserveMapper.removeUserReserve  */
+        delete from ch_user_reserve
+        where
+        <choose>
+            <when test="value!='' and value!=null">
+                user_id = #{value}
+            </when>
+            <otherwise>
+                1=2
+            </otherwise>
+        </choose>
+    </delete>
+
+</mapper>
