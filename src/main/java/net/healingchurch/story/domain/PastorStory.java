@@ -22,6 +22,7 @@ public class PastorStory extends User{
 
     private int reserveId;
     private String inputDate;
+    private String isReserve;
 
     public PastorStory() {
     }
@@ -162,6 +163,14 @@ public class PastorStory extends User{
         this.inputDate = inputDate;
     }
 
+    public String isReserve() {
+        return isReserve;
+    }
+
+    public void setIsReserve(String reserve) {
+        isReserve = reserve;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -190,6 +199,7 @@ public class PastorStory extends User{
                 ", updateDate='" + updateDate + '\'' +
                 ", fromDate='" + fromDate + '\'' +
                 ", toDate='" + toDate + '\'' +
+                ", isReserve='" + isReserve + '\'' +
                 ", page=" + page +
                 ", offset=" + offset +
                 ", limit=" + limit +

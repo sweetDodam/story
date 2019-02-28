@@ -134,6 +134,7 @@
             ,D.pastor_id
             ,D.visit_user_id
             ,FN_DATE_FORMAT(D.visit_date) as visit_date
+            ,FN_DATE_FORMAT(E.input_date) as input_date
         </if>
         from ch_user A
         inner join (select  	X.group_id,
@@ -147,6 +148,7 @@
         left join ch_user_role C on C.role_id = A.role_id
         <if test="visitDate!='' and visitDate!=null">
             left join ch_story_pastor D on D.visit_user_id = A.user_id and D.pastor_id = #{pastorId} and DATE_FORMAT(D.visit_date, '%Y%m%d')  = #{visitDate}
+            left join ch_user_reserve E on A.user_id = E.user_id
         </if>
         where 1=1
         and C.role_id not in (1, 2) /*   관리자, 목회자 제외  */
@@ -154,6 +156,7 @@
         <if test="roleId!='' and roleId!=null">and C.role_id = #{roleId}</if>
         <if test="userId!='' and userId!=null">and A.user_id = #{userId}</if>
         <if test="userName!='' and userName!=null">and A.user_name like concat('%', #{userName}, '%')</if>
+        <if test="isReserve!='' and isReserve!=null">and E.user_id is not null</if>
 
         order by A.user_name
 
@@ -177,6 +180,7 @@
         left join ch_user_role C on C.role_id = A.role_id
         <if test="visitDate!='' and visitDate!=null">
             left join ch_story_pastor D on D.visit_user_id = A.user_id and D.pastor_id = #{pastorId} and DATE_FORMAT(D.visit_date, '%Y%m%d')  = #{visitDate}
+            left join ch_user_reserve E on A.user_id = E.user_id
         </if>
         where 1=1
         and C.role_id not in (1, 2) /*   관리자, 목회자 제외  */
@@ -184,5 +188,6 @@
         <if test="roleId!='' and roleId!=null">and C.role_id = #{roleId}</if>
         <if test="userId!='' and userId!=null">and A.user_id = #{userId}</if>
         <if test="userName!='' and userName!=null">and A.user_name like concat('%', #{userName}, '%')</if>
+        <if test="isReserve!='' and isReserve!=null">and E.user_id is not null</if>
     </select>
 </mapper>

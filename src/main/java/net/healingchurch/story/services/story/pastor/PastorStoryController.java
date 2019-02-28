@@ -75,8 +75,9 @@ public class PastorStoryController {
                                                  @RequestParam(value = "userName", defaultValue = "") String userName,
                                                  @RequestParam(value = "visitDate", defaultValue = "") String visitDate,
                                                  @RequestParam(value = "pastorId", defaultValue = "") String pastorId,
+                                                 @RequestParam(value = "isReserve", defaultValue = "") String isReserve,
                                                  @RequestParam(value = "page", defaultValue = "0") int page,
                                                  @RequestParam(value = "limit", defaultValue = "20") int limit) {
-        return pastorStoryService.findUserStoryList(userId, groupId, roleId, userName, visitDate, pastorId, page, limit);
+        return pastorStoryService.findUserStoryList(userId, groupId, roleId, userName, visitDate, pastorId, isReserve, page, limit);
     }
 }

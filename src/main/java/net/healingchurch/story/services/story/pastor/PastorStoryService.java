@@ -16,5 +16,5 @@ public interface PastorStoryService {
 
     void removeStory(int storyId);
 
-    Map<Object, Object> findUserStoryList(String userId, int groupId, int roleId, String userName, String visitDate, String pastorId, int page, int limit);
+    Map<Object, Object> findUserStoryList(String userId, int groupId, int roleId, String userName, String visitDate, String pastorId, String isReserve, int page, int limit);
 }

@@ -46,6 +46,17 @@ var storyPastor = {
             $("#" + target).datepicker().focus();
         });
 
+        //심방 예정자만 보기 체크박스 change 이벤트
+        $('#isReserve').on('change', function () {
+            if ($('#isReserve').is(":checked")) {
+                $('#isReserve').val('Y');
+            } else {
+                $('#isReserve').val('');
+            }
+            //검색
+            _this.gridSearch();
+        });
+
         //모달 닫기 이벤트
         $("#saveStoryModal").on('hide.bs.modal', function(e){
             $("#saveStoryModal .modal-content").empty();
@@ -210,33 +221,35 @@ var formatter = {
 
 var jqGridForm = {
     colModel : [
-        { label: '아이디',			name: 'userId',             align: 'center', width: 45},
-        { label: '이름',        	name: 'userName',           align: 'center', width: 70,	    formatter: formatter.updModal},
-        { label: '등록여부',    	name: 'registFlag',			align: 'center', width: 55, 	formatter: formatter.registFlag},
-        { label: '소속',        	name: 'groupDesc',			align: 'center', width: 115      },
-        { label: '전화번호',    	name: 'mobile',             align: 'center', width: 100 	},
-        { label: '이메일',      	name: 'email',              align: 'center', width: 120 	},
-        { label: '청년부 등록일',	name: 'regDate',            align: 'center', width: 130 	},
-        { label: '알파날짜',    	name: 'alphaDate',          align: 'center', width: 100 	},
-        { label: '등반날짜',    	name: 'pastorJoinDate',    align: 'center', width: 100 	},
-        { label: 'userSeq',		    name: 'userSeq',            hidden: true},
-        { label: '스토리아이디', 	name: 'storyId',			hidden: true },
-        { label: '사역자ID',  	    name: 'pastorId',           hidden: true },
-        { label: '권한',        	name: 'roleDesc',           hidden: true },
-        { label: '권한ID',      	name: 'roleId',             hidden: true },
-        { label: '소속ID',      	name: 'groupId',            hidden: true },
-        { label: '관리자여부',   	name: 'isAdmin',            hidden: true },
-        { label: '주소',        	name: 'address',            hidden: true },
-        { label: '심방날짜',  	    name: 'visitDate',          hidden: true },
-        { label: '상태',        	name: 'status',             hidden: true },
-        { label: '등록일',       	name: 'createDate',         hidden: true },
-        { label: '수정일',       	name: 'updateDate',         hidden: true }]
+        { label: '아이디',			        name: 'userId',            align: 'center', width: 45},
+        { label: '이름',        	        name: 'userName',          align: 'center', width: 70,	    formatter: formatter.updModal},
+        { label: '등록여부',    	        name: 'registFlag',        align: 'center', width: 55, 	formatter: formatter.registFlag},
+        { label: '소속',        	        name: 'groupDesc',         align: 'center', width: 115      },
+        { label: '전화번호',    	        name: 'mobile',             align: 'center', width: 100 	},
+        { label: '이메일',      	        name: 'email',              align: 'center', width: 120 	},
+        { label: '청년부 등록일',	        name: 'regDate',            align: 'center', width: 130 	},
+        { label: '알파날짜',    	        name: 'alphaDate',          align: 'center', width: 100 	},
+        { label: '등반날짜',    	        name: 'pastorJoinDate',    align: 'center', width: 100 	},
+        { label: '심방예정자<br>등록일', 	name: 'inputDate',          align: 'center', width: 100 	},
+        { label: 'userSeq',		        name: 'userSeq',            hidden: true},
+        { label: '스토리아이디', 	        name: 'storyId',			  hidden: true },
+        { label: '사역자ID',  	        name: 'pastorId',           hidden: true },
+        { label: '권한',        	        name: 'roleDesc',           hidden: true },
+        { label: '권한ID',      	        name: 'roleId',             hidden: true },
+        { label: '소속ID',      	        name: 'groupId',            hidden: true },
+        { label: '관리자여부',   	        name: 'isAdmin',            hidden: true },
+        { label: '주소',        	        name: 'address',            hidden: true },
+        { label: '심방날짜',  	            name: 'visitDate',          hidden: true },
+        { label: '상태',        	        name: 'status',             hidden: true },
+        { label: '등록일',       	        name: 'createDate',         hidden: true },
+        { label: '수정일',       	        name: 'updateDate',         hidden: true }]
     ,setParam : function(){
         var data = common.serializeObject($("#GridForm"));
 
         data["page"] = page;
         data["limit"] = $('#pager .ui-pg-selbox').val();
         data["visitDate"] = $("#visitDate").val().replace(/[^0-9]/g, "");
+        data["isReserve"] = $("#isReserve").val();
 
         //그룹셀렉트 박스
         var selectCnt = $('.group-selectBox select').length;

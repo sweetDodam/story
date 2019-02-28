@@ -1,6 +1,7 @@
 package net.healingchurch.story.services.story.pastor;
 
 import net.healingchurch.story.domain.PastorStory;
+import net.healingchurch.story.services.user.reserve.UserReserveMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,9 @@ import java.util.Map;
 public class PastorStoryServiceImpl implements PastorStoryService {
     @Autowired
     private PastorStoryMapper pastorStoryMapper;
+
+    @Autowired
+    private UserReserveMapper userReserveMapper;
 
     @Override
     public Map<Object, Object> findStoryList(String visitUserId, String pastorId, String fromDate, String toDate, int page, int limit) {
@@ -59,7 +63,13 @@ public class PastorStoryServiceImpl implements PastorStoryService {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         pastorStory.setLoginUserId(principal.getUsername());
 
-        return pastorStoryMapper.createStory(pastorStory);
+        //사역자 스토리 등록
+        int result = pastorStoryMapper.createStory(pastorStory);
+
+        //심방 예정자에서 삭제
+        userReserveMapper.removeUserReserve(visitUserId);
+
+        return result;
     }
 
     @Override
@@ -93,7 +103,7 @@ public class PastorStoryServiceImpl implements PastorStoryService {
     }
 
     @Override
-    public Map<Object, Object> findUserStoryList(String userId, int groupId, int roleId, String userName, String visitDate,String pastorId, int page, int limit) {
+    public Map<Object, Object> findUserStoryList(String userId, int groupId, int roleId, String userName, String visitDate, String pastorId, String isReserve, int page, int limit) {
         PastorStory story = new PastorStory();
 
         story.setPage(page);
@@ -106,6 +116,7 @@ public class PastorStoryServiceImpl implements PastorStoryService {
         story.setUserName(userName);
         story.setVisitDate(visitDate);
         story.setPastorId(pastorId);
+        story.setIsReserve(isReserve);
 
         Map<Object, Object> resutMap = new HashMap<>();
 
