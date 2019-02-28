@@ -108,8 +108,11 @@ select.ui-pg-selbox.form-control{
 }
 
 .ui-jqgrid-hdiv{
-    pointer-events: none;
     background-color: #FAFAFA;
+}
+
+.ui-jqgrid-hdiv th:not(.jqgrid-multibox){
+    pointer-events: none;
 }
 
 .ui-jqgrid tr.jqgrow td {
