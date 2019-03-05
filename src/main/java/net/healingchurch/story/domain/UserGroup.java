@@ -9,6 +9,8 @@ public class UserGroup {
     private int groupLevel;
     private String createDate;
     private String updateDate;
+    private String createUser;
+    private String updateUser;
 
     private int page;
     private int offset;
@@ -70,6 +72,22 @@ public class UserGroup {
         this.updateDate = updateDate;
     }
 
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    public String getUpdateUser() {
+        return updateUser;
+    }
+
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -124,6 +142,8 @@ public class UserGroup {
                 ", groupLevel=" + groupLevel +
                 ", createDate='" + createDate + '\'' +
                 ", updateDate='" + updateDate + '\'' +
+                ", createUser='" + createUser + '\'' +
+                ", updateUser='" + updateUser + '\'' +
                 ", page=" + page +
                 ", offset=" + offset +
                 ", limit=" + limit +

@@ -103,7 +103,7 @@ public class PastorStoryServiceImpl implements PastorStoryService {
     }
 
     @Override
-    public Map<Object, Object> findUserStoryList(String userId, int groupId, int roleId, String userName, String visitDate, String pastorId, String isReserve, int page, int limit) {
+    public Map<Object, Object> findUserStoryList(String userId, int groupId, int roleId, String userName, String visitDate, String pastorId, String isReserve, String isConfirm, int page, int limit) {
         PastorStory story = new PastorStory();
 
         story.setPage(page);
@@ -117,6 +117,7 @@ public class PastorStoryServiceImpl implements PastorStoryService {
         story.setVisitDate(visitDate);
         story.setPastorId(pastorId);
         story.setIsReserve(isReserve);
+        story.setIsConfirm(isConfirm);
 
         Map<Object, Object> resutMap = new HashMap<>();
 

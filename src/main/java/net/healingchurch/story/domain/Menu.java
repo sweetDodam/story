@@ -14,6 +14,8 @@ public class Menu {
     int roleOrder;
     String createDate;
     String updateDate;
+    String createUser;
+    String updateUser;
 
     String roleDesc;
     String loginUserId;
@@ -108,6 +110,21 @@ public class Menu {
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
     }
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    public String getUpdateUser() {
+        return updateUser;
+    }
+
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
+    }
 
     public String getRoleDesc() {
         return roleDesc;
@@ -152,6 +169,8 @@ public class Menu {
                 ", roleOrder='" + roleOrder + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", updateDate='" + updateDate + '\'' +
+                ", createUser='" + createUser + '\'' +
+                ", updateUser='" + updateUser + '\'' +
                 ", loginUserId=" + loginUserId +
                 '}';
     }

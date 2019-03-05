@@ -2,6 +2,7 @@ package net.healingchurch.story.services.index;
 
 import net.healingchurch.story.domain.*;
 
+import net.healingchurch.story.services.common.code.CodeService;
 import net.healingchurch.story.services.event.EventService;
 import net.healingchurch.story.services.menu.MenuService;
 import net.healingchurch.story.services.user.UserService;
@@ -41,6 +42,9 @@ public class WebAppContoller {
 
     @Autowired
     private EventService eventService;
+
+    @Autowired
+    private CodeService codeService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -111,6 +115,10 @@ public class WebAppContoller {
         //선택한 스토리 날짜
         model.put("formInputDate", inputDate);
 
+        //화면에 뿌릴 공통코드 조회
+        model.put("worshipList", codeService.findCodeChildList("WORSHIP_REASON"));
+        model.put("leaderList", codeService.findCodeChildList("LEADER_REASON"));
+
         return "story_pasture_form";
     }
 
@@ -129,6 +137,9 @@ public class WebAppContoller {
         //로그인한 유저의 그룹 상세 정보
         UserGroup formUserGroup = userGroupService.getUserGroup(user.getGroupId());
         model.put("formUserGroup", formUserGroup);
+
+        //화면에 뿌릴 공통코드 조회
+        model.put("roleList", codeService.findCodeChildList("USER_ROLE"));
 
         return "story_pasture_list";
     }
@@ -224,6 +235,9 @@ public class WebAppContoller {
         //로그인한 유저의 마을 그룹 상세 정보
         UserGroup formUserGroup = userGroupService.getUserGroup(user.getParentGroupId());
         model.put("formUserGroup", formUserGroup);
+
+        //화면에 뿌릴 공통코드 조회
+        model.put("roleList", codeService.findCodeChildList("USER_ROLE"));
 
         return "story_town_list";
     }
@@ -324,6 +338,9 @@ public class WebAppContoller {
         UserGroup formUserGroup = userGroupService.getUserGroup(user.getGroupId());
         model.put("formUserGroup", formUserGroup);
 
+        //화면에 뿌릴 공통코드 조회
+        model.put("roleList", codeService.findCodeChildList("USER_ROLE"));
+
         return "story_pastor_list";
     }
 
@@ -415,6 +432,10 @@ public class WebAppContoller {
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
 
+        //화면에 뿌릴 공통코드 조회
+        model.put("statusList", codeService.findCodeChildList("USER_STATUS"));
+        model.put("roleList", codeService.findCodeChildList("USER_ROLE"));
+
         return "user";
     }
 
@@ -436,6 +457,10 @@ public class WebAppContoller {
             UserGroup formUserGroup = userGroupService.getUserGroup(formUser.getGroupId());
             model.put("formUserGroup", formUserGroup);
         }
+
+        //화면에 뿌릴 공통코드 조회
+        model.put("statusList", codeService.findCodeChildList("USER_STATUS"));
+        model.put("roleList", codeService.findCodeChildList("USER_ROLE"));
 
         return "user_form";
     }
@@ -481,6 +506,9 @@ public class WebAppContoller {
         //로그인한 유저의 정보
         User user = userService.getUser(userDetails.getUsername());
         model.put("userInfo", user);
+
+        //화면에 뿌릴 공통코드 조회
+        model.put("roleList", codeService.findCodeChildList("USER_ROLE"));
 
         return "menuMgm";
     }

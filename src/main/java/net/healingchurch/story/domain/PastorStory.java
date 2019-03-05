@@ -13,6 +13,8 @@ public class PastorStory extends User{
     private String etc;
     private String createDate;
     private String updateDate;
+    private String createUser;
+    private String updateUser;
 
     private String fromDate;
     private String toDate;
@@ -23,6 +25,7 @@ public class PastorStory extends User{
     private int reserveId;
     private String inputDate;
     private String isReserve;
+    private String isConfirm;
 
     public PastorStory() {
     }
@@ -107,6 +110,22 @@ public class PastorStory extends User{
         this.updateDate = updateDate;
     }
 
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    public String getUpdateUser() {
+        return updateUser;
+    }
+
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
+    }
+
     public int getPage() {
         return page;
     }
@@ -171,6 +190,14 @@ public class PastorStory extends User{
         isReserve = reserve;
     }
 
+    public String getIsConfirm() {
+        return isConfirm;
+    }
+
+    public void setIsConfirm(String isConfirm) {
+        this.isConfirm = isConfirm;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -197,9 +224,12 @@ public class PastorStory extends User{
                 ", etc='" + etc + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", updateDate='" + updateDate + '\'' +
+                ", createUser='" + createUser + '\'' +
+                ", updateUser='" + updateUser + '\'' +
                 ", fromDate='" + fromDate + '\'' +
                 ", toDate='" + toDate + '\'' +
                 ", isReserve='" + isReserve + '\'' +
+                ", isConfirm='" + isConfirm + '\'' +
                 ", page=" + page +
                 ", offset=" + offset +
                 ", limit=" + limit +

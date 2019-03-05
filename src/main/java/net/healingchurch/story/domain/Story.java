@@ -17,6 +17,8 @@ public class Story extends User{
 
     private String createDate;
     private String updateDate;
+    private String createUser;
+    private String updateUser;
     private String inputDate;
 
     private String fromDate;
@@ -173,6 +175,22 @@ public class Story extends User{
         this.updateDate = updateDate;
     }
 
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    public String getUpdateUser() {
+        return updateUser;
+    }
+
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
+    }
+
     public String getInputDate() {
         return inputDate;
     }
@@ -209,6 +227,8 @@ public class Story extends User{
                 ", etc='" + etc + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", updateDate='" + updateDate + '\'' +
+                ", createUser='" + createUser + '\'' +
+                ", updateUser='" + updateUser + '\'' +
                 ", inputDate=" + inputDate + '\'' +
                 '}';
     }

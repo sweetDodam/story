@@ -7,6 +7,8 @@ public class Event {
     private String eventContent;
     private String createDate;
     private String updateDate;
+    private String createUser;
+    private String updateUser;
     private String writer;
     private String eventDate;
     private int groupId;
@@ -52,6 +54,22 @@ public class Event {
 
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    public String getUpdateUser() {
+        return updateUser;
+    }
+
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
     }
 
     public String getWriter() {
@@ -146,6 +164,8 @@ public class Event {
                 ", eventContent='" + eventContent + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", updateDate='" + updateDate + '\'' +
+                ", createUser='" + createUser + '\'' +
+                ", updateUser='" + updateUser + '\'' +
                 ", writer='" + writer + '\'' +
                 ", eventDate='" + eventDate + '\'' +
                 ", groupId='" + groupId +

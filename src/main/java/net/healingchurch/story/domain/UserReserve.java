@@ -8,6 +8,8 @@ public class UserReserve {
     private String inputDate;
     private String createDate;
     private String updateDate;
+    private String createUser;
+    private String updateUser;
 
     private int page;
     private int offset;
@@ -108,6 +110,8 @@ public class UserReserve {
                 ", inputDate='" + inputDate + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", updateDate='" + updateDate + '\'' +
+                ", createUser='" + createUser + '\'' +
+                ", updateUser='" + updateUser + '\'' +
                 ", page=" + page +
                 ", offset=" + offset +
                 ", limit=" + limit +

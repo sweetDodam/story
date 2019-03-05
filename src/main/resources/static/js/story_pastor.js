@@ -57,6 +57,17 @@ var storyPastor = {
             _this.gridSearch();
         });
 
+        //심방 확인자만 보기 체크박스 change 이벤트
+        $('#isConfirm').on('change', function () {
+            if ($('#isConfirm').is(":checked")) {
+                $('#isConfirm').val('Y');
+            } else {
+                $('#isConfirm').val('');
+            }
+            //검색
+            _this.gridSearch();
+        });
+
         //모달 닫기 이벤트
         $("#saveStoryModal").on('hide.bs.modal', function(e){
             $("#saveStoryModal .modal-content").empty();
@@ -173,29 +184,18 @@ var storyPastor = {
             format: "yyyy-mm-dd(D)",
             calendarWeeks: false, //몇째주인지 표시
             autoclose: true,
-            todayHighlight: true,
+            todayHighlight: false,
             language: "kr",
-            //daysOfWeekDisabled: "1,2,3,4,5,6",
+            daysOfWeekDisabled: "1,2,3,4,5,6",
             useCurrent: false,
             endDate: new Date()
         }).on('changeDate', function(e){
             _this.gridSearch();
         });
 
-        //오늘 날짜
-        var today = new Date();
-        var year = today.getFullYear();
-        var month = today.getMonth()+1;
-        var date = today.getDate();
-
-        if(month < 10){
-            month = "0" + month;
-        }
-        if(date < 10){
-            date = "0" + date;
-        }
-
-        $("#visitDate").datepicker("setDate", year + "-" + month + "-" + date);
+        //현재 날짜의 최근 일요일을 가져온다
+        var today = common.calculateSundayDate(new Date());
+        $("#visitDate").datepicker("setDate", today);
     }
 };
 
@@ -212,9 +212,9 @@ var formatter = {
     registFlag : function(cellValue,rowObject,options){
         if(common.dataChk(rowObject)){
             if(common.dataChkStr(options.storyId)){
-                return "등록";
+                return "<font style='font-weight: bold;'>심방 확인</font>";
             }
-            return "미등록";
+            return "심방 미확인";
         }
     }
 };
@@ -223,11 +223,11 @@ var jqGridForm = {
     colModel : [
         { label: '아이디',			        name: 'userId',            align: 'center', width: 45},
         { label: '이름',        	        name: 'userName',          align: 'center', width: 70,	    formatter: formatter.updModal},
-        { label: '등록여부',    	        name: 'registFlag',        align: 'center', width: 55, 	formatter: formatter.registFlag},
-        { label: '소속',        	        name: 'groupDesc',         align: 'center', width: 115      },
+        { label: '심방여부',    	        name: 'registFlag',        align: 'center', width: 65, 	formatter: formatter.registFlag},
+        { label: '심방날짜',  	            name: 'visitDate',         align: 'center', width: 100},
+        { label: '소속',        	        name: 'groupDesc',         align: 'center', width: 120      },
         { label: '전화번호',    	        name: 'mobile',             align: 'center', width: 100 	},
         { label: '이메일',      	        name: 'email',              align: 'center', width: 120 	},
-        { label: '청년부 등록일',	        name: 'regDate',            align: 'center', width: 130 	},
         { label: '알파날짜',    	        name: 'alphaDate',          align: 'center', width: 100 	},
         { label: '등반날짜',    	        name: 'pastorJoinDate',    align: 'center', width: 100 	},
         { label: '심방예정자<br>등록일', 	name: 'inputDate',          align: 'center', width: 100 	},
@@ -239,7 +239,6 @@ var jqGridForm = {
         { label: '소속ID',      	        name: 'groupId',            hidden: true },
         { label: '관리자여부',   	        name: 'isAdmin',            hidden: true },
         { label: '주소',        	        name: 'address',            hidden: true },
-        { label: '심방날짜',  	            name: 'visitDate',          hidden: true },
         { label: '상태',        	        name: 'status',             hidden: true },
         { label: '등록일',       	        name: 'createDate',         hidden: true },
         { label: '수정일',       	        name: 'updateDate',         hidden: true }]
@@ -250,6 +249,7 @@ var jqGridForm = {
         data["limit"] = $('#pager .ui-pg-selbox').val();
         data["visitDate"] = $("#visitDate").val().replace(/[^0-9]/g, "");
         data["isReserve"] = $("#isReserve").val();
+        data["isConfirm"] = $("#isConfirm").val();
 
         //그룹셀렉트 박스
         var selectCnt = $('.group-selectBox select').length;

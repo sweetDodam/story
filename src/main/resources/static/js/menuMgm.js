@@ -4,9 +4,6 @@ var menuMgm = {
 
         console.log("menuMgm init");
 
-        //권한 셀렉트 박스 그리기
-        common.comCodeSelectLoad(".comCode", "N");
-
         //그리드 셋팅
         _this.gridLoad();
         _this.gridSearch(1);

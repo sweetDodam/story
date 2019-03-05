@@ -28,8 +28,13 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-label-group">
-                        <input type="text" class="form-control" id="status" name="status" placeholder="상태" th:value="${registFlag ? '' : formUser.getStatus()}">
-                        <label for="status">상태</label>
+                        <select class="form-control" id="status" name="status" parentCodeId="USER_STATUS">
+                            <option value="">상태 선택</option>
+                            <option th:each="list, i : ${statusList}" th:value="${list.getCodeName()}"
+                                                                             th:text="${list.getDescription()}"
+                                                                             th:attr="selected=${(!registFlag && formUser.getStatus() == list.getCodeName()) ? 'selected' : 'false'}">
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -64,9 +69,9 @@
                     <label class="calendar-icon" target="birthDate"></label>
                 </div>
                 <div class="col-md-6">
-                    <p class="my-2 ch-chk-label">교회 등록일</p>
-                    <input type="text" id="regDate" name="regDate" class="form-control datePicker regDate" readonly th:value="${registFlag ? '' : formUser.getRegDate()}">
-                    <label class="calendar-icon" target="regDate"></label>
+                    <p class="my-2 ch-chk-label">등반일</p>
+                    <input type="text" id="pastureJoinDate" name="pastureJoinDate" class="form-control datePicker pastureJoinDate" readonly th:value="${registFlag ? '' : formUser.getPastureJoinDate()}">
+                    <label class="calendar-icon" target="pastureJoinDate"></label>
                 </div>
             </div>
         </div>
@@ -76,11 +81,6 @@
                     <p class="my-2 ch-chk-label">알파 수료일</p>
                     <input type="text" id="alphaDate" name="alphaDate" class="form-control datePicker alphaDate" readonly th:value="${registFlag ? '' : formUser.getAlphaDate()}">
                     <label class="calendar-icon" target="alphaDate"></label>
-                </div>
-                <div class="col-md-6">
-                    <p class="my-2 ch-chk-label">등반일</p>
-                    <input type="text" id="pastureJoinDate" name="pastureJoinDate" class="form-control datePicker pastureJoinDate" readonly th:value="${registFlag ? '' : formUser.getPastureJoinDate()}">
-                    <label class="calendar-icon" target="pastureJoinDate"></label>
                 </div>
             </div>
         </div>
@@ -105,7 +105,13 @@
             <div class="form-row">
                 <div class="col-md-6">
                     <p class="my-2 ch-chk-label">권한</p>
-                    <select class="form-control comCode" id="roleId" name="roleId" parentCodeId="USER_ROLE"></select>
+                    <select class="form-control comCode" id="roleId" name="roleId">
+                        <option value="">선택</option>
+                        <option th:each="list, i : ${roleList}" th:value="${list.getCodeName()}"
+                                th:text="${list.getDescription()}"
+                                th:attr="selected=${(!registFlag && formUser.getRoleId() == list.getCodeName()) ? 'selected' : (registFlag && list.getCodeName() == '5') ? 'selected' : false}">
+                        </option>
+                    </select>
                 </div>
             </div>
         </div>

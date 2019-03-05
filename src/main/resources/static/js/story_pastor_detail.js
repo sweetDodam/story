@@ -138,7 +138,7 @@ var storyPastorDetail = {
             autoclose: true,
             todayHighlight: true,
             language: "kr",
-            daysOfWeekDisabled: "1,2,3,4,5,6",
+            //daysOfWeekDisabled: "1,2,3,4,5,6",
             useCurrent: false,
             endDate: new Date()
         }).on('changeDate', function(e){
@@ -151,7 +151,7 @@ var storyPastorDetail = {
             autoclose: true,
             todayHighlight: true,
             language: "kr",
-            daysOfWeekDisabled: "1,2,3,4,5,6",
+            //daysOfWeekDisabled: "1,2,3,4,5,6",
             useCurrent: false,
             endDate: new Date()
         }).on('changeDate', function(e){
@@ -203,17 +203,19 @@ var popPage = 1;
 var jqGridPopForm = {
     colModel : [
         { label: '심방날짜',    	name: 'visitDate',          align: 'center',    width: 100      },
-        { label: '목회자',	        name: 'userName',       	align: 'center',    width: 80 	    },
         { label: '심방장소',	    name: 'visitPlace',    	    align: 'left',      width: 100      },
-        { label: '심방내용',	    name: 'summary',          	align: 'left',      width: 150 	    },
-        { label: '기도제목',	    name: 'prayers',       	    align: 'left',      width: 150      },
-        { label: '기타사항',	    name: 'etc',   	            align: 'left',      width: 150  	},
+        { label: '심방내용',	    name: 'summary',          	align: 'left',      width: 160 	    },
+        { label: '기도제목',	    name: 'prayers',       	    align: 'left',      width: 160      },
+        { label: '기타사항',	    name: 'etc',   	            align: 'left',      width: 160      },
+        { label: '등록자',       	name: 'createUser',         align: 'center',    width: 80       },
+        { label: '등록일',       	name: 'createDate',         align: 'center',    width: 100      },
+        { label: '수정자',       	name: 'updateUser',        	align: 'center',    width: 80       },
+        { label: '수정일',       	name: 'updateDate',        	align: 'center',    width: 100      },
         { label: '아이디',      	name: 'userId',             align: 'center',    width: 75,		hidden: true	},
         { label: '스토리아이디', 	name: 'storyId',         	align: 'center',    width: 90, 	    hidden: true 	},
         { label: '권한ID',      	name: 'roleId',             align: 'center',    width: 100, 	hidden: true 	},
-        { label: '소속ID',      	name: 'groupId',            align: 'center',    width: 100, 	hidden: true 	},
-        { label: '등록일',       	name: 'createDate',         align: 'center',    width: 100, 	hidden: true 	},
-        { label: '수정일',       	name: 'updateDate',        	align: 'center',    width: 100, 	hidden: true 	}]
+        { label: '소속ID',      	name: 'groupId',            align: 'center',    width: 100, 	hidden: true 	}
+        ]
     ,setParam : function(){
         var data = common.serializeObject($("#GridPopForm"));
 

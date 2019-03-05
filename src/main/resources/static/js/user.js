@@ -4,9 +4,6 @@ var user = {
 
         console.log("user init");
 
-        //권한 셀렉트 박스 그리기
-        common.comCodeSelectLoad(".comCode");
-
         //그룹 셀렉트 박스 그리기
         _this.groupSelectLoad();
 
@@ -200,13 +197,13 @@ var jqGridForm = {
         { label: '아이디',				    name: 'userId',             align: 'center', width: 95 	},
         { label: '이름',				    name: 'userName',           align: 'center', width: 95, formatter: formatter.updModal},
         { label: '권한',				    name: 'roleDesc',           align: 'center', width: 100 },
-        { label: '소속',				    name: 'groupDesc',			align: 'left', width: 160 },
-        { label: '시스템 관리자',           name: 'isAdmin',            align: 'center', width: 100, formatter: formatter.isFormatter},
+        { label: '소속',				    name: 'groupDesc',		   align: 'left', width: 160 },
+        { label: '생년월일',			    name: 'birthDate',          align: 'center', width: 110 },
         { label: '전화번호',			    name: 'mobile',             align: 'center', width: 130 },
+        { label: '시스템 관리자',           name: 'isAdmin',            align: 'center', width: 100, formatter: formatter.isFormatter},
         { label: '개인정보<br>동의 여부',   name: 'isPermission',		align: 'center', width: 90, formatter: formatter.isFormatter},
         { label: '이메일',				    name: 'email',              align: 'center', width: 140 },
         { label: '주소',				    name: 'address',            align: 'center', width: 200 },
-        { label: '청년부 등록일',		    name: 'regDate',            align: 'center', width: 110 },
         { label: '알파날짜',			    name: 'alphaDate',          align: 'center', width: 110 },
         { label: '등반날짜',			    name: 'pastureJoinDate',    align: 'center', width: 110 },
         { label: '유저seq',			        name: 'userSeq',            align: 'center', width: 100, hidden: true, classes: 'noExl'},

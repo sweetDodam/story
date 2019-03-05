@@ -7,13 +7,6 @@ var userForm = {
         //그룹 셀렉트 박스 그리기
         _this.groupSelectLoad();
 
-        //권한 셀렉트 박스 그리기
-        common.comCodeSelectLoad("#UserForm .comCode", "N");
-
-        if(common.dataChk($("#formRoleId").val())) {
-            $("#roleId option[value=" + $("#formRoleId").val() + "]").prop("selected", true);
-        }
-
         //날짜 로드
         _this.datePickerLoad();
         
@@ -66,17 +59,6 @@ var userForm = {
         }).on('changeDate', function(e){
         });
 
-        $("#regDate").datepicker({
-            format: "yyyy-mm-dd(D)",
-            calendarWeeks: false, //몇째주인지 표시
-            autoclose: true,
-            todayHighlight: true,
-            language: "kr",
-            useCurrent: false,
-            endDate: new Date()
-        }).on('changeDate', function(e){
-        });
-
         $("#alphaDate").datepicker({
             format: "yyyy-mm-dd(D)",
             calendarWeeks: false, //몇째주인지 표시
@@ -98,25 +80,6 @@ var userForm = {
             endDate: new Date()
         }).on('changeDate', function(e){
         });
-
-        //오늘 날짜
-        var today = new Date();
-        var year = today.getFullYear();
-        var month = today.getMonth()+1;
-        var date = today.getDate();
-
-        if(month < 10){
-            month = "0" + month;
-        }
-        if(date < 10){
-            date = "0" + date;
-        }
-        var date = year + "-" + month + "-" + date;
-
-    /*    $("#birthDate").datepicker("setDate", date);
-        $("#regDate").datepicker("setDate", date);
-        $("#alphaDate").datepicker("setDate", date);
-        $("#pastureJoinDate").datepicker("setDate", date);*/
     },
     passwordReset : function(){
         var url = "/services/user/passwordUpdate";
@@ -172,7 +135,6 @@ var userForm = {
         }
 
         formData.set("birthDate", $("#birthDate").val().replace(/[^0-9]/g, ""));
-        formData.set("regDate", $("#regDate").val().replace(/[^0-9]/g, ""));
         formData.set("alphaDate", $("#alphaDate").val().replace(/[^0-9]/g, ""));
         formData.set("pastureJoinDate", $("#pastureJoinDate").val().replace(/[^0-9]/g, ""));
 

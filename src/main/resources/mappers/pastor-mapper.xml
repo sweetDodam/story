@@ -14,9 +14,12 @@
         ,A.etc
         ,FN_DATE_FORMAT(A.create_date) as create_date
         ,FN_DATE_FORMAT(A.update_date) as update_date
-        ,B.user_name
+        ,B.user_name as create_user
+        ,C.user_name as update_user
+
         from ch_story_pastor A
-        left join ch_user B on A.pastor_id = B.user_id
+        left join ch_user B on A.create_user = B.user_id
+        left join ch_user C on A.update_user = C.user_id
 
         where 1=1
 
@@ -65,8 +68,19 @@
 
     <select id="getStory" resultType="net.healingchurch.story.domain.PastorStory" parameterType="int">
         /*  PastorStoryMapper.getStory  */
-        select * from ch_story_pastor
-        where story_id = #{value}
+        select
+         A.story_id
+        ,A.pastor_id
+        ,A.visit_user_id
+        ,FN_DATE_FORMAT(A.visit_date) as visit_date
+        ,A.visit_place
+        ,A.summary
+        ,A.prayers
+        ,A.etc
+        ,FN_DATE_FORMAT(A.create_date) as create_date
+        ,FN_DATE_FORMAT(A.update_date) as update_date
+        from ch_story_pastor A
+        where A.story_id = #{value}
     </select>
 
     <insert id="createStory" parameterType="net.healingchurch.story.domain.PastorStory"
@@ -75,7 +89,7 @@
         insert into ch_story_pastor (pastor_id, visit_user_id, visit_date, visit_place, summary, prayers, etc, create_date, create_user)
         VALUES
         (
-            #{pastorId},
+            #{loginUserId},
             #{visitUserId},
             STR_TO_DATE(#{visitDate}, '%Y%m%d'),
             #{visitPlace},
@@ -93,6 +107,7 @@
         update ch_story_pastor
         set
              visit_place = #{visitPlace}
+            ,visit_date = STR_TO_DATE(#{visitDate}, '%Y%m%d')
             ,summary = #{summary}
             ,prayers = #{prayers}
             ,etc = #{etc}
@@ -147,7 +162,7 @@
         and     @pv := concat(@pv, ',', X.group_id)) B on B.group_id = A.group_id
         left join ch_user_role C on C.role_id = A.role_id
         <if test="visitDate!='' and visitDate!=null">
-            left join ch_story_pastor D on D.visit_user_id = A.user_id and D.pastor_id = #{pastorId} and DATE_FORMAT(D.visit_date, '%Y%m%d')  = #{visitDate}
+            left join ch_story_pastor D on D.visit_user_id = A.user_id and DATE_FORMAT(D.visit_date, '%Y%m%d') BETWEEN str_to_date(#{visitDate}, '%Y%m%d') and  date_add(str_to_date(#{visitDate}, '%Y%m%d'), interval + 6 day)
             left join ch_user_reserve E on A.user_id = E.user_id
         </if>
         where 1=1
@@ -157,6 +172,7 @@
         <if test="userId!='' and userId!=null">and A.user_id = #{userId}</if>
         <if test="userName!='' and userName!=null">and A.user_name like concat('%', #{userName}, '%')</if>
         <if test="isReserve!='' and isReserve!=null">and E.user_id is not null</if>
+        <if test="isConfirm!='' and isConfirm!=null">and D.story_id is not null</if>
 
         order by A.user_name
 
@@ -179,7 +195,7 @@
         and     @pv := concat(@pv, ',', X.group_id)) B on B.group_id = A.group_id
         left join ch_user_role C on C.role_id = A.role_id
         <if test="visitDate!='' and visitDate!=null">
-            left join ch_story_pastor D on D.visit_user_id = A.user_id and D.pastor_id = #{pastorId} and DATE_FORMAT(D.visit_date, '%Y%m%d')  = #{visitDate}
+            left join ch_story_pastor D on D.visit_user_id = A.user_id and DATE_FORMAT(D.visit_date, '%Y%m%d') BETWEEN str_to_date(#{visitDate}, '%Y%m%d') and  date_add(str_to_date(#{visitDate}, '%Y%m%d'), interval + 6 day)
             left join ch_user_reserve E on A.user_id = E.user_id
         </if>
         where 1=1
@@ -189,5 +205,6 @@
         <if test="userId!='' and userId!=null">and A.user_id = #{userId}</if>
         <if test="userName!='' and userName!=null">and A.user_name like concat('%', #{userName}, '%')</if>
         <if test="isReserve!='' and isReserve!=null">and E.user_id is not null</if>
+        <if test="isConfirm!='' and isConfirm!=null">and D.story_id is not null</if>
     </select>
 </mapper>

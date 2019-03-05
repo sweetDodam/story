@@ -253,6 +253,7 @@ var common = {
 
         $.ajax({
             type: 'GET',
+            type: 'GET',
             url: '/services/menu/childList',
             contentType: 'application/json',
             async : false,
@@ -301,7 +302,7 @@ var common = {
 
         return rs;
     },
-    comCodeSelectLoad: function(selector, firstOption){
+    comCodeSelectLoad: function(selector, firstOption, optionTxt){
         //불참 사유 셀렉트박스 옵션 그리기
         $(selector).each(function(){
             var optionFlag = common.dataChk(firstOption) ? firstOption : "Y";
@@ -313,8 +314,10 @@ var common = {
             var comCode = common.comCodeData(parentCodeId);
 
             if(optionFlag == "Y"){
+                optionTxt = common.dataChk(optionTxt) ? optionTxt : '선택';
+
                 //디폴트 값 추가
-                var option = "<option value=''>선택</option>";
+                var option = "<option value=''>" + optionTxt + "</option>";
                 $(this).append(option);
             }
 
@@ -344,26 +347,29 @@ var common = {
         // 그리드의 width 초기화
         $(gridId).setGridWidth( resizeWidth, true);
     },
-    calculateSundayDate : function(getDate, after){
+    /**
+     * 기본 0 (일요일)
+     * 1 : 월, 2: 화...
+     * */
+    calculateSundayDate : function(getDate, after, setDay){
         var year = getDate.getFullYear();
         var month = getDate.getMonth()+1;
         var date = getDate.getDate();
         var dayLabel = getDate.getDay();
 
-        //평일이라면 과거 일요일로
-        if(dayLabel < 7){
-            var toSunday = new Date(year, (month-1), date);
+        setDay = (setDay != null) ? setDay : 0;
 
-            if(after){
-                toSunday.setDate(toSunday.getDate() + (7 - dayLabel));
-            }else{
-                toSunday.setDate(toSunday.getDate() - dayLabel);
-            }
+        var toSunday = new Date(year, (month-1), date);
 
-            year = toSunday.getFullYear();
-            month = toSunday.getMonth()+1;
-            date = toSunday.getDate();
+        if(after){
+            toSunday.setDate(toSunday.getDate() + (7 - dayLabel - setDay));
+        }else{
+            toSunday.setDate(toSunday.getDate() - (dayLabel - setDay));
         }
+
+        year = toSunday.getFullYear();
+        month = toSunday.getMonth()+1;
+        date = toSunday.getDate();
 
         if(month < 10){
             month = "0" + month;
@@ -379,6 +385,13 @@ var common = {
     },
     unComma: function(str){
         return str.toString().replace(/,/gi, "");
+    },
+    parseYMD : function (str) {
+        var y = str.substr(0, 4);
+        var m = str.substr(4, 2);
+        var d = str.substr(6, 2);
+
+        return new Date(y,m-1,d);
     }
 };
 common.init();

@@ -204,9 +204,9 @@ var commonCode = {
         formData.set("codeId", $("#newCodeId").val());
         formData.set("sortIdx", $("#newSortIdx").val());
 
-        //하위 코드으로 추가했다면
+        //하위 코드로 추가했다면
         if(lowFlag){
-            txt = "하위 코드으로 추가";
+            txt = "하위 코드로 추가";
             codeLevel += 1;
 
             if(codeLevel > 2){
@@ -230,7 +230,7 @@ var commonCode = {
         }).done(function(resultId) {
             alert(txt + '되었습니다.');
 
-            //하위 코드으로 추가했다면
+            //하위 코드로 추가했다면
             if(lowFlag){
                 //선택된 레벨의 그리드 재조회
                 var level = Number($("#codeLevel").val());

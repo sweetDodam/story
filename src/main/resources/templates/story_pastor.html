@@ -1,7 +1,7 @@
 <div class="col-md-12" th:with="groupFlag=${(formUserGroup == null || formUserGroup.getGroupId() == '') ? false : true}">
     <div class="card mb-5">
         <div class="card-header">
-            <i class="fas fa-table mr-1"></i>사역자 스토리 등록
+            <i class="fas fa-table mr-1"></i><span th:text="${menuInfo.getMenuName()}"></span>
         </div>
         <div class="card-body" >
             <form id="GridForm">
@@ -28,20 +28,19 @@
                         </div>
                     </div>
                     <div class="form-group ch-search-obj-r">
-                        <p class="my-2">목회자</p>
                         <div class="form-row">
-                            <div class="col-md-4 ch-group-pad-btm">
-                                <select class="form-control" id="pastorId" name="pastorId">
-                                    <option  th:each="list : ${pastorList}" th:value="${list.getUserId()}" th:text="${list.getUserName()}" th:attr="selected=${userInfo.getUserId() == list.getUserId() ? true : false}"></option>
-                                </select>
-                            </div>
                             <div class="col-md-4">
                                 <input type="text" id="visitDate" name="visitDate" class="form-control datePicker" readonly>
                                 <label class="calendar-icon" target="visitDate"></label>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="checkbox">
-                                    <p class="my-2 ch-chk-label"><input type="checkbox" name="isReserve" id="isReserve" value="Y" checked><label for="isReserve">심방 예정자만 보기</label></p>
+                                    <p class="my-2 ch-chk-label"><input type="checkbox" name="isReserve" id="isReserve" value=""><label for="isReserve">심방 예정자만 보기</label></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="checkbox">
+                                    <p class="my-2 ch-chk-label"><input type="checkbox" name="isConfirm" id="isConfirm" value=""><label for="isConfirm">심방 확인자만 보기</label></p>
                                 </div>
                             </div>
                         </div>

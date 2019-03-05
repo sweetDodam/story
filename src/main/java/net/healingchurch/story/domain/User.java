@@ -21,6 +21,8 @@ public class User {
     private String status;
     private String createDate;
     private String updateDate;
+    private String createUser;
+    private String updateUser;
     private boolean isPermission;
 
     private String fromDate;
@@ -183,6 +185,22 @@ public class User {
         this.updateDate = updateDate;
     }
 
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    public String getUpdateUser() {
+        return updateUser;
+    }
+
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
+    }
+
     public boolean getIsPermission() {
         return isPermission;
     }
@@ -303,6 +321,8 @@ public class User {
                 ", birthDate='" + birthDate + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", updateDate='" + updateDate + '\'' +
+                ", createUser='" + createUser + '\'' +
+                ", updateUser='" + updateUser + '\'' +
                 ", groupDesc='" + groupDesc + '\'' +
                 ", roleDesc='" + roleDesc + '\'' +
                 ", roleOrder='" + roleOrder + '\'' +

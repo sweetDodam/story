@@ -1,7 +1,7 @@
 <div class="col-md-12" th:with="groupFlag=${(formUserGroup == null || formUserGroup.getGroupId() == '') ? false : true}">
     <div class="card mb-5">
         <div class="card-header">
-            <i class="fas fa-table mr-1"></i>마을 스토리 조회
+            <i class="fas fa-table mr-1"></i><span th:text="${menuInfo.getMenuName()}"></span>
         </div>
         <div class="card-body" >
             <form id="GridForm">

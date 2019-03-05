@@ -145,7 +145,7 @@ select[readonly=readonly], .datePicker{
 }
 
 .datepicker table tr td.disabled, .datepicker table tr td.disabled:hover{
-    color: #999999 !important;
+    color: #CCCCCC !important;
 }
 
 .ch-group-pad-btm{
@@ -441,4 +441,20 @@ tr[aria-selected=true]{
 input[type=checkbox]{
     position: relative;
     top: 1.5px;
+}
+
+.spanVertical{
+    padding-right: 5px;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-weight: bold;
+}
+
+
+.btm-search-5{
+    bottom: -5px;
+}
+
+.btm-search-10{
+    bottom: -10px;
 }

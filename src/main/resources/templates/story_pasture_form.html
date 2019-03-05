@@ -41,8 +41,10 @@
                     <p class="my-2 ch-chk-label"><label id="worshipRequired" class="required-icon" th:style="${registFlag || formStory.getWorshipYn().toString() == '0' ? 'display: ;' : 'display: none;'}">※</label>예배 불참 사유</p>
                     <div class="ch-group-pad-btm">
                         <select class="form-control comCode" id="worshipReason" name="worshipReason" parentCodeId="WORSHIP_REASON" th:attr="readonly=${registFlag || formStory.getWorshipYn().toString() == '0' ? 'false' : 'true'}
-                                                                                                                                           ,required=${registFlag || formStory.getWorshipYn().toString() == '0' ? 'true' : 'false'}
-                                                                                                                                           ,selVal=${registFlag ? '' : formStory.getWorshipReason()}"></select>
+                                                                                                                                           ,required=${registFlag || formStory.getWorshipYn().toString() == '0' ? 'true' : 'false'}">
+                            <option value="">선택</option>
+                            <option th:each="list, i : ${worshipList}" th:value="${list.getCodeName()}" th:text="${list.getDescription()}" th:attr="selected=${(!registFlag && formStory.getWorshipReason() == list.getCodeName()) ? 'selected' : 'false'}"></option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -61,7 +63,9 @@
                     <div class="ch-group-pad-btm">
                         <select class="form-control comCode" id="leaderReason" name="leaderReason" parentCodeId="LEADER_REASON" th:attr="readonly=${registFlag || formStory.getLeaderYn().toString() == '0' ? 'false' : 'true'}
                                                                                                                                         ,required=${registFlag || formStory.getLeaderYn().toString() == '0' ? 'true' : 'false'}
-                                                                                                                                        ,selVal=${registFlag ? '' : formStory.getLeaderReason()}"></select>
+                                                                                                                                        ,selVal=${registFlag ? '' : formStory.getLeaderReason()}">
+                            <option th:each="list, i : ${leaderList}" th:value="${list.getCodeName()}" th:text="${list.getDescription()}" th:attr="selected=${(!registFlag && formStory.getLeaderReason() == list.getCodeName()) ? 'selected' : 'false'}"></option>
+                        </select>
                     </div>
                 </div>
             </div>

@@ -4,11 +4,6 @@ var storyPastureList = {
 
         console.log("storyPastureList init");
 
-        //권한 셀렉트 박스 그리기
-        common.comCodeSelectLoad(".comCode");
-        //관리자, 목회자 제외
-        $('[parentCodeId=USER_ROLE]').children("[value=1], [value=2]").remove();
-
         //그룹 셀렉트 박스 그리기
         _this.groupSelectLoad();
 
@@ -197,7 +192,6 @@ var jqGridForm = {
         { label: '소속',    	    name: 'groupDesc',          align: 'left', width: 250     },
         { label: '전화번호',    	name: 'mobile',             align: 'center', width: 180 	},
         { label: '이메일',      	name: 'email',              align: 'center', width: 200 	},
-        { label: '청년부 등록일',	name: 'regDate',            align: 'center', width: 180 	},
         { label: '알파날짜',    	name: 'alphaDate',          align: 'center', width: 180 	},
         { label: '등반날짜',    	name: 'pastureJoinDate',    align: 'center', width: 180 	},
         { label: 'userSeq',		    name: 'userSeq',            align: 'center', width: 100,	hidden: true },

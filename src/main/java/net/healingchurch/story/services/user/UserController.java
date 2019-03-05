@@ -29,9 +29,12 @@ public class UserController {
                                    @RequestParam(value = "isAdmin", defaultValue = "false") boolean isAdmin,
                                    @RequestParam(value = "alphaDate", defaultValue = "") String alphaDate,
                                    @RequestParam(value = "pastureJoinDate", defaultValue = "") String pastureJoinDate,
+                                   @RequestParam(value = "isPermission", defaultValue = "false") boolean isPermission,
+                                   @RequestParam(value = "status", defaultValue = "") String status,
+                                   @RequestParam(value = "birthDate", defaultValue = "") String birthDate,
                                    @RequestParam(value = "page", defaultValue = "0") int page,
                                     @RequestParam(value = "limit", defaultValue = "20") int limit) {
-        return userService.findUserList(userId, roleId, groupId, userName, isAdmin, alphaDate, pastureJoinDate, page, limit);
+        return userService.findUserList(userId, roleId, groupId, userName, isAdmin, alphaDate, pastureJoinDate, isPermission, status, birthDate, page, limit);
     }
 
     @GetMapping("get")

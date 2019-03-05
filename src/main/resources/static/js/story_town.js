@@ -209,7 +209,6 @@ var jqGridForm = {
         { label: '소속',    	    name: 'groupDesc',          align: 'left', width: 115 },
         { label: '전화번호',    	name: 'mobile',             align: 'center', width: 100 	},
         { label: '이메일',      	name: 'email',              align: 'center', width: 120 	},
-        { label: '청년부 등록일',	name: 'regDate',            align: 'center', width: 130 	},
         { label: '알파날짜',    	name: 'alphaDate',          align: 'center', width: 100 	},
         { label: '등반날짜',    	name: 'pastureJoinDate',    align: 'center', width: 100 	},
         { label: 'userSeq',		    name: 'userSeq',            hidden: true},

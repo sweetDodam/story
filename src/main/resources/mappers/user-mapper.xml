@@ -51,9 +51,11 @@
         <if test="roleId!='' and roleId!=null">and A.role_id = #{roleId}</if>
         <if test="userName!='' and userName!=null">and A.user_name like concat('%', #{userName}, '%')</if>
         <if test="isAdmin!='' and isAdmin!=null">and A.is_admin = #{isAdmin} </if>
-        <if test="alphaDate!='' and alphaDate!=null">and A.alpha_date = #{alphaDate}</if>
-        <if test="pastureJoinDate!='' and pastureJoinDate!=null">and A.pasture_join_date = #{pastureJoinDate}</if>
+        <if test="alphaDate!='' and alphaDate!=null">and and DATE_FORMAT(A.alpha_date, '%Y%m%d') = STR_TO_DATE(#{alphaDate}, '%Y%m')</if>
+        <if test="pastureJoinDate!='' and pastureJoinDate!=null">and DATE_FORMAT(A.pasture_join_date, '%Y%m') = STR_TO_DATE(#{pastureJoinDate}, '%Y%m')</if>
         <if test="isPermission!='' and isPermission!=null">and A.is_permission = #{isPermission} </if>
+        <if test="status!='' and status!=null">and A.status = #{status} </if>
+        <if test="birthDate!='' and birthDate!=null">and DATE_FORMAT(A.birth_date, '%Y%m') = STR_TO_DATE(#{birthDate}, '%Y%m')</if>
 
         order by A.user_name
 
@@ -88,9 +90,11 @@
         <if test="roleId!='' and roleId!=null">and A.role_id = #{roleId}</if>
         <if test="userName!='' and userName!=null">and A.user_name like concat('%', #{userName}, '%')</if>
         <if test="isAdmin!='' and isAdmin!=null">and A.is_admin = #{isAdmin} </if>
-        <if test="alphaDate!='' and alphaDate!=null">and A.alpha_date = #{alphaDate}</if>
-        <if test="pastureJoinDate!='' and pastureJoinDate!=null">and A.pasture_join_date = #{pastureJoinDate}</if>
+        <if test="alphaDate!='' and alphaDate!=null">and and DATE_FORMAT(A.alpha_date, '%Y%m%d') = STR_TO_DATE(#{alphaDate}, '%Y%m')</if>
+        <if test="pastureJoinDate!='' and pastureJoinDate!=null">and DATE_FORMAT(A.pasture_join_date, '%Y%m') = STR_TO_DATE(#{pastureJoinDate}, '%Y%m')</if>
         <if test="isPermission!='' and isPermission!=null">and A.is_permission = #{isPermission} </if>
+        <if test="status!='' and status!=null">and A.status = #{status} </if>
+        <if test="birthDate!='' and birthDate!=null">and DATE_FORMAT(A.birth_date, '%Y%m') = STR_TO_DATE(#{birthDate}, '%Y%m')</if>
 
     </select>
 
@@ -189,6 +193,7 @@
             <otherwise>
                 is_admin = #{isAdmin}
                 ,is_permission = #{isPermission}
+                ,status = #{status}
                 ,update_date = now()
                 ,update_user = #{loginUserId}
                 <if test="userName!='' and userName!=null">,user_name = #{userName}</if>
@@ -201,7 +206,6 @@
                 <if test="regDate!='' and regDate!=null">,reg_date = STR_TO_DATE(#{regDate}, '%Y%m%d')</if>
                 <if test="alphaDate!='' and alphaDate!=null">,alpha_date = STR_TO_DATE(#{alphaDate}, '%Y%m%d')</if>
                 <if test="pastureJoinDate!='' and pastureJoinDate!=null">,pasture_join_date = STR_TO_DATE(#{pastureJoinDate}, '%Y%m%d')</if>
-                <if test="status!='' and status!=null">,status = #{status}</if>
             </otherwise>
         </choose>
         where user_id = #{userId}

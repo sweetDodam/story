@@ -7,10 +7,7 @@
 <div class="modal-body" th:with="registFlag=${(formStory == null || formStory.getStoryId() == '') ? true : false}">
     <form id="StoryForm" th:action="@{registFlag ? /services/story/pastor/create : /services/story/pastor/update}" method="POST">
         <input type="hidden" id="visitUserId" name="visitUserId" th:value="${formUser.getUserId()}"/>
-        <input type="hidden" id="pastorId" name="pastorId" th:value="${formPastorId}"/>
-        <input type="hidden" id="visitDate" name="visitDate" th:value="${formVisitDate}"/>
         <input type="hidden" id="storyId" name="storyId" th:value="${registFlag ? '' :formStory.getStoryId()}"/>
-        <input type="hidden" id="myUserId" name="myUserId" th:value="${userInfo.getUserId()}"/>
 
         <div class="form-group ch-group-pad-btm">
             <div class="form-row">
@@ -29,10 +26,20 @@
             </div>
         </div>
         <div class="form-group">
+            <div class="form-row ch-txt-align-r">
+                <span class="spanVertical" style="width: calc(35% - 10px)">심방날짜 : </span>
+                <div class="col-md-6" style="width: calc(55% - 10px)">
+                    <input type="text" id="visitDtlDate" name="visitDtlDate" class="form-control datePicker" readonly th:value="${registFlag ? '' : formStory.getVisitDate()}" required="required">
+                    <label class="calendar-icon" target="visitDtlDate"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
             <div class="checkbox">
                 <p class="my-2 ch-chk-label">심방장소</p>
                 <textarea class="form-control" id="visitPlace" name="visitPlace" th:utext="${registFlag ? '' : formStory.getVisitPlace()}" style="height:50px;"></textarea>
             </div>
+        </div>
         <div class="form-group">
             <div class="checkbox">
                 <p class="my-2 ch-chk-label">심방내용</p>
@@ -57,5 +64,11 @@
         <a class="btn btn-primary bg-ch-blue txt-ch-white" onclick="storyPastorForm.delete();" th:if="${!registFlag}">삭제</a>
     </div>
 </div>
+
+<script th:inline="javascript">
+    /* <![CDATA[ */
+    var formVisitDate = /*[[${formVisitDate}]]*/;
+    /* ]]> */
+</script>
 
 <script src="../../js/story_pastor_form.js"></script>

@@ -3,6 +3,14 @@ var storyPastorForm = {
         var _this = this;
 
         console.log("storyPastorForm init");
+
+        _this.datePickerLoad();
+
+        //달력아이콘 click 이벤트
+        $('.modal-body .calendar-icon').click(function(){
+            var target = $(this).attr("target");
+            $("#" + target).datepicker().focus();
+        });
     },
     save : function () {
         //필수체크 검사
@@ -12,23 +20,20 @@ var storyPastorForm = {
 
         var form = $("#StoryForm")[0];
         var formData = new FormData(form);
-
         var url = "/services/story/pastor/create";
         var txt = "등록";
-        var txt2 = "";
 
         if(common.dataChk($("#storyId").val())){
             url = "/services/story/pastor/update";
             txt = "수정";
         }
 
-        if($("#myUserId").val() != $("#pastorId").val()){
-            txt2 = "다른 목회자의 스토리입니다. ";
-        }
-
-        if(!confirm(txt2 + txt + "하시겠습니까?")){
+        if(!confirm(txt + "하시겠습니까?")){
             return;
         }
+
+        formData.set("visitDate", $("#visitDtlDate").val().replace(/[^0-9]/g, ""));
+
         $.ajax({
             type: 'POST',
             url: url,
@@ -53,16 +58,10 @@ var storyPastorForm = {
     delete : function () {
         var form = $("#StoryForm")[0];
         var formData = new FormData(form);
-
         var url = "/services/story/pastor/remove";
         var txt = "삭제";
-        var txt2 = "";
 
-        if($("#myUserId").val() != $("#pastorId").val()){
-            txt2 = "다른 목회자의 스토리입니다. ";
-        }
-
-        if(!confirm(txt2 + txt + "하시겠습니까?")){
+        if(!confirm(txt + "하시겠습니까?")){
             return;
         }
 
@@ -85,6 +84,23 @@ var storyPastorForm = {
         }).fail(function (error) {
             console.debug(txt + "실패");
             alert("관리자에게 문의하거나 다시 시도해주세요.");
+        });
+    },
+    datePickerLoad : function () {
+        var startDate = common.parseYMD(formVisitDate);
+        var endDate = common.parseYMD(formVisitDate);
+        endDate.setDate(startDate.getDate() + 6);
+
+        $("#visitDtlDate").datepicker({
+            format: "yyyy-mm-dd(D)",
+            calendarWeeks: false, //몇째주인지 표시
+            autoclose: true,
+            todayHighlight: true,
+            language: "kr",
+            useCurrent: false,
+            startDate: startDate,
+            endDate: endDate
+        }).on('changeDate', function(e){
         });
     }
 };

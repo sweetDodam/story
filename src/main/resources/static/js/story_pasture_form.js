@@ -4,9 +4,6 @@ var storyPastureForm = {
 
         console.log("storyPastureForm init");
 
-        //불참 사유 셀렉트박스 옵션 그리기
-        common.comCodeSelectLoad(".comCode");
-
         //예배 참석 여부
         $("input[name=worshipYn]").on('change', function () {
             //참석일 경우 비활성화

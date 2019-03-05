@@ -230,7 +230,6 @@ var storyPasture = {
             $("#jqGridDtl").setGridHeight( $(".modal-body").height() * 0.92);
         }
 
-
         //해당 그리드 데이터 가져오기
         $("#jqGridDtl").jqGrid('clearGridData');
         $("#jqGridDtl").jqGrid('setGridParam', { data: $("#jqGrid").getRowData() });

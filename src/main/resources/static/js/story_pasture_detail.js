@@ -73,6 +73,8 @@ var storyPastureDetail = {
                 }
                 $('#jqGridPop').jqGrid('footerData', 'set', sumData);
 
+                storyPastureDetail.setGridDtlData();
+
             },onPaging: function (pgButton) {
                 var gridPage = $("#jqGridPop").getGridParam("page");
                 var totalPage = $("#jqGridPop").getGridParam("total");
@@ -217,12 +219,9 @@ var storyPastureDetail = {
         });
     },
     setGridDtlData : function (rowId) {
-        //해당 그리드 데이터 가져오기
-        var data = new Array();
-        data.push($("#jqGridPop").getRowData(rowId));
-
+        //그리드 데이터 가져오기
         $("#jqGridPopDtl").jqGrid('clearGridData');
-        $("#jqGridPopDtl").jqGrid('setGridParam', { data: data });
+        $("#jqGridPopDtl").jqGrid('setGridParam', { data: $("#jqGridPop").getRowData() });
         $("#jqGridPopDtl").trigger("reloadGrid");
     }
 };
@@ -270,7 +269,6 @@ var jqGridPopForm = {
         { label: '성경',				    name: 'bibleCount',			align: 'center', width: 100,    index:'bibleCount',               summaryType:'sum'       },
         { label: 'QT',    			        name: 'qtCount',          	align: 'center', width: 100,    index:'qtCount',                  summaryType:'sum'       },
         { label: '새벽기도',    		    name: 'dawnPrayCount',   	align: 'center', width: 100,    index:'dawnPrayCount',            summaryType:'sum'       },
-        { label: '상세',       		        name: 'dtl',               	align: 'center', width: 50, 	formatter: popFormatter.dtlModal},
         { label: '기도제목',                name: 'prayers',            align: 'center', width: 100,	hidden: true	},
         { label: '기타사항',                name: 'etc',            	align: 'center', width: 100,	hidden: true	},
         { label: '아이디',      		    name: 'userId',             align: 'center', width: 75,		hidden: true	},

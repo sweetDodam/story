@@ -26,12 +26,6 @@
                     <input type="text" id="toDate" name="toDate" class="form-control datePicker toDate notClear" readonly>
                     <label class="calendar-icon" target="toDate"></label>
                 </div>
-                <div class="form-label-group ch-mgn-5r">
-                    <select class="form-control" id="pastorId" name="pastorId">
-                        <option  value="">전체</option>
-                        <option  th:each="list : ${pastorList}" th:value="${list.getUserId()}" th:text="${list.getUserName()}"></option>
-                    </select>
-                </div>
                 <div class="btn-modal-right ch-mgn-10r">
                     <a class="btn btn-primary bg-ch-blue txt-ch-white txt-ch-size-middle ch-mgn-5r" onclick="storyPastorDetail.gridSearch();">조회</a>
                     <a class="btn btn-primary bg-ch-blue txt-ch-white txt-ch-size-middle ch-mgn-10r" onclick="storyPastorDetail.searchClear()">초기화</a>

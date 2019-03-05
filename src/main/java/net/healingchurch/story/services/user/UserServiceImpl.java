@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public Map<Object, Object> findUserList(String userId, int roleId, int groupId, String userName, boolean isAdmin, String alphaDate, String pastureJoinDate, int page, int limit) {
+    public Map<Object, Object> findUserList(String userId, int roleId, int groupId, String userName, boolean isAdmin, String alphaDate, String pastureJoinDate, boolean isPermission, String status, String birthDate, int page, int limit) {
         User user = new User();
 
         user.setPage(page);
@@ -38,6 +38,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setIsAdmin(isAdmin);
         user.setAlphaDate(alphaDate);
         user.setPastureJoinDate(pastureJoinDate);
+        user.setIsPermission(isPermission);
+        user.setStatus(status);
+        user.setBirthDate(birthDate);
 
         Map<Object, Object> resutMap = new HashMap<>();
 

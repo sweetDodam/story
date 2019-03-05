@@ -1,7 +1,7 @@
 <div class="col-md-12">
     <div class="card mb-5">
         <div class="card-header">
-            <i class="fas fa-table mr-1"></i>사용자 관리
+            <i class="fas fa-table mr-1"></i><span th:text="${menuInfo.getMenuName()}"></span>
             <button type="button" class="btn btn-primary btn-right btn-custom saveUserModalBtn" data-toggle="modal" data-target="#saveUserModal">사용자 등록</button>
         </div>
         <div class="card-body">
@@ -25,7 +25,10 @@
                         <p class="my-2">권한</p>
                         <div class="form-row">
                             <div class="col-md-4 ch-group-pad-btm">
-                                <select class="form-control comCode" id="sRoleId" name="roleId" parentCodeId="USER_ROLE"></select>
+                                <select class="form-control comCode" id="sRoleId" name="roleId">
+                                    <option value="">선택</option>
+                                    <option th:each="list, i : ${roleList}" th:value="${list.getCodeName()}" th:text="${list.getDescription()}"></option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -41,28 +44,38 @@
                                 <input type="text" class="form-control" id="sUserId" name="userId">
                                 <label for="sUserId">아이디</label>
                             </div>
+                            <div class="form-label-group col-md-4">
+                                <select class="form-control comCode" id="sStatus" name="status">
+                                    <option value="">상태 선택</option>
+                                    <option th:each="list, i : ${statusList}" th:value="${list.getCodeName()}" th:text="${list.getDescription()}"></option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group ch-search-obj-r" >
-                        <div class="form-row btn-right">
-                            <a class="btn btn-primary bg-ch-blue txt-ch-white txt-ch-size-middle ch-mgn-5r" onclick="user.gridSearch();">조회</a>
-                            <a class="btn btn-primary bg-ch-blue txt-ch-white txt-ch-size-middle ch-mgn-10r" onclick="user.searchClear()">초기화</a>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <div class="table-responsive" >
-                <table id="jqGrid" class="table table-bordered"></table>
-                <div id="pager"></div>
-            </div>
-        </div>
-    </div>
+                     <!--   <div class="form-row">
+                            <div class="col-md-4"> -->
+                                <div class="form-row btn-right">
+                                    <a class="btn btn-primary bg-ch-blue txt-ch-white txt-ch-size-middle ch-mgn-5r" onclick="user.gridSearch();">조회</a>
+                                    <a class="btn btn-primary bg-ch-blue txt-ch-white txt-ch-size-middle ch-mgn-10r" onclick="user.searchClear()">초기화</a>
+                                </div>
+                        <!-- </div>
+                   </div> -->
+               </div>
+           </div>
+       </form>
+       <div class="table-responsive" >
+           <table id="jqGrid" class="table table-bordered"></table>
+           <div id="pager"></div>
+       </div>
+   </div>
+</div>
 </div>
 
 <script th:inline="javascript">
-    /* <![CDATA[ */
-    var menuId = /*[[${menuInfo.getMenuId()}]]*/;
-    /* ]]> */
+/* <![CDATA[ */
+var menuId = /*[[${menuInfo.getMenuId()}]]*/;
+/* ]]> */
 </script>
 
 <!-- 사용자 추가/수정 모달 영역 -->
