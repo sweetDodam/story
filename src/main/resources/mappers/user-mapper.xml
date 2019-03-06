@@ -12,7 +12,6 @@
         ,A.group_id
         ,A.user_name
         ,A.is_admin
-
         ,A.address
         ,A.mobile
         ,A.email
@@ -51,11 +50,22 @@
         <if test="roleId!='' and roleId!=null">and A.role_id = #{roleId}</if>
         <if test="userName!='' and userName!=null">and A.user_name like concat('%', #{userName}, '%')</if>
         <if test="isAdmin!='' and isAdmin!=null">and A.is_admin = #{isAdmin} </if>
-        <if test="alphaDate!='' and alphaDate!=null">and and DATE_FORMAT(A.alpha_date, '%Y%m%d') = STR_TO_DATE(#{alphaDate}, '%Y%m')</if>
-        <if test="pastureJoinDate!='' and pastureJoinDate!=null">and DATE_FORMAT(A.pasture_join_date, '%Y%m') = STR_TO_DATE(#{pastureJoinDate}, '%Y%m')</if>
-        <if test="isPermission!='' and isPermission!=null">and A.is_permission = #{isPermission} </if>
+        <if test="alphaDate!='' and alphaDate!=null">and and DATE_FORMAT(A.alpha_date, '%Y%m%d') = #{alphaDate}</if>
+        <if test="pastureJoinDate!='' and pastureJoinDate!=null">and DATE_FORMAT(A.pasture_join_date, '%Y%m') = #{pastureJoinDate}</if>
         <if test="status!='' and status!=null">and A.status = #{status} </if>
-        <if test="birthDate!='' and birthDate!=null">and DATE_FORMAT(A.birth_date, '%Y%m') = STR_TO_DATE(#{birthDate}, '%Y%m')</if>
+        <if test="birthDate!='' and birthDate!=null">and DATE_FORMAT(A.birth_date, '%Y%m') = #{birthDate}</if>
+        <if test="searchPermission!='' and searchPermission!=null">
+            <choose>
+                <when test='searchPermission == "Y"'>
+                    and A.is_permission  = 1
+                </when>
+                <when test='searchPermission == "N"'>
+                    and A.is_permission  = 0
+                </when>
+                <otherwise>
+                </otherwise>
+            </choose>
+        </if>
 
         order by A.user_name
 
@@ -90,11 +100,22 @@
         <if test="roleId!='' and roleId!=null">and A.role_id = #{roleId}</if>
         <if test="userName!='' and userName!=null">and A.user_name like concat('%', #{userName}, '%')</if>
         <if test="isAdmin!='' and isAdmin!=null">and A.is_admin = #{isAdmin} </if>
-        <if test="alphaDate!='' and alphaDate!=null">and and DATE_FORMAT(A.alpha_date, '%Y%m%d') = STR_TO_DATE(#{alphaDate}, '%Y%m')</if>
-        <if test="pastureJoinDate!='' and pastureJoinDate!=null">and DATE_FORMAT(A.pasture_join_date, '%Y%m') = STR_TO_DATE(#{pastureJoinDate}, '%Y%m')</if>
-        <if test="isPermission!='' and isPermission!=null">and A.is_permission = #{isPermission} </if>
+        <if test="alphaDate!='' and alphaDate!=null">and and DATE_FORMAT(A.alpha_date, '%Y%m%d') = #{alphaDate}</if>
+        <if test="pastureJoinDate!='' and pastureJoinDate!=null">and DATE_FORMAT(A.pasture_join_date, '%Y%m') = #{pastureJoinDate}</if>
         <if test="status!='' and status!=null">and A.status = #{status} </if>
-        <if test="birthDate!='' and birthDate!=null">and DATE_FORMAT(A.birth_date, '%Y%m') = STR_TO_DATE(#{birthDate}, '%Y%m')</if>
+        <if test="birthDate!='' and birthDate!=null">and DATE_FORMAT(A.birth_date, '%Y%m') = #{birthDate}</if>
+        <if test="searchPermission!='' and searchPermission!=null">
+            <choose>
+                <when test='searchPermission == "Y"'>
+                    and A.is_permission  = 1
+                </when>
+                <when test='searchPermission == "N"'>
+                    and A.is_permission  = 0
+                </when>
+                <otherwise>
+                </otherwise>
+            </choose>
+        </if>
 
     </select>
 

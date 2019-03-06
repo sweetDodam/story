@@ -28,7 +28,7 @@ var userForm = {
         });
 
         //달력아이콘 click 이벤트
-        $('.calendar-icon').click(function(){
+        $('#UserForm .calendar-icon').click(function(){
             var target = $(this).attr("target");
             $("#" + target).datepicker().focus();
         });

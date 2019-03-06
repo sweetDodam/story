@@ -442,7 +442,7 @@ input[type=checkbox]{
     position: relative;
     top: 1.5px;
 }
-
+m
 .spanVertical{
     padding-right: 5px;
     margin-top: auto;
@@ -457,4 +457,11 @@ input[type=checkbox]{
 
 .btm-search-10{
     bottom: -10px;
+}
+
+.chk-row{
+    display: inline-block;
+    margin: 1px 3px 0px 10px !important;
+    height: 0px;
+    font-weight: normal !important;
 }

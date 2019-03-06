@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserService {
-    Map<Object, Object> findUserList(String userId, int roleId, int groupId, String userName, boolean isAdmin, String alphaDate, String pastureJoinDate, boolean isPermission, String status, String birthDate, int page, int limit);
+    Map<Object, Object> findUserList(String userId, int roleId, int groupId, String userName, boolean isAdmin, String alphaDate, String pastureJoinDate, String searchPermission, String status, String birthDate, int page, int limit);
 
     List<User> findUserSimpleList(String userId, int roleId, int groupId, String userName);
 

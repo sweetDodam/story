@@ -24,6 +24,7 @@ public class User {
     private String createUser;
     private String updateUser;
     private boolean isPermission;
+    private String searchPermission;
 
     private String fromDate;
     private String toDate;
@@ -209,6 +210,14 @@ public class User {
         this.isPermission = isPermission;
     }
 
+    public String getSearchPermission() {
+        return searchPermission;
+    }
+
+    public void setSearchPermission(String searchPermission) {
+        this.searchPermission = searchPermission;
+    }
+
     public String getGroupDesc() {
         return groupDesc;
     }
@@ -232,6 +241,7 @@ public class User {
     public void setRoleOrder(int roleOrder) {
         this.roleOrder = roleOrder;
     }
+
     public String getFromDate() {
         return fromDate;
     }
@@ -323,6 +333,8 @@ public class User {
                 ", updateDate='" + updateDate + '\'' +
                 ", createUser='" + createUser + '\'' +
                 ", updateUser='" + updateUser + '\'' +
+                ", isPermission='" + isPermission + '\'' +
+                ", searchPermission='" + searchPermission + '\'' +
                 ", groupDesc='" + groupDesc + '\'' +
                 ", roleDesc='" + roleDesc + '\'' +
                 ", roleOrder='" + roleOrder + '\'' +

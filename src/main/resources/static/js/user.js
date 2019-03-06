@@ -7,6 +7,9 @@ var user = {
         //그룹 셀렉트 박스 그리기
         _this.groupSelectLoad();
 
+        //날짜 로드
+        _this.datePickerLoad();
+
         //그리드 셋팅
         _this.gridLoad();
         _this.gridSearch();
@@ -32,6 +35,36 @@ var user = {
         $('.saveUserModalBtn').on('click', function () {
             var targetModal = $(this).attr("data-target");
             $(targetModal + " .modal-content").load("/user/form?", "menuId=" + menuId);
+        });
+
+        //달력아이콘 click 이벤트
+        $('#GridForm .calendar-icon').click(function(){
+            var target = $(this).attr("target");
+            $("#" + target).datepicker().focus();
+        });
+
+        //개인정보 동의 여부 [예]  체크박스 change 이벤트
+        $('#isPermissionY').on('change', function () {
+            if ($('#isPermissionY').is(":checked")) {
+                $('#isPermissionY').val('Y');
+
+                $('#isPermissionN').prop("checked", false);
+                $('#isPermissionN').val('');
+            } else {
+                $('#isPermissionY').val('');
+            }
+        });
+
+        //개인정보 동의 여부 [아니오] 체크박스 change 이벤트
+        $('#isPermissionN').on('change', function () {
+            if ($('#isPermissionN').is(":checked")) {
+                $('#isPermissionN').val('N');
+
+                $('#isPermissionY').prop("checked", false);
+                $('#isPermissionY').val('');
+            } else {
+                $('#isPermissionN').val('');
+            }
         });
 
         //모달 닫기 이벤트 실행시
@@ -167,12 +200,40 @@ var user = {
 
         //검색 조건 초기화
         $(".ch-search-area").find("input, select").not(".notClear").val("");
+        $(".ch-search-area").find("input").not(".notClear").prop("checked", false);
 
         //그룹 셀렉트 박스 초기화
         $('#GridForm .group-selectBox select').children().remove();
 
         //그룹 셀렉트 박스 그리기
         _this.groupSelectLoad();
+    },
+    datePickerLoad : function () {
+        $("#sPastureJoinDate").datepicker({
+            format: "yyyy-mm",
+            calendarWeeks: false, //몇째주인지 표시
+            autoclose: true,
+            todayHighlight: true,
+            language: "kr",
+            useCurrent: false,
+            endDate: new Date(),
+            minViewMode: 1,
+            startView : 1
+        }).on('changeDate', function(e){
+        });
+
+        $("#sBirthDate").datepicker({
+            format: "yyyy-mm",
+            calendarWeeks: false, //몇째주인지 표시
+            autoclose: true,
+            todayHighlight: true,
+            language: "kr",
+            useCurrent: false,
+            endDate: new Date(),
+            minViewMode: 1,
+            startView : 2
+        }).on('changeDate', function(e){
+        });
     }
 };
 
@@ -232,6 +293,10 @@ var jqGridForm = {
                 break;
             }
         }
+
+        data["birthDate"] = $("#sBirthDate").val().replace(/[^0-9]/g, "");
+        data["pastureJoinDate"] = $("#sPastureJoinDate").val().replace(/[^0-9]/g, "");
+        data["searchPermission"] = $("#isPermissionY").val() + $("#isPermissionN").val();
 
         return data;
     }
