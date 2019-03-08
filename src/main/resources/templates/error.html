@@ -25,6 +25,7 @@
         <div class="card-body">
             <div id="created"  style="margin: 10px;text-align: center;font-size: 9pt;padding-top: 30px;" th:text="${#dates.format(timestamp)}"></div>
             <div style="margin: 10px;text-align: center;font-weight: bold;padding-bottom: 30px;">
+                <span th:text="${errorMsg}"></span><br>
                 관리자에게 문의하거나 다시 시도해주세요.
             </div>
             <div class="text-center">
