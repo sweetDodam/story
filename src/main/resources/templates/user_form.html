@@ -109,7 +109,7 @@
                         <option value="">선택</option>
                         <option th:each="list, i : ${roleList}" th:value="${list.getCodeName()}"
                                 th:text="${list.getDescription()}"
-                                th:attr="selected=${(!registFlag && formUser.getRoleId() == list.getCodeName()) ? 'selected' : (registFlag && list.getCodeName() == '5') ? 'selected' : false}">
+                                th:attr="selected=${(!registFlag && formUser.getRoleId().toString() == list.getCodeName()) ? 'selected' : (registFlag && list.getCodeName() == '5') ? 'selected' : false}">
                         </option>
                     </select>
                 </div>
