@@ -77,7 +77,7 @@ var user = {
         $("#saveUserModal").on('shown.bs.modal', function(e){
             setTimeout(function() {
                 userForm.init();
-            }, 100);
+            }, 300);
         });
 
         //윈도우 resize 이벤트
