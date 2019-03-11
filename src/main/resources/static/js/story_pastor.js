@@ -231,6 +231,10 @@ var jqGridForm = {
         { label: '알파날짜',    	        name: 'alphaDate',          align: 'center', width: 100 	},
         { label: '등반날짜',    	        name: 'pastorJoinDate',    align: 'center', width: 100 	},
         { label: '심방예정자<br>등록일', 	name: 'inputDate',          align: 'center', width: 100 	},
+        { label: '등록자',    	            name: 'createUser',         align: 'center', width: 65, 	hidden: true },
+        { label: '등록일',       	        name: 'createDate',         align: 'center', width: 110, 	hidden: true },
+        { label: '수정자',    	            name: 'updateUser',         align: 'center', width: 65, 	hidden: true },
+        { label: '수정일',       	        name: 'updateDate',         align: 'center', width: 110, 	hidden: true },
         { label: 'userSeq',		        name: 'userSeq',            hidden: true},
         { label: '스토리아이디', 	        name: 'storyId',			  hidden: true },
         { label: '사역자ID',  	        name: 'pastorId',           hidden: true },
@@ -239,9 +243,7 @@ var jqGridForm = {
         { label: '소속ID',      	        name: 'groupId',            hidden: true },
         { label: '관리자여부',   	        name: 'isAdmin',            hidden: true },
         { label: '주소',        	        name: 'address',            hidden: true },
-        { label: '상태',        	        name: 'status',             hidden: true },
-        { label: '등록일',       	        name: 'createDate',         hidden: true },
-        { label: '수정일',       	        name: 'updateDate',         hidden: true }]
+        { label: '상태',        	        name: 'status',             hidden: true }]
     ,setParam : function(){
         var data = common.serializeObject($("#GridForm"));
 

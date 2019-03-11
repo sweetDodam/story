@@ -14,12 +14,12 @@
         ,A.etc
         ,FN_DATE_FORMAT(A.create_date) as create_date
         ,FN_DATE_FORMAT(A.update_date) as update_date
-        ,B.user_name as create_user
-        ,C.user_name as update_user
+        ,CU.user_name as create_user
+        ,UU.user_name as update_user
 
         from ch_story_pastor A
-        left join ch_user B on A.create_user = B.user_id
-        left join ch_user C on A.update_user = C.user_id
+        left join ch_user CU on A.create_user = CU.user_id
+        left join ch_user UU on A.update_user = UU.user_id
 
         where 1=1
 
@@ -79,7 +79,13 @@
         ,A.etc
         ,FN_DATE_FORMAT(A.create_date) as create_date
         ,FN_DATE_FORMAT(A.update_date) as update_date
+        ,CU.user_name as create_user
+        ,UU.user_name as update_user
+
         from ch_story_pastor A
+        left join ch_user CU on A.create_user = CU.user_id
+        left join ch_user UU on A.update_user = UU.user_id
+
         where A.story_id = #{value}
     </select>
 
@@ -150,6 +156,10 @@
             ,D.visit_user_id
             ,FN_DATE_FORMAT(D.visit_date) as visit_date
             ,FN_DATE_FORMAT(E.input_date) as input_date
+            ,FN_DATE_FORMAT(D.create_date) as create_date
+            ,FN_DATE_FORMAT(D.update_date) as update_date
+            ,CU.user_name as create_user
+            ,UU.user_name as update_user
         </if>
         from ch_user A
         inner join (select  	X.group_id,
@@ -164,6 +174,8 @@
         <if test="visitDate!='' and visitDate!=null">
             left join ch_story_pastor D on D.visit_user_id = A.user_id and DATE_FORMAT(D.visit_date, '%Y%m%d') BETWEEN str_to_date(#{visitDate}, '%Y%m%d') and  date_add(str_to_date(#{visitDate}, '%Y%m%d'), interval + 6 day)
             left join ch_user_reserve E on A.user_id = E.user_id
+            left join ch_user CU on D.create_user = CU.user_id
+            left join ch_user UU on D.update_user = UU.user_id
         </if>
         where 1=1
         and C.role_id not in (1, 2) /*   관리자, 목회자 제외  */
@@ -197,6 +209,8 @@
         <if test="visitDate!='' and visitDate!=null">
             left join ch_story_pastor D on D.visit_user_id = A.user_id and DATE_FORMAT(D.visit_date, '%Y%m%d') BETWEEN str_to_date(#{visitDate}, '%Y%m%d') and  date_add(str_to_date(#{visitDate}, '%Y%m%d'), interval + 6 day)
             left join ch_user_reserve E on A.user_id = E.user_id
+            left join ch_user CU on D.create_user = CU.user_id
+            left join ch_user UU on D.update_user = UU.user_id
         </if>
         where 1=1
         and C.role_id not in (1, 2) /*   관리자, 목회자 제외  */
