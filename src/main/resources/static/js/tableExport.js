@@ -641,8 +641,6 @@
       $rows = collectHeadRows ($(el));
       $rows.push.apply($rows, collectRows ($(el)));
 
-      console.log("ddd");
-
       $($rows).each(function () {
         var cols = [];
         var styleCols = [];
