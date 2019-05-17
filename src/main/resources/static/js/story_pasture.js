@@ -210,7 +210,8 @@ var storyPasture = {
             viewrecords: true,
             height: 100,
             width: 100,
-            shrinkToFit: true,
+            autowidth: true,
+            shrinkToFit: false,
             sortable: false,
             multiselect: multiselect,
             loadComplete : function(data){
@@ -219,8 +220,14 @@ var storyPasture = {
         });
     },
     setGridDtlData : function () {
-        //그리드 크기 변경
-        $("#jqGridDtl").setGridWidth( $(".modal-body").width() - 5, true);
+        if(Number($("#formRoleOrder").val()) <= 2) {
+            //그리드 크기 변경
+            $("#jqGridDtl").setGridWidth( $(".modal-body").width() - 5, false);
+        }else{
+            //그리드 크기 변경
+            $("#jqGridDtl").setGridWidth( $(".modal-body").width() - 5, true);
+        }
+
 
         if(Number($("#formRoleOrder").val()) <= 2) {
             //그리드 크기 변경
@@ -416,12 +423,13 @@ var jqGridForm = {
 
 var jqGridDtlForm = {
     colModel : [
-        { label: '이름',      name: 'userName',      align: 'center',   width: 150 },
-        { label: '기도제목',  name: 'prayers',       align: 'left',     width: 600 }]
+        { label: '이름',      name: 'userName',      align: 'center',   width: 70 },
+        { label: '기도제목',  name: 'prayers',       align: 'left',     width: 230 }]
     ,colModel2 : [
-        { label: '이름',      name: 'userName',      align: 'center',   width: 100 },
-        { label: '기도제목',  name: 'prayers',       align: 'left',     width: 500 },
-        { label: ' ',         name: 'reserveId',     align: 'center',   width: 110, formatter: formatter.reserveFlag 	 }]
+        { label: '이름',      name: 'userName',      align: 'center',   width: 65 },
+        { label: '기도제목',  name: 'prayers',       align: 'left',     width: 180 },
+        { label: '기타',      name: 'etc',           align: 'left',     width: 100 },
+        { label: ' ',         name: 'reserveId',     align: 'center',   width: 65, formatter: formatter.reserveFlag 	 }]
 };
 
 storyPasture.init();
