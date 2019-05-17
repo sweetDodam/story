@@ -395,6 +395,7 @@ var jqGridForm = {
         { label: '관리자여부',   	        name: 'isAdmin',            align: 'center', width: 100, 	hidden: true },
         { label: '스토리날짜',  	        name: 'inputDate',          align: 'center', width: 100, 	hidden: true },
         { label: '기도제목',                name: 'prayers',            align: 'center', width: 100, 	hidden: true },
+        { label: '기타사항',                name: 'etc',                align: 'center', width: 100, 	hidden: true },
         { label: '등록일',       	        name: 'createDate',         align: 'center', width: 100, 	hidden: true },
         { label: '수정일',       	        name: 'updateDate',         align: 'center', width: 100, 	hidden: true },
         { label: '심방예정ID',                name: 'reserveId',            align: 'center', width: 100, 	hidden: true }]
@@ -428,7 +429,7 @@ var jqGridDtlForm = {
     ,colModel2 : [
         { label: '이름',      name: 'userName',      align: 'center',   width: 65 },
         { label: '기도제목',  name: 'prayers',       align: 'left',     width: 180 },
-        { label: '기타',      name: 'etc',           align: 'left',     width: 100 },
+        { label: '기타사항',  name: 'etc',           align: 'left',     width: 100 },
         { label: ' ',         name: 'reserveId',     align: 'center',   width: 65, formatter: formatter.reserveFlag 	 }]
 };
 
