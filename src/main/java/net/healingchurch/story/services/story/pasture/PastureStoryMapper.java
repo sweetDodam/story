@@ -14,9 +14,13 @@ public interface PastureStoryMapper {
 
     int createStory(PastureStory pastureStory);
 
+    int createStorySub(PastureStory pastureStory);
+
     PastureStory getStory(int storyId);
 
     int updateStory(PastureStory pastureStory);
+
+    int updateStorySub(PastureStory pastureStory);
 
     void removeStory(int storyId);
 
@@ -24,4 +28,5 @@ public interface PastureStoryMapper {
 
     int findUserStoryListCnt(PastureStory pastureStory);
 
+    PastureStory getStoryId(PastureStory pastureStory);
 }

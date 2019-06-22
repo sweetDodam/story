@@ -70,8 +70,27 @@ public class PastureStoryServiceImpl implements PastureStoryService {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         pastureStory.setLoginUserId(principal.getUsername());
 
-        //목장 스토리 입력
-        int rs = pastureStoryMapper.createStory(pastureStory);
+        PastureStory resultPastureStory = new PastureStory();
+        resultPastureStory = pastureStoryMapper.getStoryId(pastureStory);
+
+        int rs = 0;
+        if(resultPastureStory != null){
+            //목장 스토리 마스터 수정
+            rs = resultPastureStory.getStoryId();
+            pastureStoryMapper.updateStory(pastureStory);
+        }else{
+            //목장 스토리 마스터 입력
+            rs = pastureStoryMapper.createStory(pastureStory);
+            pastureStory.setStoryId(rs);
+        }
+
+        if(resultPastureStory != null && resultPastureStory.getPastureStoryId() > 0){
+            //목장 스토리 수정
+            pastureStoryMapper.updateStorySub(pastureStory);
+        }else{
+            //목장 스토리 입력
+            pastureStoryMapper.createStorySub(pastureStory);
+        }
 
         //마을 스토리 합계 등록/수정
         String groupIdStr = String.valueOf(groupId);
@@ -109,8 +128,19 @@ public class PastureStoryServiceImpl implements PastureStoryService {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         pastureStory.setLoginUserId(principal.getUsername());
 
-        //목장 스토리 수정
+        //목장 스토리 마스터 수정
         int rs = pastureStoryMapper.updateStory(pastureStory);
+
+        PastureStory resultPastureStory = new PastureStory();
+        resultPastureStory = pastureStoryMapper.getStory(storyId);
+
+        if(resultPastureStory.getPastureStoryId() > 0){
+            //목장 스토리 수정
+            pastureStoryMapper.updateStorySub(pastureStory);
+        }else{
+            //목장 스토리 입력
+            pastureStoryMapper.createStorySub(pastureStory);
+        }
 
         //마을 스토리 합계 등록/수정
         String groupIdStr = String.valueOf(groupId);

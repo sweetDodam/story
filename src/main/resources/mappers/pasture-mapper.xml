@@ -62,7 +62,7 @@
         A.*,
         B.*
         from ch_story_master A
-        inner join ch_story_pasture B
+        left join ch_story_pasture B
         on A.story_id = B.master_id
         where A.story_id = #{value}
     </select>
@@ -88,12 +88,16 @@
             STR_TO_DATE(#{inputDate}, '%Y%m%d')
             ,now()
         );
+    </insert>
 
+    <insert id="createStorySub" parameterType="net.healingchurch.story.domain.PastureStory"
+            useGeneratedKeys="true" keyProperty="storySubId">
+        /*  PastureStoryMapper.createStorySub  */
         insert into ch_story_pasture
         (master_id, prayers, worship_reason, leader_reason, create_user)
         VALUES
         (
-            (select MAX(story_id) from ch_story_master),
+            #{storyId},
             #{prayers},
             #{worshipReason},
             #{leaderReason},
@@ -116,9 +120,12 @@
         , dawn_pray_count = #{dawnPrayCount}
         , etc = #{etc}
 
-
         where story_id = #{storyId};
+    </update>
 
+    <update id="updateStorySub" parameterType="net.healingchurch.story.domain.PastureStory"
+            useGeneratedKeys="true" keyProperty="storyId">
+        /*  PastureStoryMapper.updateStorySub  */
         update ch_story_pasture
         set
             prayers = #{prayers}
@@ -231,5 +238,18 @@
         <if test="roleId!='' and roleId!=null">and C.role_id = #{roleId}</if>
         <if test="userId!='' and userId!=null">and A.user_id = #{userId}</if>
         <if test="userName!='' and userName!=null">and A.user_name like concat('%', #{userName}, '%')</if>
+    </select>
+
+    <select id="getStoryId" resultType="net.healingchurch.story.domain.PastureStory" parameterType="net.healingchurch.story.domain.PastureStory">
+        /*  PastureStoryMapper.getStoryId  */
+        select
+        A.story_id,
+        B.pasture_story_id
+
+        from ch_story_master A
+        left join ch_story_pasture B on A.story_id = B.master_id
+
+        where A.user_id = #{userId}
+        and DATE_FORMAT(A.input_date, '%Y%m%d')  = #{inputDate}
     </select>
 </mapper>
