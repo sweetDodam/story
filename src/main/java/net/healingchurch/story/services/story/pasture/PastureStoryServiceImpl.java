@@ -80,8 +80,8 @@ public class PastureStoryServiceImpl implements PastureStoryService {
             pastureStoryMapper.updateStory(pastureStory);
         }else{
             //목장 스토리 마스터 입력
-            rs = pastureStoryMapper.createStory(pastureStory);
-            pastureStory.setStoryId(rs);
+            pastureStoryMapper.createStory(pastureStory);
+            rs = pastureStory.getStoryId();
         }
 
         if(resultPastureStory != null && resultPastureStory.getPastureStoryId() > 0){
