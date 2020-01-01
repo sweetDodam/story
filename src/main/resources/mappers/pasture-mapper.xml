@@ -35,6 +35,10 @@
             and DATE_FORMAT(A.input_date, '%Y%m%d')<![CDATA[ <= ]]>  #{toDate}
         </if>
 
+        <if test='roleId != "1" and roleId != "2"'>
+          and A.group_id=#{groupId}
+        </if>
+
         order by A.input_date desc
 
         <if test="page!=null and page!=''">LIMIT #{offset}, #{limit}</if>
@@ -53,6 +57,9 @@
         </if>
         <if test="toDate!=null and toDate!=''">
             and DATE_FORMAT(A.input_date, '%Y%m%d')<![CDATA[ <= ]]>  #{toDate}
+        </if>
+        <if test='roleId != "1" and roleId != "2"'>
+            and A.group_id=#{groupId}
         </if>
     </select>
 

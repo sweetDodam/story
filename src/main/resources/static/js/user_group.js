@@ -21,7 +21,7 @@ var userGroup = {
             autoWidth: true,
             shrinkToFit: true,
             sortable: false,
-            sortname: 'groupId',
+      //      sortname: 'groupId',
             loadComplete : function(data){
 
             },onSelectRow : function (rowid, status, e) {
@@ -49,7 +49,7 @@ var userGroup = {
             autoWidth: true,
             shrinkToFit: true,
             sortable: false,
-            sortname: 'groupId',
+      //      sortname: 'groupId',
             loadComplete : function(data){
 
             },onSelectRow : function (rowid, status, e) {
@@ -73,7 +73,7 @@ var userGroup = {
             autoWidth: true,
             shrinkToFit: true,
             sortable: false,
-            sortname: 'groupId',
+      //      sortname: 'groupId',
             loadComplete : function(data){
 
             },onSelectRow : function (rowid, status, e) {
@@ -162,14 +162,14 @@ var userGroup = {
 
         var level = Number($("#groupLevel").text());
 
-        if(level < 3){
+        /*if(level < 3){
             var rowData = $("#jqGrid" + (level+1)).getRowData();
 
             if(rowData.length > 0){
                 alert("하위 그룹이 존재하면 삭제할 수 없습니다.\n하위 그룹을 먼저 삭제해주세요.");
                 return;
             }
-        }
+        }*/
 
         if(!confirm(txt + "하시겠습니까?")){
             return;
@@ -300,6 +300,10 @@ var userGroup = {
         $("#groupLevel").text(data.groupLevel);
         $("#groupName").val(data.groupName);
 
+        $("[name=tempYn]").prop("checked", false);
+        console.log(data.tempYn);
+        $("#tempYn_"+data.tempYn).prop("checked", true);
+
         userGroup.inputClear("add");
     }
 };
@@ -310,6 +314,7 @@ var jqGridForm = {
         { label: '그룹 이름',               name: 'groupName',          align: 'left',  width: 200 },
         { label: '그룹레벨',                name: 'groupLevel',         hidden: true   },
         { label: '부모그룹ID',				name: 'parentGroupId',      hidden: true   },
+        { label: '임시여부',                name: 'tempYn',         hidden: true   },
         { label: '등록일',				    name: 'createDate',         hidden: true   },
         { label: '수정일',				    name: 'update_Date',        hidden: true   }]
 };

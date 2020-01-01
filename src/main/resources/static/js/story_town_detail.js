@@ -106,6 +106,9 @@ var storyTownDetail = {
         today.setDate(1);
         var fromDate = common.calculateSundayDate(today, true);
 
+        if(fromDate > toDate){
+            fromDate = toDate;
+        }
         $("#fromDate").datepicker("setDate", fromDate);
         $("#toDate").datepicker("setDate", toDate);
     },
@@ -146,6 +149,9 @@ var storyTownDetail = {
         today.setDate(1);
         var fromDate = common.calculateSundayDate(today, true);
 
+        if(fromDate > toDate){
+            fromDate = toDate;
+        }
         $("#fromDate").datepicker("setDate", fromDate);
         $("#toDate").datepicker("setDate", toDate);
     },

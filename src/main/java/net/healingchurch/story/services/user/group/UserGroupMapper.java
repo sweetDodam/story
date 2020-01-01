@@ -9,9 +9,9 @@ import java.util.List;
 public interface UserGroupMapper {
     List<UserGroup> findUserGroupList(UserGroup userGroup);
 
-    List<UserGroup> findUserGroupChildList(int parentGroupId);
+    List<UserGroup> findUserGroupChildList(UserGroup userGroup);
 
-    UserGroup getUserGroup(int groupId);
+    UserGroup getUserGroup(UserGroup userGroup);
 
     int createUserGroup(UserGroup userGroup);
 

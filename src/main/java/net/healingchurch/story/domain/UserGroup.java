@@ -11,6 +11,8 @@ public class UserGroup {
     private String updateDate;
     private String createUser;
     private String updateUser;
+    private String useYn;
+    private String tempYn;
 
     private int page;
     private int offset;
@@ -128,6 +130,22 @@ public class UserGroup {
         this.loginUserId = loginUserId;
     }
 
+    public String getUseYn() {
+        return useYn;
+    }
+
+    public void setUseYn(String useYn) {
+        this.useYn = useYn;
+    }
+
+    public String getTempYn() {
+        return tempYn;
+    }
+
+    public void setTempYn(String tempYn) {
+        this.tempYn = tempYn;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(groupId);
@@ -140,6 +158,8 @@ public class UserGroup {
                 ", parentGroupId=" + parentGroupId +
                 ", groupName='" + groupName + '\'' +
                 ", groupLevel=" + groupLevel +
+                ", useYn='" + useYn  + '\'' +
+                ", tempYn='" + tempYn  + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", updateDate='" + updateDate + '\'' +
                 ", createUser='" + createUser + '\'' +

@@ -6,15 +6,15 @@ import net.healingchurch.story.domain.UserGroup;
 import java.util.List;
 
 public interface UserGroupService {
-    List<UserGroup> findUserGroupList(int page, int limit);
+    List<UserGroup> findUserGroupList(int page, String tempYn, String useYn, int limit);
 
-    List<UserGroup> findUserGroupChildList(int parentGroupId);
+    List<UserGroup> findUserGroupChildList(int parentGroupId, String tempYn, String useYn);
 
-    UserGroup getUserGroup(int groupId);
+    UserGroup getUserGroup(int groupId, String tempYn, String useYn);
 
-    int createUserGroup(int parentGroupId, String groupName, int groupLevel);
+    int createUserGroup(int parentGroupId, String groupName, int groupLevel, String tempYn);
 
-    int updateUserGroup(int groupId, int parentGroupId, String groupName, int groupLevel);
+    int updateUserGroup(int groupId, int parentGroupId, String groupName, int groupLevel, String tempYn);
 
     void removeUserGroup(int groupId);
 }

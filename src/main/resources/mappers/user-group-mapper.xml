@@ -6,36 +6,46 @@
             resultType="net.healingchurch.story.domain.UserGroup">
         /*  UserGroupMapper.findUserGroupList  */
         select * from ch_user_group
-        order by parent_group_id, group_name
+        where 1=1
+        <if test="!tempYn.equals('') and tempYn!=null">and temp_yn = #{tempYn} </if>
+        <if test="!useYn.equals('') and useYn!=null">and use_yn = #{useYn} </if>
+        order by temp_yn, parent_group_id, group_id
 
-        <if test="page!=null and page!=''">LIMIT #{offset}, #{limit}</if>
+        <if test="page!=null and !page.equals('')">LIMIT #{offset}, #{limit}</if>
     </select>
 
-    <select id="findUserGroupChildList" parameterType="int"
+    <select id="findUserGroupChildList" parameterType="net.healingchurch.story.domain.UserGroup"
             resultType="net.healingchurch.story.domain.UserGroup">
         /*  UserGroupMapper.findUserGroupChildList  */
         select * from ch_user_group
-        where parent_group_id = #{value}
-        order by group_name
+        where parent_group_id = #{parentGroupId}
+        <if test="!tempYn.equals('') and tempYn!=null">and temp_yn = #{tempYn} </if>
+        <if test="!useYn.equals('') and useYn!=null">and use_yn = #{useYn} </if>
+        order by temp_yn, group_id
     </select>
 
-    <select id="getUserGroup" parameterType="int"
+    <select id="getUserGroup" parameterType="net.healingchurch.story.domain.UserGroup"
             resultType="net.healingchurch.story.domain.UserGroup">
         /*  UserGroupMapper.getUserGroup  */
         select * from ch_user_group
-        where group_id = #{value}
+        where group_id = #{groupId}
+        <if test="!tempYn.equals('') and tempYn!=null">and temp_yn = #{tempYn} </if>
+        <if test="!useYn.equals('') and useYn!=null">and use_yn = #{useYn} </if>
+
+        order by temp_yn, group_id
     </select>
 
     <insert id="createUserGroup" parameterType="net.healingchurch.story.domain.UserGroup"
             useGeneratedKeys="true" keyProperty="userSeq">
         /*  UserGroupMapper.createUserGroup  */
-        INSERT INTO ch_user_group(parent_group_id, group_name, group_level, create_date, create_user)
+        INSERT INTO ch_user_group(parent_group_id, group_name, group_level, create_date, create_user, temp_yn)
         VALUES (
             #{parentGroupId},
             #{groupName},
             #{groupLevel},
             now(),
-            #{loginUserId}
+            #{loginUserId},
+            #{tempYn}
             )
     </insert>
 
@@ -46,15 +56,16 @@
         set
          update_date = now()
         ,update_user = #{loginUserId}
-        <if test="groupName!='' and groupName!=null">, group_name = #{groupName} </if>
-        <if test="parentGroupId!='' and parentGroupId!=null">, parent_group_id = #{parentGroupId} </if>
-        <if test="groupLevel!='' and groupLevel!=null">, group_level = #{groupLevel} </if>
+        <if test="!groupName.equals('') and groupName!=null">, group_name = #{groupName} </if>
+        <if test="!parentGroupId.equals('') and parentGroupId!=null">, parent_group_id = #{parentGroupId} </if>
+        <if test="!tempYn.equals('') and tempYn!=null">, temp_yn = #{tempYn} </if>
         where group_id = #{groupId}
     </update>
 
     <delete id="removeUserGroup" parameterType="int">
         /*  UserGroupMapper.removeUserGroup  */
-        delete from ch_user_group
+        update ch_user_group
+        set use_yn = 'N'
         where group_id = #{value}
     </delete>
 

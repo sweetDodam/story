@@ -21,34 +21,42 @@ public class UserGroupController {
 
     @GetMapping("list")
     public List<UserGroup> findUserGroupList(@RequestParam(value = "page", defaultValue = "0") int page,
+                                             @RequestParam(value = "tempYn", defaultValue = "") String tempYn,
+                                             @RequestParam(value = "useYn", defaultValue = "") String useYn,
                                              @RequestParam(value = "limit", defaultValue = "20") int limit) {
-        return userGroupService.findUserGroupList(page, limit);
+        return userGroupService.findUserGroupList(page, tempYn, useYn, limit);
     }
 
     @GetMapping("childList")
-    public List<UserGroup> findUserGroupChildList(@RequestParam(value = "parentGroupId", defaultValue = "") int parentGroupId) {
-        return userGroupService.findUserGroupChildList(parentGroupId);
+    public List<UserGroup> findUserGroupChildList(@RequestParam(value = "parentGroupId", defaultValue = "") int parentGroupId,
+                                                  @RequestParam(value = "tempYn", defaultValue = "") String tempYn,
+                                                  @RequestParam(value = "useYn", defaultValue = "" )String useYn) {
+        return userGroupService.findUserGroupChildList(parentGroupId, tempYn, useYn);
     }
 
     @GetMapping("get")
-    public UserGroup getUserGroup(@RequestParam(value = "groupId", defaultValue = "") int groupId) {
-        return userGroupService.getUserGroup(groupId);
+    public UserGroup getUserGroup(@RequestParam(value = "groupId", defaultValue = "") int groupId,
+                                  @RequestParam(value = "tempYn", defaultValue = "") String tempYn,
+                                  @RequestParam(value = "useYn", defaultValue = "") String useYn) {
+        return userGroupService.getUserGroup(groupId, tempYn, useYn);
     }
 
     @PostMapping("create")
     public int createUserGroup(
                             @RequestParam(value = "parentGroupId", defaultValue = "0") int parentGroupId,
                             @RequestParam(value = "groupName", defaultValue = "") String groupName,
-                            @RequestParam(value = "groupLevel", defaultValue = "0") int groupLevel){
-        return userGroupService.createUserGroup(parentGroupId, groupName, groupLevel);
+                            @RequestParam(value = "groupLevel", defaultValue = "0") int groupLevel,
+                            @RequestParam(value = "tempYn", defaultValue = "") String tempYn){
+        return userGroupService.createUserGroup(parentGroupId, groupName, groupLevel, tempYn);
     }
 
     @PostMapping("update")
     public int updateUserGroup(@RequestParam(value = "groupId", defaultValue = "0") int groupId,
                                @RequestParam(value = "parentGroupId", defaultValue = "0") int parentGroupId,
                                @RequestParam(value = "groupName", defaultValue = "") String groupName,
-                               @RequestParam(value = "groupLevel", defaultValue = "0") int groupLevel){
-        return userGroupService.updateUserGroup(groupId, parentGroupId, groupName, groupLevel);
+                               @RequestParam(value = "groupLevel", defaultValue = "0") int groupLevel,
+                               @RequestParam(value = "tempYn", defaultValue = "") String tempYn){
+        return userGroupService.updateUserGroup(groupId, parentGroupId, groupName, groupLevel, tempYn);
     }
 
     @PostMapping("remove")

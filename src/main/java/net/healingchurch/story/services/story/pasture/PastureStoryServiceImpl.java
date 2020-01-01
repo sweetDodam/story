@@ -2,7 +2,10 @@ package net.healingchurch.story.services.story.pasture;
 
 import net.healingchurch.story.domain.PastureStory;
 import net.healingchurch.story.domain.TownStory;
+import net.healingchurch.story.domain.User;
+import net.healingchurch.story.domain.UserGroup;
 import net.healingchurch.story.services.story.town.TownStoryService;
+import net.healingchurch.story.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +24,9 @@ public class PastureStoryServiceImpl implements PastureStoryService {
     @Resource(name = "townStoryService")
     private TownStoryService townStoryService;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public Map<Object, Object> findStoryList(String userId, String fromDate, String toDate, int page, int limit) {
         PastureStory pastureStory = new PastureStory();
@@ -30,6 +36,15 @@ public class PastureStoryServiceImpl implements PastureStoryService {
         pastureStory.setPage(page);
         pastureStory.setOffset((page-1)*limit);
         pastureStory.setLimit(limit);
+
+        //로그인한 유저의 권한
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUser(principal.getUsername());
+        pastureStory.setRoleId(user.getRoleId());
+
+        //조회할 유저의 그룹정보
+        User user2 = userService.getUser(userId);
+        pastureStory.setGroupId(user2.getGroupId());
 
         Map<Object, Object> resutMap = new HashMap<>();
 

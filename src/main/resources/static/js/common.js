@@ -112,7 +112,9 @@ var common = {
     },
     groupData : function (groupId) {
         var data = {
-            groupId: groupId
+            groupId: groupId,
+            tempYn: 'N',
+            useYn: 'Y'
         };
 
         var rs = null;
@@ -124,6 +126,7 @@ var common = {
             async : false,
             data: data
         }).done(function(result) {
+            console.log(result);
             rs = result;
         }).fail(function (error) {
             console.debug(error);
@@ -134,7 +137,8 @@ var common = {
     },
     groupChildData : function (groupId) {
         var data = {
-            parentGroupId: groupId
+            parentGroupId: groupId,
+            useYn: 'Y'
         };
 
         var rs = null;
@@ -146,6 +150,7 @@ var common = {
             async : false,
             data: data
         }).done(function(result) {
+            console.log(result);
             rs = result;
         }).fail(function (error) {
             console.debug(error);
@@ -156,7 +161,9 @@ var common = {
     },
     childSelectGroupLoad : function (parentGroupId, level, selector) {
         var data = {
-            parentGroupId: parentGroupId
+            parentGroupId: parentGroupId,
+            tempYn: 'N',
+            useYn: 'Y'
         };
 
         $.ajax({
@@ -167,6 +174,7 @@ var common = {
             data: data
         }).done(function(result) {
 
+            console.log(result);
             var len = result.length;
             var sel = common.dataChkStr(selector) + " ";
 

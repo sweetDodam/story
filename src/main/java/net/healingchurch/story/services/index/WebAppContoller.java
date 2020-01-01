@@ -81,7 +81,7 @@ public class WebAppContoller {
         model.put("userInfo", user);
 
         //로그인한 유저의 그룹 상세 정보
-        UserGroup formUserGroup = userGroupService.getUserGroup(user.getGroupId());
+        UserGroup formUserGroup = userGroupService.getUserGroup(user.getGroupId(), "N", "Y");
         model.put("formUserGroup", formUserGroup);
 
         return "story_pasture";
@@ -135,7 +135,7 @@ public class WebAppContoller {
         model.put("userInfo", user);
 
         //로그인한 유저의 그룹 상세 정보
-        UserGroup formUserGroup = userGroupService.getUserGroup(user.getGroupId());
+        UserGroup formUserGroup = userGroupService.getUserGroup(user.getGroupId(), "N", "Y");
         model.put("formUserGroup", formUserGroup);
 
         //화면에 뿌릴 공통코드 조회
@@ -179,7 +179,7 @@ public class WebAppContoller {
         model.put("userInfo", user);
 
         //로그인한 유저의 마을 그룹 상세 정보
-        UserGroup formUserGroup = userGroupService.getUserGroup(user.getParentGroupId());
+        UserGroup formUserGroup = userGroupService.getUserGroup(user.getParentGroupId(), "N", "Y");
         model.put("formUserGroup", formUserGroup);
 
         return "story_town";
@@ -233,7 +233,7 @@ public class WebAppContoller {
         model.put("userInfo", user);
 
         //로그인한 유저의 마을 그룹 상세 정보
-        UserGroup formUserGroup = userGroupService.getUserGroup(user.getParentGroupId());
+        UserGroup formUserGroup = userGroupService.getUserGroup(user.getParentGroupId(), "N", "Y");
         model.put("formUserGroup", formUserGroup);
 
         //화면에 뿌릴 공통코드 조회
@@ -277,7 +277,7 @@ public class WebAppContoller {
         model.put("userInfo", user);
 
         //로그인한 유저의 그룹 상세 정보
-        UserGroup formUserGroup = userGroupService.getUserGroup(user.getGroupId());
+        UserGroup formUserGroup = userGroupService.getUserGroup(user.getGroupId(), "N", "Y");
         model.put("formUserGroup", formUserGroup);
 
         //목회자 리스트
@@ -335,7 +335,7 @@ public class WebAppContoller {
         model.put("userInfo", user);
 
         //로그인한 유저의 그룹 상세 정보
-        UserGroup formUserGroup = userGroupService.getUserGroup(user.getGroupId());
+        UserGroup formUserGroup = userGroupService.getUserGroup(user.getGroupId(), "N", "Y");
         model.put("formUserGroup", formUserGroup);
 
         //화면에 뿌릴 공통코드 조회
@@ -454,7 +454,7 @@ public class WebAppContoller {
 
         if(formUser != null) {
             //선택된 유저의 그룹 상세 정보
-            UserGroup formUserGroup = userGroupService.getUserGroup(formUser.getGroupId());
+            UserGroup formUserGroup = userGroupService.getUserGroup(formUser.getGroupId(), "N", "Y");
             model.put("formUserGroup", formUserGroup);
         }
 

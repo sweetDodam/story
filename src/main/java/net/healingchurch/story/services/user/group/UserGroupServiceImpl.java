@@ -23,31 +23,42 @@ public class UserGroupServiceImpl implements UserGroupService {
     private UserGroupMapper userGroupMapper;
 
     @Override
-    public List<UserGroup> findUserGroupList(int page, int limit) {
+    public List<UserGroup> findUserGroupList(int page, String tempYn, String useYn, int limit) {
         UserGroup userGroup = new UserGroup();
         userGroup.setPage(page);
+        userGroup.setTempYn(tempYn);
+        userGroup.setUseYn(useYn);
         userGroup.setOffset((page-1)*limit);
         userGroup.setLimit(limit);
         return userGroupMapper.findUserGroupList(userGroup);
     }
 
     @Override
-    public List<UserGroup> findUserGroupChildList(int parentGroupId) {
-        return userGroupMapper.findUserGroupChildList(parentGroupId);
+    public List<UserGroup> findUserGroupChildList(int parentGroupId, String tempYn, String useYn) {
+        UserGroup userGroup = new UserGroup();
+        userGroup.setParentGroupId(parentGroupId);
+        userGroup.setTempYn(tempYn);
+        userGroup.setUseYn(useYn);
+        return userGroupMapper.findUserGroupChildList(userGroup);
     }
 
     @Override
-    public UserGroup getUserGroup(int groupId) {
-        return userGroupMapper.getUserGroup(groupId);
+    public UserGroup getUserGroup(int groupId, String tempYn, String useYn) {
+        UserGroup userGroup = new UserGroup();
+        userGroup.setGroupId(groupId);
+        userGroup.setTempYn(tempYn);
+        userGroup.setUseYn(useYn);
+        return userGroupMapper.getUserGroup(userGroup);
     }
 
     @Override
-    public int createUserGroup(int parentGroupId, String groupName, int groupLevel) {
+    public int createUserGroup(int parentGroupId, String groupName, int groupLevel, String tempYn) {
         UserGroup userGroup = new UserGroup();
 
         userGroup.setParentGroupId(parentGroupId);
         userGroup.setGroupName(groupName);
         userGroup.setGroupLevel(groupLevel);
+        userGroup.setTempYn(tempYn);
 
         //로그인한 유저 아이디
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -57,13 +68,14 @@ public class UserGroupServiceImpl implements UserGroupService {
     }
 
     @Override
-    public int updateUserGroup(int groupId, int parentGroupId, String groupName, int groupLevel) {
+    public int updateUserGroup(int groupId, int parentGroupId, String groupName, int groupLevel, String tempYn) {
         UserGroup userGroup = new UserGroup();
 
         userGroup.setGroupId(groupId);
         userGroup.setParentGroupId(parentGroupId);
         userGroup.setGroupName(groupName);
         userGroup.setGroupLevel(groupLevel);
+        userGroup.setTempYn(tempYn);
 
         //로그인한 유저 아이디
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
