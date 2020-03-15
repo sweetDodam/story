@@ -100,7 +100,7 @@ var storyTown = {
             colModel: jqGridForm.colModel,
             viewrecords: true,
             height: $("#content-wrapper").height() * 0.5,
-            width: ($(".card-body").width() - 5) < 1000 ? 1000 : ($(".card-body").width() - 5),
+            width: ($(".card-body").width() - 5) < 900 ? 900 : ($(".card-body").width() - 5),
             pager: "#pager",
             pgbuttons: true,
             pginput : true,
@@ -203,15 +203,15 @@ var formatter = {
 
 var jqGridForm = {
     colModel : [
-        { label: '아이디',			name: 'userId',             align: 'center', width: 45},
+        { label: '아이디',			name: 'userId',             align: 'center', width: 70},
         { label: '이름',        	name: 'userName',           align: 'center', width: 70,     formatter: formatter.updModal},
-        { label: '등록여부',    	name: 'registFlag',			align: 'center', width: 55, 	formatter: formatter.registFlag},
-        { label: '소속',    	    name: 'groupDesc',          align: 'left', width: 115 },
-        { label: '전화번호',    	name: 'mobile',             align: 'center', width: 100 	},
-        { label: '이메일',      	name: 'email',              align: 'center', width: 120 	},
-        { label: '알파날짜',    	name: 'alphaDate',          align: 'center', width: 100 	},
-        { label: '등반날짜',    	name: 'pastureJoinDate',    align: 'center', width: 100 	},
-        { label: 'userSeq',		    name: 'userSeq',            hidden: true},
+        { label: '등록여부',    	name: 'registFlag',			align: 'center', width: 70, 	formatter: formatter.registFlag},
+        { label: '소속',    	    name: 'groupDesc',          align: 'left', width: 150 },
+        { label: '전화번호',    	name: 'mobile',             hidden: true },
+        { label: '이메일',      	name: 'email',              hidden: true },
+        { label: '알파날짜',    	name: 'alphaDate',          hidden: true },
+        { label: '등반날짜',    	name: 'pastureJoinDate',    hidden: true },
+        { label: 'userSeq',		    name: 'userSeq',            hidden: true },
         { label: '스토리아이디', 	name: 'storyId',			hidden: true },
         { label: '마을스토리아이디',name: 'townStoryId',		hidden: true },
         { label: '마을동정아이디',  name: 'eventId',		    hidden: true },
@@ -222,8 +222,8 @@ var jqGridForm = {
         { label: '주소',        	name: 'address',            hidden: true },
         { label: '스토리날짜',  	name: 'inputDate',          hidden: true },
         { label: '상태',        	name: 'status',             hidden: true },
-        { label: '등록일',       	name: 'createDate',         hidden: true },
-        { label: '수정일',       	name: 'updateDate',         hidden: true }]
+        { label: '마을동정 등록일', name: 'createDate',         align: 'center', hidden: false },
+        { label: '마을동정 수정일', name: 'updateDate',         align: 'center', hidden: false }]
 
     ,setParam : function(){
         var data = common.serializeObject($("#GridForm"));

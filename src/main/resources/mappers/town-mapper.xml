@@ -19,9 +19,9 @@
         ,C.friday_worship_yn
         ,C.dawn_pray_count
         ,C.etc
-        ,FN_DATE_FORMAT(C.create_date) as create_date
-        ,FN_DATE_FORMAT(C.update_date) as update_date
         ,D.*
+        ,CONCAT(FN_DATE_FORMAT(D.create_date), DATE_FORMAT(D.create_date, ' %H:%i'))as townCreateDate
+        ,CONCAT(FN_DATE_FORMAT(D.update_date), DATE_FORMAT(D.update_date, ' %H:%i')) as townUpdateDate
         ,count(E.user_id) as user_cnt
 
         from ch_user A
@@ -159,13 +159,14 @@
             useGeneratedKeys="true" keyProperty="townStoryId">
         /*  TownStoryMapper.createStory  */
         insert into ch_story_town
-        (master_id, leader_care_story, pasture_care_story, create_user)
+        (master_id, leader_care_story, pasture_care_story, create_user, create_date)
         VALUES
         (
             #{storyId},
             #{leaderCareStory},
             #{pastureCareStory},
-            #{loginUserId}
+            #{loginUserId},
+            now()
         );
     </insert>
 
@@ -209,7 +210,8 @@
 
         leader_care_story = #{leaderCareStory},
         pasture_care_story = #{pastureCareStory},
-        update_user = #{loginUserId}
+        update_user = #{loginUserId},
+        update_date = now()
 
         where master_id = #{storyId};
     </update>
@@ -245,6 +247,8 @@
         <if test="inputDate!='' and inputDate!=null">
             ,D.event_id
             ,E.town_story_id
+            ,CONCAT(FN_DATE_FORMAT(D.create_date), DATE_FORMAT(D.create_date, ' %H:%i'))as create_date
+            ,CONCAT(FN_DATE_FORMAT(D.update_date), DATE_FORMAT(D.update_date, ' %H:%i')) as update_date
         </if>
         from ch_user A
         inner join (select  	X.group_id,
@@ -259,7 +263,7 @@
         <if test="inputDate!='' and inputDate!=null">
             left join ch_event D on D.group_id = B.parent_group_id and DATE_FORMAT(D.event_date, '%Y%m%d')  = #{inputDate}
             left join (select
-            X.group_id
+             X.group_id
             ,Y.town_story_id
             from ch_story_master X
             inner join ch_story_town Y on X.story_id = Y.master_id

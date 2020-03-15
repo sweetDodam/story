@@ -191,6 +191,8 @@
             ,FN_CODE_DESC('WORSHIP_REASON', E.worship_reason) as worship_desc
             ,FN_CODE_DESC('LEADER_REASON', E.leader_reason) as leader_desc
             ,F.reserve_id
+            ,CONCAT(FN_DATE_FORMAT(D.create_date), DATE_FORMAT(D.create_date, ' %H:%i'))as create_date
+            ,CONCAT(FN_DATE_FORMAT(D.update_date), DATE_FORMAT(D.update_date, ' %H:%i')) as update_date
         </if>
         from ch_user A
         inner join (select  	X.group_id,

@@ -9,6 +9,8 @@ public class TownStory extends Story {
     private String pastureCareStory;
     private String eventId;
     private int userCnt;
+    private String townCreateDate;
+    private String townUpdateDate;
 
     public TownStory() {
     }
@@ -61,6 +63,22 @@ public class TownStory extends Story {
         this.userCnt = userCnt;
     }
 
+    public String getTownCreateDate() {
+        return townCreateDate;
+    }
+
+    public void setTownCreateDate(String townCreateDate) {
+        this.townCreateDate = townCreateDate;
+    }
+
+    public String getTownUpdateDate() {
+        return townUpdateDate;
+    }
+
+    public void setTownUpdateDate(String townUpdateDate) {
+        this.townUpdateDate = townUpdateDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -85,6 +103,8 @@ public class TownStory extends Story {
                 ", pastureCareStory='" + pastureCareStory + '\'' +
                 ", eventId='" + eventId + '\'' +
                 ", userCnt='" + userCnt + '\'' +
+                ", townCreateDate='" + townCreateDate + '\'' +
+                ", townUpdateDate='" + townUpdateDate + '\'' +
                 '}';
     }
 }

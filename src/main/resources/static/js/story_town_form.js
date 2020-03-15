@@ -261,16 +261,16 @@ var popFormatter = {
 
 var jqGridPopForm = {
     colModel : [
-        { label: '목장',    		        name: 'userName',           align: 'center', width: 120     },
-        { label: '재적',    		        name: 'userCnt',            align: 'center', width: 100,    index:'userCnt',       summaryType:'sum'},
-        { label: '예배참석',	            name: 'worshipYn',       	align: 'center', width: 100, 	formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'worshipYn',        summaryType:'sum'},
+        { label: '목장',    		        name: 'userName',           align: 'center', width: 95     },
+        { label: '재적',    		        name: 'userCnt',            align: 'center', width: 95,    index:'userCnt',       summaryType:'sum'},
+        { label: '예배참석',	            name: 'worshipYn',       	align: 'center', width: 95, 	formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'worshipYn',        summaryType:'sum'},
         { label: '리더모임참석',	        name: 'leaderYn',          	align: 'center', width: 100, 	formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'leaderYn',         summaryType:'sum'},
         { label: '목장모임참석',	        name: 'pastureMeetYn',   	align: 'center', width: 100, 	formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'pastureMeetYn',    summaryType:'sum'},
         { label: '금요철야참석',	        name: 'fridayWorshipYn',	align: 'center', width: 100, 	formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'fridayWorshipYn',  summaryType:'sum'},
-        { label: '성경',				    name: 'bibleCount',			align: 'center', width: 100,    formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'bibleCount',       summaryType:'sum'},
-        { label: 'QT',    			        name: 'qtCount',          	align: 'center', width: 100,    formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'qtCount',          summaryType:'sum'},
-        { label: '새벽기도',    		    name: 'dawnPrayCount',   	align: 'center', width: 100,    formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'dawnPrayCount',    summaryType:'sum'},
-        { label: '영적돌봄',       		    name: 'dtl',               	align: 'center', width: 100, 	formatter: popFormatter.dtlModal},
+        { label: '성경',				    name: 'bibleCount',			align: 'center', width: 95,    formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'bibleCount',       summaryType:'sum'},
+        { label: 'QT',    			        name: 'qtCount',          	align: 'center', width: 95,    formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'qtCount',          summaryType:'sum'},
+        { label: '새벽기도',    		    name: 'dawnPrayCount',   	align: 'center', width: 95,    formatter: popFormatter.nullChk, unformat:popFormatter.nullToNum, index:'dawnPrayCount',    summaryType:'sum'},
+        { label: '영적돌봄',       		    name: 'dtl',               	align: 'center', width: 95, 	formatter: popFormatter.dtlModal},
         { label: '목자영적돌봄',            name: 'leaderCareStory',    hidden: true	},
         { label: '목장영적돌봄',            name: 'pastureCareStory',   hidden: true	},
         { label: '기타사항',                name: 'etc',            	hidden: true	},
@@ -280,13 +280,14 @@ var jqGridPopForm = {
         { label: '마을스토리아이디',        name: 'townStoryId',        hidden: true 	},
         { label: '권한ID',      		    name: 'roleId',             hidden: true 	},
         { label: '소속ID',      		    name: 'groupId',            hidden: true 	},
-        { label: '등록일',       		    name: 'createDate',         hidden: true 	},
-        { label: '수정일',       		    name: 'updateDate',        	hidden: true 	}]
+        { label: '등록일',       		    name: 'townCreateDate',     align: 'center', width: 115, hidden: false 	},
+        { label: '수정일',       		    name: 'townUpdateDate',     align: 'center', width: 115, hidden: false 	}]
     ,setParam : function(){
         var data = common.serializeObject($("#StoryForm"));
 
         data["inputDate"] = $("#inputDatePop").val().replace(/[^0-9]/g, "");
-
+		data["eventContent"] = null;
+		
         return data;
     }
 };
