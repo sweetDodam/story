@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    #url: jdbc:log4jdbc:mysql://localhost:3306/chyou?serverTimezone=UTC&allowMultiQueries=true
+    #url: jdbc:log4jdbc:mysql://localhost:3306/chyou?serverTimezone=UTC&allowMultiQueries=true 로컬용
     url: jdbc:log4jdbc:mysql://chyou.co.kr:3306/juyoung32?serverTimezone=UTC&allowMultiQueries=true
     username: juyoung32
     password: healingchurch123
